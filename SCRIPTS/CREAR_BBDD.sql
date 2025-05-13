@@ -31,6 +31,7 @@ CREATE TABLE IF NOT EXISTS `BiciFast`.`usuario` (
   `metodo_pago` ENUM('TARJETA', 'EFECTIVO') NOT NULL,
   `fecha_inicio_suscripcion` DATETIME NOT NULL DEFAULT NOW(),
   `fecha_fin_suscripcion` DATETIME GENERATED ALWAYS AS (fecha_inicio_suscripcion + 30) VIRTUAL,
+  `tipo_usuario` ENUM('ADMIN', 'MANT', 'NORMAL') NOT NULL DEFAULT 'NORMAL',
   PRIMARY KEY (`id`),
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
   UNIQUE INDEX `dni_UNIQUE` (`dni` ASC) VISIBLE,

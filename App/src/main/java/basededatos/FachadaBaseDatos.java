@@ -35,6 +35,7 @@ public class FachadaBaseDatos {
 
 
         } catch (SQLException | IOException f){
+            System.out.println("Estoy en el dir:"+ System.getProperty("user.dir"));
             System.out.println(f.getMessage());
         }
 

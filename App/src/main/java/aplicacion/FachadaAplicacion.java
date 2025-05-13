@@ -8,13 +8,16 @@ public class FachadaAplicacion {
     FachadaGUI fgui;
 
     public FachadaAplicacion() {
-        fgui = new FachadaGUI();
+        fgui = new FachadaGUI(this);
     }
 
     public static void main(String[] args)
     {
-        FachadaBaseDatos fachada = new FachadaBaseDatos();
-        fachada._funciona();
+        FachadaBaseDatos fbd = new FachadaBaseDatos();
+        fbd._funciona();
+
+        FachadaAplicacion fa = new FachadaAplicacion();
+        fa.lanzarAplicacion();
 
     }
 

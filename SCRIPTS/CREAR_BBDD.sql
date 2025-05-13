@@ -17,6 +17,8 @@ USE `BiciFast` ;
 -- -----------------------------------------------------
 -- Table `BiciFast`.`usuario`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `BiciFast`.`usuario` ;
+
 CREATE TABLE IF NOT EXISTS `BiciFast`.`usuario` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `nombre` VARCHAR(255) NOT NULL,
@@ -30,7 +32,7 @@ CREATE TABLE IF NOT EXISTS `BiciFast`.`usuario` (
   `contrasenha` BINARY(60) NOT NULL COMMENT 'BINARY extiende por 0x00 para completar, mientras que char trunca esp. vacios, por lo que es mas optima',
   `metodo_pago` ENUM('TARJETA', 'EFECTIVO') NOT NULL,
   `fecha_inicio_suscripcion` DATETIME NOT NULL DEFAULT NOW(),
-  `fecha_fin_suscripcion` DATETIME GENERATED ALWAYS AS (fecha_inicio_suscripcion + 30) VIRTUAL,
+  `fecha_fin_suscripcion` DATETIME GENERATED ALWAYS AS (DATE_ADD(fecha_inicio_suscripcion, INTERVAL 30 DAY)) VIRTUAL,
   `tipo_usuario` ENUM('ADMIN', 'MANT', 'NORMAL') NOT NULL DEFAULT 'NORMAL',
   PRIMARY KEY (`id`),
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
@@ -42,6 +44,8 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `BiciFast`.`estacion`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `BiciFast`.`estacion` ;
+
 CREATE TABLE IF NOT EXISTS `BiciFast`.`estacion` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `ubicacion` TINYTEXT NOT NULL,
@@ -54,6 +58,8 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `BiciFast`.`bicicleta`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `BiciFast`.`bicicleta` ;
+
 CREATE TABLE IF NOT EXISTS `BiciFast`.`bicicleta` (
   `id` INT NOT NULL,
   `estado` ENUM('CORRECTO', 'REVISION') NOT NULL DEFAULT 'CORRECTO',
@@ -72,6 +78,8 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `BiciFast`.`viaje`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `BiciFast`.`viaje` ;
+
 CREATE TABLE IF NOT EXISTS `BiciFast`.`viaje` (
   `usuario` INT NOT NULL,
   `id` INT NOT NULL AUTO_INCREMENT,

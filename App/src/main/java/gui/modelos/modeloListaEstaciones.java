@@ -1,13 +1,13 @@
 package gui.modelos;
 
-public class ModeloListaEstaciones extends javax.swing.AbstractListModel<String> {
+public class modeloListaEstaciones extends javax.swing.AbstractListModel<String> {
     private java.util.List<aplicacion.Estacion> estaciones;
 
-    public ModeloListaEstaciones() {
+    public modeloListaEstaciones() {
         this.estaciones = new java.util.ArrayList<>();
     }
 
-    public ModeloListaEstaciones(java.util.List<aplicacion.Estacion> estaciones) {
+    public modeloListaEstaciones(java.util.List<aplicacion.Estacion> estaciones) {
         this.estaciones = new java.util.ArrayList<>(estaciones);
     }
 

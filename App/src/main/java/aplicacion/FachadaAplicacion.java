@@ -9,6 +9,17 @@ public class FachadaAplicacion {
     private final FachadaGUI    fgui;
     private final FachadaBaseDatos fbd;
     private final GestorUsuario controladorUsuario;
+    private TipoUsuario nivelAcceso;
+
+    public TipoUsuario nivelAcceso() {
+        return nivelAcceso;
+    }
+
+    public void setNivelAcceso(TipoUsuario nivelAcceso) {
+        this.nivelAcceso = nivelAcceso;
+    }
+
+
 
     public FachadaAplicacion()
     {

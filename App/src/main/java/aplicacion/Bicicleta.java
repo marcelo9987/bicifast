@@ -1,6 +1,6 @@
 package aplicacion;
 
-public class Bicicleta
+public final class Bicicleta
 {
     private int id;
     private EstadoBicicleta estado;

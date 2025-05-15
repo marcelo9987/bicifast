@@ -1,30 +1,45 @@
-insert into estacion (ubicacion, aforo) values ('8001 VILLA PARK DRIVE', 1);
-insert into estacion (ubicacion, aforo) values ('86 boulevard Haussmann', 2);
-insert into estacion (ubicacion, aforo) values ('1008 OAK STREET', 3);
-insert into estacion (ubicacion, aforo) values ('P.O. BOX 406', 4);
-insert into estacion (ubicacion, aforo) values ('ONE PENN''S WAY', 5);
-insert into estacion (ubicacion, aforo) values ('MAC N9301-041', 6);
-insert into estacion (ubicacion, aforo) values ('Av Alfonso IX, 7', 7);
-insert into estacion (ubicacion, aforo) values ('720 HIGHWAY 15 SOUTH', 8);
-insert into estacion (ubicacion, aforo) values ('Hamngatan 2', 9);
-insert into estacion (ubicacion, aforo) values ('3RD FLOOR', 10);
-insert into estacion (ubicacion, aforo) values ('320 1ST STREET', 11);
-insert into estacion (ubicacion, aforo) values ('Bahnhofstraße 23', 12);
-insert into estacion (ubicacion, aforo) values ('Altenburger Straße 13', 13);
-insert into estacion (ubicacion, aforo) values ('PIAZZA FILIPPO MEDA 4', 14);
-insert into estacion (ubicacion, aforo) values ('1200 E. WARRENVILLE RD', 15);
-insert into estacion (ubicacion, aforo) values ('PO BOX 7009', 16);
-insert into estacion (ubicacion, aforo) values ('ul. Piłsudskiego 36', 17);
-insert into estacion (ubicacion, aforo) values ('16 BOULEVARD DES ITALIENS', 18);
-insert into estacion (ubicacion, aforo) values ('Balasta dambis 15', 19);
-insert into estacion (ubicacion, aforo) values ('Heinemannstraße 15', 20);
-insert into estacion (ubicacion, aforo) values ('4140 EAST STATE STREET', 21);
-insert into estacion (ubicacion, aforo) values ('Tilžės g. 149', 22);
-insert into estacion (ubicacion, aforo) values ('8001 VILLA PARK DRIVE', 23);
-insert into estacion (ubicacion, aforo) values ('111 S. CASAVER', 24);
-insert into estacion (ubicacion, aforo) values ('110 S FERRALL STREET', 25);
-insert into estacion (ubicacion, aforo) values ('MAC N9301-041', 26);
-insert into estacion (ubicacion, aforo) values ('12 PLACE DES ETATS UNIS', 27);
-insert into estacion (ubicacion, aforo) values ('7800 E IMPERIAL HWY', 28);
-insert into estacion (ubicacion, aforo) values ('Nieheimer Straße 14', 29);
-insert into estacion (ubicacion, aforo) values ('1200 E. WARRENVILLE ROAD', 30);
+USE BiciFast;
+
+-- Estacións
+INSERT
+    INTO
+        estacion (ubicacion, aforo)
+    VALUES
+        ('Plaza Mayor', 10)
+      , ('Estación de tren', 15)
+      , ('Universidad', 20);
+
+-- Usuarios
+INSERT
+    INTO
+        usuario (nombre, primer_apellido, segundo_apellido, dni, email, direccion, fecha_nacimiento, telefono, contrasenha, metodo_pago, tipo_usuario)
+    VALUES
+        ('Juan', 'Alfonso', 'Ramirez', '41111111Y', 'a@a.a', 'a', '2025-05-15', '666666660', '$2b$12$YVPWtgnr2qrV0Epb.owGue58eGWapAFc8Mi3edI9xMVZmCMx/uuoG', 'TARJETA', 'NORMAL')
+      , ('Laura', 'Gómez', 'Pérez', '12345678A', 'laura@example.com', 'Calle A, 1', '1990-05-10', '600123456', /*clave123*/'$2b$12$kWGhjiKRQ5M2UWRXh.Smg.Sy1ioGBUBuyNVAhiFl36XYRAxRuq1My', 'TARJETA', 'NORMAL')
+      , ('Carlos', 'Ruiz', NULL, '87654321B', 'carlos@example.com', 'Av. B, 2', '1985-08-15', '600654321', /*clave456*/'$2b$12$h8OJB57bGowswCW1jJbOS.rY7G7cSQyzV4pa9mujKBpkqwDRmqXvm', 'EFECTIVO', 'NORMAL')
+      , ('Ana', 'López', 'Martínez', '11223344C', 'ana@example.com', 'Calle C, 3', '2000-01-20', '600111222', /*clave789*/'$2b$12$qi/loQmOcY15yugcTpcaYugb4K.zxc7WQN2PZ7lkdHGnr7bIlv2Da', 'TARJETA', 'NORMAL');
+
+-- Bicicletas
+INSERT
+    INTO
+        bicicleta (estado, estacion)
+    VALUES
+        ('CORRECTO', 1)
+       , ('CORRECTO', 1)
+       , ('CORRECTO', 1)
+       , ('CORRECTO', 1)
+       , ('CORRECTO', 1)
+       , ('CORRECTO', 1)
+       , ('REVISION', 2)
+       , ('CORRECTO', 3)
+       , ('CORRECTO', 1);
+
+-- Viaxes
+INSERT
+    INTO
+        viaje (usuario, bicicleta, hora_inicio, hora_fin, origen, destino)
+    VALUES
+        (1, 1, '2025-05-10 08:00:00', '2025-05-10 08:30:00', 1, 2),
+      (1, 4, '2025-05-11 09:15:00', NULL, 1, NULL),
+      (2, 2, '2025-05-09 17:00:00', '2025-05-09 17:45:00', 2, 3);
+

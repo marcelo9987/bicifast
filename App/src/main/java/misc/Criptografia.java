@@ -5,7 +5,7 @@ import com.password4j.Hash;
 import com.password4j.Password;
 import com.password4j.types.Bcrypt;
 
-public class Criptografia
+public final class Criptografia
 {
     public static String encriptar(String texto)
     {

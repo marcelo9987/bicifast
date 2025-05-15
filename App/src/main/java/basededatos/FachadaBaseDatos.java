@@ -1,6 +1,9 @@
 package basededatos;
 
 
+import aplicacion.FachadaAplicacion;
+import aplicacion.Usuario;
+
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -8,10 +11,16 @@ import java.util.Properties;
 
 
 public class FachadaBaseDatos {
+
     private java.sql.Connection conexion;
+    private FachadaAplicacion fa;
+    private DAOUsuario daoUsuario;
 
-    public FachadaBaseDatos (){
-
+    public FachadaBaseDatos (FachadaAplicacion fa)
+    {
+        // ---- INICIALIZACIÓN DE VARIABLES ----
+        this.fa = fa;
+        // ---- CONEXIÓN A BB.DD. ----
         Properties configuracion = new Properties();
         FileInputStream arqConfiguracion;
 
@@ -34,11 +43,15 @@ public class FachadaBaseDatos {
                     usuario);
 
 
+
+
         } catch (SQLException | IOException f){
             System.out.println("Estoy en el dir:"+ System.getProperty("user.dir"));
             System.out.println(f.getMessage());
         }
 
+        // ------ INICIALIZACIÓN DE CONECTORES A BBDD (D.A.O.) ------
+        this.daoUsuario = new DAOUsuario(conexion, this.fa);
 
     }
 
@@ -56,4 +69,8 @@ public class FachadaBaseDatos {
         }
     }
 
+    public Usuario validarUsuario(String email, String contrasenha)
+    {
+        return daoUsuario.validarUsuario(email, contrasenha);
+    }
 }

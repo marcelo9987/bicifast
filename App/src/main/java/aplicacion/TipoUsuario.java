@@ -9,7 +9,7 @@ public enum TipoUsuario
 {
     Admin
     , Mant
-    , Normal
+    , NORMAL
     , NO_DEFINIDO
 
 }

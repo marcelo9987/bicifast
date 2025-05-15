@@ -16,7 +16,8 @@ public class FachadaGUI {
         VLogin loginFrame = new VLogin(fa);
 
         // Configurar el tamaño y visibilidad
-        loginFrame.setSize(400, 300); // Ajusta el tamaño según sea necesario
+        loginFrame.pack();
+        loginFrame.setLocationRelativeTo(null);
         loginFrame.setVisible(true);
     }
 }

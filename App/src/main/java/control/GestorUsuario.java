@@ -13,10 +13,20 @@ public class GestorUsuario {
         this.fbd = fbd;
     }
 
-    public TipoUsuario comprobarLogin(String email, String contrasenha)
+    public Usuario comprobarLogin(String email, String contrasenha)
     {
         Usuario usuario_obtenido =  fbd.validarUsuario(email, contrasenha);
         System.out.println("[DEBUG] Usuario obtenido: " + usuario_obtenido);
-        return usuario_obtenido.tipoUsuario();
+        return usuario_obtenido;
+    }
+
+    public boolean usuarioTieneBiciEnUso(Usuario usuarioLogado)
+    {
+        if (usuarioLogado != null) {
+            return fbd.usuarioTieneBiciEnUso(usuarioLogado);
+        } else {
+            System.out.println("[DEBUG] Usuario no logado");
+            return false;
+        }
     }
 }

@@ -4,17 +4,29 @@
  */
 package gui.fomularios;
 
+import aplicacion.Estacion;
+import aplicacion.FachadaAplicacion;
+import gui.modelos.modeloTablaEstaciones;
+
+import java.util.List;
+
 /**
  *
  * @author imarc
  */
 public class VPrincipalUsuario extends javax.swing.JFrame {
 
+    FachadaAplicacion fa;
     /**
      * Creates new form VPrincipalUsuario
      */
-    public VPrincipalUsuario() {
+    public VPrincipalUsuario(FachadaAplicacion fa)
+    {
+        this.fa = fa;
         initComponents();
+        this.gestionarBicicletaEnUso();
+        this.listarEstaciones();
+        this.pack();
     }
 
     /**
@@ -29,70 +41,121 @@ public class VPrincipalUsuario extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         btnConfig = new javax.swing.JButton();
         btnPerfil = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
-        jLabel1 = new javax.swing.JLabel();
+        lblListaDeEstaciones = new javax.swing.JLabel();
         btnSalir = new javax.swing.JButton();
+        btnDevolverBici = new javax.swing.JButton();
+        chkBiciEnUso = new javax.swing.JCheckBox();
+        btnBicisEstacion = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tablaEstaciones = new javax.swing.JTable();
+        btnActualizar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        btnConfig.setText("Configuracion");
+        btnConfig.setText("Configuración");
         btnConfig.setMaximumSize(new java.awt.Dimension(130, 28));
         btnConfig.setMinimumSize(new java.awt.Dimension(130, 28));
         btnConfig.setPreferredSize(new java.awt.Dimension(130, 28));
 
         btnPerfil.setText("Perfil");
 
-        jList1.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
-        jScrollPane1.setViewportView(jList1);
-
-        jLabel1.setText("Lista de estaciones");
+        lblListaDeEstaciones.setText("Lista de estaciones");
 
         btnSalir.setText("Salir");
+        btnSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalirActionPerformed(evt);
+            }
+        });
+
+        btnDevolverBici.setText("Devolver bicicleta");
+        btnDevolverBici.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDevolverBiciActionPerformed(evt);
+            }
+        });
+
+        chkBiciEnUso.setText("Bicicleta en uso");
+        chkBiciEnUso.setEnabled(false);
+
+        btnBicisEstacion.setText("Bicicletas");
+        btnBicisEstacion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBicisEstacionActionPerformed(evt);
+            }
+        });
+
+        tablaEstaciones.setModel(new modeloTablaEstaciones());
+        jScrollPane2.setViewportView(tablaEstaciones);
+
+        btnActualizar.setText("Actualizar");
+        btnActualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnActualizarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
                         .addComponent(btnConfig, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnPerfil)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 63, Short.MAX_VALUE)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(46, 46, 46))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addGap(129, 129, 129))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addComponent(btnSalir)
-                                .addContainerGap())))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(77, 107, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(btnDevolverBici)
+                                .addGap(113, 113, 113)
+                                .addComponent(chkBiciEnUso)
+                                .addGap(45, 45, 45))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 384, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnBicisEstacion)
+                    .addComponent(btnActualizar))
+                .addGap(54, 54, 54))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(btnSalir)
+                .addContainerGap())
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(253, 253, 253)
+                .addComponent(lblListaDeEstaciones)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnConfig, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnPerfil))
-                .addGap(19, 19, 19)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btnSalir)
-                .addContainerGap(13, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(55, 55, 55)
+                        .addComponent(btnActualizar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnBicisEstacion)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnSalir)
+                        .addContainerGap())
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
+                        .addComponent(lblListaDeEstaciones)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnDevolverBici)
+                            .addComponent(chkBiciEnUso))
+                        .addGap(77, 77, 77))))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -109,48 +172,80 @@ public class VPrincipalUsuario extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(VPrincipalUsuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(VPrincipalUsuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(VPrincipalUsuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(VPrincipalUsuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+    private void btnBicisEstacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBicisEstacionActionPerformed
+        // TODO add your handling code here:
+        int index = tablaEstaciones.getSelectedRow();
+        if (index != -1) {
+            aplicacion.Estacion estacionSeleccionada = ((modeloTablaEstaciones) tablaEstaciones.getModel()).obtenerEstacion(index);
+            DiaBicis menuBicis = new DiaBicis(this, true,this.fa, estacionSeleccionada);
+            menuBicis.setVisible(true);
+            menuBicis.pack();
+            menuBicis.setLocationRelativeTo(null);
+        } else {
+            javax.swing.JOptionPane.showMessageDialog(this, "Debes seleccionar una estacion");
         }
-        //</editor-fold>
+    }//GEN-LAST:event_btnBicisEstacionActionPerformed
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new VPrincipalUsuario().setVisible(true);
-            }
-        });
-    }
+    private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_btnSalirActionPerformed
+
+    private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
+        listarEstaciones();
+        gestionarBicicletaEnUso();
+    }//GEN-LAST:event_btnActualizarActionPerformed
+
+    private void btnDevolverBiciActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDevolverBiciActionPerformed
+        int filaSeleccionada = tablaEstaciones.getSelectedRow();
+        if (filaSeleccionada != -1)
+        {
+            aplicacion.Estacion estacionSeleccionada = ((modeloTablaEstaciones) tablaEstaciones.getModel()).obtenerEstacion(filaSeleccionada);
+            fa.devolverBicicleta(estacionSeleccionada);
+            listarEstaciones();
+            gestionarBicicletaEnUso();
+        }
+        else
+        {
+            javax.swing.JOptionPane.showMessageDialog(this, "Debes seleccionar una estacion");
+        }
+    }//GEN-LAST:event_btnDevolverBiciActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnActualizar;
+    private javax.swing.JButton btnBicisEstacion;
     private javax.swing.JButton btnConfig;
+    private javax.swing.JButton btnDevolverBici;
     private javax.swing.JButton btnPerfil;
     private javax.swing.JButton btnSalir;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JList<String> jList1;
+    private javax.swing.JCheckBox chkBiciEnUso;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JLabel lblListaDeEstaciones;
+    private javax.swing.JTable tablaEstaciones;
     // End of variables declaration//GEN-END:variables
+
+    private void listarEstaciones()
+    {
+        modeloTablaEstaciones modelo = (modeloTablaEstaciones) tablaEstaciones.getModel();
+        modelo.setFilas(fa.preguntaLasEstaciones(), fa.preguntaLasBicicletasPorEstacion());
+    }
+
+    private void gestionarBicicletaEnUso()
+    {
+        boolean usuarioTieneBici = fa.usuarioTieneBici();
+        if (usuarioTieneBici)
+        {
+            btnDevolverBici.setEnabled(true);
+            chkBiciEnUso.setSelected(true);
+//            chkBiciEnUso.set
+
+
+        }
+        else
+        {
+            chkBiciEnUso.setSelected(false);
+            btnDevolverBici.setEnabled(false);
+        }
+    }
+
 }

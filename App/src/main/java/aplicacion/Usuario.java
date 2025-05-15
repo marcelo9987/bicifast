@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.util.StringJoiner;
 
 public final class Usuario {
+    private int idUsuario;
     private String      nombre;
     private String      apellido1;
     private String      apellido2;
@@ -18,7 +19,8 @@ public final class Usuario {
     private Date        fin_suscripcion;
     private TipoUsuario tipoUsuario;
 
-    public Usuario(String nombre, String apellido1, String apellido2, String dni, String email, String direccion, Date fecha_nacimiento, String telefono, String contrasenha, MetodoPago metodoPago, Date inicio_suscripcion, Date fin_suscripcion,  TipoUsuario tipoUsuario) {
+    public Usuario(int id,String nombre, String apellido1, String apellido2, String dni, String email, String direccion, Date fecha_nacimiento, String telefono, String contrasenha, MetodoPago metodoPago, Date inicio_suscripcion, Date fin_suscripcion,  TipoUsuario tipoUsuario) {
+        this.idUsuario = id;
         this.nombre = nombre;
         this.apellido1 = apellido1;
         this.apellido2 = apellido2;
@@ -39,6 +41,7 @@ public final class Usuario {
     public String toString() {
         return new StringJoiner(", ", Usuario.class.getSimpleName() + "[", "]")
                 .add("apellido1='" + apellido1 + "'")
+                .add("idUsuario=" + idUsuario)
                 .add("nombre='" + nombre + "'")
                 .add("apellido2='" + apellido2 + "'")
                 .add("dni='" + dni + "'")
@@ -52,6 +55,10 @@ public final class Usuario {
                 .add("fin_suscripcion=" + fin_suscripcion)
                 .add("tipoUsuario=" + tipoUsuario)
                 .toString();
+    }
+
+    public int idUsuario() {
+        return idUsuario;
     }
 
     public String apellido1() {

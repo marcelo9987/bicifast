@@ -1,9 +1,6 @@
 package basededatos;
 
-import aplicacion.FachadaAplicacion;
-import aplicacion.MetodoPago;
-import aplicacion.TipoUsuario;
-import aplicacion.Usuario;
+import aplicacion.*;
 import misc.Criptografia;
 
 import java.sql.Connection;
@@ -33,6 +30,7 @@ public class DAOUsuario extends AbstractDAO {
             stmUsuario= con.prepareStatement
                     (
                             "SELECT " +
+                                    "id" +
                                     "   nombre" +
                                     "   , primer_apellido" +
                                     "   , segundo_apellido" +
@@ -87,6 +85,7 @@ public class DAOUsuario extends AbstractDAO {
 
 
                         usuarioResultante = new Usuario(
+                                rsUsuario.getInt(1),
                                 rsUsuario.getString("nombre"),
                                 rsUsuario.getString("primer_apellido"),
                                 rsUsuario.getString("segundo_apellido"),
@@ -130,5 +129,132 @@ public class DAOUsuario extends AbstractDAO {
         }
 
         return usuarioResultante;
+    }
+
+    public boolean usuarioTieneBiciEnUso(Usuario usuarioLogado)
+    {
+        PreparedStatement stmUsuario = null;
+        ResultSet         rsUsuario;
+
+        Connection con = this.getConexion();
+        //SELECT count(1)
+        //    FROM usuario u
+        //             LEFT JOIN viaje v
+        //                       ON u.id = v.usuario
+        //    WHERE v.hora_fin IS NULL
+        //      AND u.id = ?
+        String consulta = "SELECT count(1) " +
+                "FROM usuario u " +
+                "LEFT JOIN viaje v ON u.id = v.usuario " +
+                "WHERE v.hora_fin IS NULL " +
+                "AND u.id = ?";
+        try {
+            stmUsuario= con.prepareStatement(consulta);
+            stmUsuario.setInt(1, usuarioLogado.idUsuario());
+            rsUsuario = stmUsuario.executeQuery();
+
+            if(rsUsuario.next())
+            {
+                System.out.println("[DEBUG] El usuario tiene una bici en uso.");
+                return rsUsuario.getInt(1) > 0;
+            }
+                System.err.println("[ERROR] No se ha encontrado el usuario con el id: " + usuarioLogado.idUsuario());
+                System.exit(-1);
+
+        }
+        catch (Exception e)
+        {
+            System.out.println("Algo ha fallado en la consulta para validar el usuario.  Más detalles: " + e.getMessage());
+        } finally {
+            try {
+                stmUsuario.close();
+            } catch (SQLException e) {
+                System.out.println("Imposible cerrar cursores");
+            }
+
+        }
+        return false;
+    }
+
+    public Bicicleta obtenerBicicletaPorUsuario(Usuario usuarioLogado) {
+        PreparedStatement stmUsuario = null;
+        ResultSet         rsUsuario;
+
+        Connection con = this.getConexion();
+
+        //SELECT
+        //    b.id
+        //    , b.estado
+        //    , b.estacion
+        //    , e.id
+        //    , e.aforo
+        //    , e.ubicacion
+        //FROM estacion e LEFT JOIN bicicleta b ON e.id = b.estacion
+        //WHERE
+        //    b.id in (
+        //        SELECT v.bicicleta
+        //        FROM viaje v
+        //        WHERE
+        //            v.hora_fin IS NULL
+        //            AND
+        //            v.usuario = ?
+        //        )
+
+        String consulta = "SELECT " +
+                "   b.id" +
+                "   , b.estado" +
+                "   , b.estacion" +
+                "   , e.id as id_e" +
+                "   , e.aforo" +
+                "   , e.ubicacion " +
+                "FROM estacion e LEFT JOIN bicicleta b ON e.id = b.estacion " +
+                "WHERE" +
+                "   b.id in (" +
+                "        SELECT v.bicicleta" +
+                "        FROM viaje v" +
+                "        WHERE" +
+                "            v.hora_fin IS NULL" +
+                "            AND" +
+                "            v.usuario = ? " +
+                ")";
+        try {
+            stmUsuario= con.prepareStatement(consulta);
+            stmUsuario.setInt(1, usuarioLogado.idUsuario());
+            rsUsuario = stmUsuario.executeQuery();
+
+            if(rsUsuario.next())
+            {
+                System.out.println("[DEBUG] El usuario tiene una bici en uso.");
+                Bicicleta bici = new  Bicicleta(
+                        rsUsuario.getInt("id"),
+                        new Estacion(
+                                rsUsuario.getInt("id_e"),
+                                rsUsuario.getString("ubicacion"),
+                                rsUsuario.getInt("aforo")
+                        ),
+                        EstadoBicicleta.valueOf(rsUsuario.getString("estado"))
+
+                );
+                System.out.println("[DEBUG] La bicicleta es: " + bici);
+                return bici;
+
+            }
+            else
+            {
+                System.err.println("[ERROR] No se ha encontrado el usuario con el id: " + usuarioLogado.idUsuario());
+                System.exit(-1);
+            }
+        }
+        catch (Exception e)
+        {
+            System.out.println("Algo ha fallado en la consulta para validar el usuario.  Más detalles: " + e.getMessage());
+        } finally {
+            try {
+                stmUsuario.close();
+            } catch (SQLException e) {
+                System.out.println("Imposible cerrar cursores");
+            }
+        }
+        return null;
     }
 }

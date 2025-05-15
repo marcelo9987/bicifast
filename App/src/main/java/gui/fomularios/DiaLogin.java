@@ -6,6 +6,7 @@ package gui.fomularios;
 
 import aplicacion.FachadaAplicacion;
 import aplicacion.TipoUsuario;
+import aplicacion.Usuario;
 
 import javax.swing.*;
 
@@ -13,15 +14,16 @@ import javax.swing.*;
  *
  * @author imarc
  */
-public class VLogin extends JDialog {
+public class DiaLogin extends JDialog {
     FachadaAplicacion fa;
     /**
      * Creates new form VLogin
      */
-    public VLogin(JFrame padre, FachadaAplicacion fa) {
+    public DiaLogin(JFrame padre, FachadaAplicacion fa) {
         super(padre,true);
         this.fa = fa;
         initComponents();
+
         this.addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
             public void windowClosing(java.awt.event.WindowEvent e) {
@@ -29,6 +31,7 @@ public class VLogin extends JDialog {
             }
         });
     }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -65,7 +68,7 @@ public class VLogin extends JDialog {
             }
         });
 
-        pwdLogin.setText("jPasswordField1");
+        pwdLogin.setText("pswd_contrasenha");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -129,7 +132,12 @@ public class VLogin extends JDialog {
     {
         TipoUsuario permisosDelUsuario = TipoUsuario.NO_DEFINIDO;
 
-        permisosDelUsuario = fa.comprobarLogin(txtEmail.getText(),  new String(pwdLogin.getPassword()));
+        Usuario usr = fa.comprobarLogin(txtEmail.getText(),  new String(pwdLogin.getPassword()));
+
+        if(usr != null) {
+            permisosDelUsuario = usr.tipoUsuario();
+        }
+
         System.out.println("Permisos del usuario: " + permisosDelUsuario.toString());
         if(permisosDelUsuario == TipoUsuario.NO_DEFINIDO)
         {
@@ -138,7 +146,7 @@ public class VLogin extends JDialog {
         }
         else
         {
-            fa.setNivelAcceso(permisosDelUsuario);
+            fa.estableceUsuarioLogado(usr);
             this.dispose();
         }
 

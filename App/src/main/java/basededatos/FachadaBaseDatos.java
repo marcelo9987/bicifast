@@ -1,27 +1,32 @@
 package basededatos;
 
 
+import aplicacion.Bicicleta;
+import aplicacion.Estacion;
 import aplicacion.FachadaAplicacion;
 import aplicacion.Usuario;
 
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Properties;
 
 
 public class FachadaBaseDatos {
 
-    private java.sql.Connection conexion;
-    private FachadaAplicacion fa;
-    private DAOUsuario daoUsuario;
+    private final DAOUsuario          daoUsuario;
+    private final DAOEstacion         daoEstacion;
+    private       java.sql.Connection conexion;
+    private       FachadaAplicacion   fa;
+    private       DAOBicicleta        daoBicicleta;
+    private       DAOViaje            daoViaje;
 
-    public FachadaBaseDatos (FachadaAplicacion fa)
-    {
+    public FachadaBaseDatos(FachadaAplicacion fa) {
         // ---- INICIALIZACIÓN DE VARIABLES ----
         this.fa = fa;
         // ---- CONEXIÓN A BB.DD. ----
-        Properties configuracion = new Properties();
+        Properties      configuracion = new Properties();
         FileInputStream arqConfiguracion;
 
         try {
@@ -36,22 +41,23 @@ public class FachadaBaseDatos {
 
             usuario.setProperty("user", configuracion.getProperty("usuario"));
             usuario.setProperty("password", configuracion.getProperty("clave"));
-            this.conexion=java.sql.DriverManager.getConnection("jdbc:"+gestor+"://"+
-                            configuracion.getProperty("servidor")+":"+
-                            configuracion.getProperty("puerto")+"/"+
+            this.conexion = java.sql.DriverManager.getConnection("jdbc:" + gestor + "://" +
+                            configuracion.getProperty("servidor") + ":" +
+                            configuracion.getProperty("puerto") + "/" +
                             configuracion.getProperty("baseDatos"),
                     usuario);
 
 
-
-
-        } catch (SQLException | IOException f){
-            System.out.println("Estoy en el dir:"+ System.getProperty("user.dir"));
+        } catch (SQLException | IOException f) {
+            System.out.println("Estoy en el dir:" + System.getProperty("user.dir"));
             System.out.println(f.getMessage());
         }
 
         // ------ INICIALIZACIÓN DE CONECTORES A BBDD (D.A.O.) ------
         this.daoUsuario = new DAOUsuario(conexion, this.fa);
+        this.daoEstacion = new DAOEstacion(conexion, this.fa);
+        this.daoBicicleta = new DAOBicicleta(conexion, this.fa);
+        this.daoViaje = new DAOViaje(conexion, this.fa);
 
     }
 
@@ -69,8 +75,41 @@ public class FachadaBaseDatos {
         }
     }
 
-    public Usuario validarUsuario(String email, String contrasenha)
-    {
+    public Usuario validarUsuario(String email, String contrasenha) {
         return daoUsuario.validarUsuario(email, contrasenha);
+    }
+
+    public List<Estacion> preguntaLasEstaciones() {
+        return daoEstacion.preguntaLasEstaciones();
+    }
+
+    public List<Bicicleta> obtenerBicisPorEstacion(Estacion estacionUsada) {
+        return daoBicicleta.obtenerBicisPorEstacion(estacionUsada);
+
+    }
+
+    public List<Bicicleta> obtenerBicisEnUsoPorEstacion(Estacion estacionUsada) {
+        return daoBicicleta.obtenerBicisEnUsoPorEstacion(estacionUsada);
+    }
+
+    public boolean usuarioTieneBiciEnUso(Usuario usuarioLogado) {
+        return daoUsuario.usuarioTieneBiciEnUso(usuarioLogado);
+    }
+
+    public Bicicleta obtenerBicicletaPorUsuario(Usuario usuarioLogado) {
+        return daoUsuario.obtenerBicicletaPorUsuario(usuarioLogado);
+    }
+
+    public void estacionarBicicleta(Bicicleta bicicleta, Estacion estacionSeleccionada) {
+        daoBicicleta.estacionarBicicleta(bicicleta, estacionSeleccionada);
+    }
+
+    public void devolverBicicleta(Usuario usuarioLogado, Bicicleta bicicleta, Estacion estacionSeleccionada) {
+        daoViaje.devolverBicicleta(usuarioLogado, bicicleta, estacionSeleccionada);
+    }
+
+    public List<Integer> preguntaLasBicicletasPorEstacion()
+    {
+        return daoBicicleta.preguntaLasBicicletasPorEstacion();
     }
 }

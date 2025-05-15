@@ -2,7 +2,8 @@ package gui;
 
 import aplicacion.FachadaAplicacion;
 import aplicacion.TipoUsuario;
-import gui.fomularios.VLogin;
+import aplicacion.Usuario;
+import gui.fomularios.DiaLogin;
 import gui.fomularios.VPrincipalAdmin;
 import gui.fomularios.VPrincipalUsuario;
 
@@ -24,7 +25,7 @@ public class FachadaGUI {
         frameTemporal.setLocationRelativeTo(null);
         frameTemporal.setVisible(true); // necesario para que funcione como parent real
 
-        VLogin dialogo_login = new VLogin(frameTemporal, fa);
+        DiaLogin dialogo_login = new DiaLogin(frameTemporal, fa);
 
         // Configurar el tamaño y visibilidad
         dialogo_login.pack();
@@ -54,7 +55,7 @@ public class FachadaGUI {
         } else if(tipoUsuario == TipoUsuario.NORMAL) {
             // Lógica para el usuario normal
             System.out.println("Acceso Normal");
-            VPrincipalUsuario vPrincipalUsuario = new VPrincipalUsuario();
+            VPrincipalUsuario vPrincipalUsuario = new VPrincipalUsuario(this.fa);
             vPrincipalUsuario.setVisible(true);
             vPrincipalUsuario.pack();
             vPrincipalUsuario.setLocationRelativeTo(null);
@@ -64,8 +65,8 @@ public class FachadaGUI {
         }
     }
 
-    public void escalaTipoAccesoMenuPrincipal(TipoUsuario nivelAcceso)
+    public void estableceUsuarioLogado(Usuario usr)
     {
-        fa.setNivelAcceso(nivelAcceso);
+        fa.estableceUsuarioLogado(usr);
     }
 }

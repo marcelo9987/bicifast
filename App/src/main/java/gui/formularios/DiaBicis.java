@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package gui.fomularios;
+package gui.formularios;
 
 import aplicacion.Bicicleta;
 import aplicacion.Estacion;
@@ -52,7 +52,6 @@ public class DiaBicis extends javax.swing.JDialog {
         jlistBicisDisponibles = new javax.swing.JList<>();
         lblEstacion = new javax.swing.JLabel();
         lblNombreEstacion = new javax.swing.JLabel();
-        btnReservar = new javax.swing.JButton();
         btnActualizar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
 
@@ -64,8 +63,6 @@ public class DiaBicis extends javax.swing.JDialog {
         lblEstacion.setText("Estacion:");
 
         lblNombreEstacion.setText("jLabel2");
-
-        btnReservar.setText("Reservar");
 
         btnActualizar.setText("Actualizar");
         btnActualizar.addActionListener(new java.awt.event.ActionListener() {
@@ -89,8 +86,7 @@ public class DiaBicis extends javax.swing.JDialog {
                 .addGap(91, 91, 91)
                 .addGroup(jpanPanelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jpanPanelPrincipalLayout.createSequentialGroup()
-                        .addComponent(btnReservar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(btnCancelar))
                     .addGroup(jpanPanelPrincipalLayout.createSequentialGroup()
                         .addGap(12, 12, 12)
@@ -115,9 +111,7 @@ public class DiaBicis extends javax.swing.JDialog {
                 .addGroup(jpanPanelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jpanPanelPrincipalLayout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnReservar)
-                        .addGap(0, 21, Short.MAX_VALUE))
+                        .addGap(0, 55, Short.MAX_VALUE))
                     .addGroup(jpanPanelPrincipalLayout.createSequentialGroup()
                         .addComponent(btnActualizar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -152,7 +146,6 @@ public class DiaBicis extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnActualizar;
     private javax.swing.JButton btnCancelar;
-    private javax.swing.JButton btnReservar;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JList<String> jlistBicisDisponibles;
     private javax.swing.JPanel jpanPanelPrincipal;

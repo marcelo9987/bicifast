@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
-package gui.fomularios;
+package gui.formularios;
 
 import aplicacion.FachadaAplicacion;
 import aplicacion.TipoUsuario;
@@ -28,7 +28,7 @@ public class DiaLogin extends JDialog {
         super(padre,true);
         this.fa = fa;
         this.localizacion = loc;
-        this.textos = ResourceBundle.getBundle("gui.fomularios.internacionalizacion", loc);
+        this.textos = fa.pedirBundle();
         initComponents();
         this.lblLoginIncorrecto.setVisible(false);
 

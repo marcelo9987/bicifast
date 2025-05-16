@@ -155,8 +155,16 @@ public class DAOUsuario extends AbstractDAO {
 
             if(rsUsuario.next())
             {
-                System.out.println("[DEBUG] El usuario tiene una bici en uso.");
-                return rsUsuario.getInt(1) > 0;
+                boolean tieneBici = rsUsuario.getInt(1) > 0;
+                if(tieneBici)
+                {
+                    System.out.println("[DEBUG] El usuario tiene una bici en uso.");
+                }
+                else
+                {
+                    System.out.println("[DEBUG] El usuario no tiene una bici en uso.");
+                }
+                return tieneBici;
             }
                 System.err.println("[ERROR] No se ha encontrado el usuario con el id: " + usuarioLogado.idUsuario());
                 System.exit(-1);

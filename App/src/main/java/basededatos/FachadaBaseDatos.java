@@ -61,6 +61,10 @@ public class FachadaBaseDatos {
 
     }
 
+    /**
+     * @hidden FUNCIONALIDAD DE PRUEBA
+     * @deprecated {@since 1.0}
+     */
     public void _funciona() {
         // Prueba de conexión
         try {
@@ -111,5 +115,15 @@ public class FachadaBaseDatos {
     public List<Integer> preguntaLasBicicletasPorEstacion()
     {
         return daoBicicleta.preguntaLasBicicletasPorEstacion();
+    }
+
+    public boolean reservarBicicleta(Usuario usuarioLogado, Bicicleta bicicletaReservada)
+    {
+        return daoBicicleta.reservarBicicleta(usuarioLogado, bicicletaReservada);
+    }
+
+    public int obtenerOcupacionEstacion(Estacion estacionSeleccionada)
+    {
+        return daoEstacion.obtenerOcupacionEstacion(estacionSeleccionada.idEstacion());
     }
 }

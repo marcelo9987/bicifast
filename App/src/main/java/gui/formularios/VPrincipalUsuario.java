@@ -2,13 +2,14 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package gui.fomularios;
+package gui.formularios;
 
 import aplicacion.Estacion;
 import aplicacion.FachadaAplicacion;
 import gui.modelos.modeloTablaEstaciones;
 
-import java.util.List;
+import java.text.MessageFormat;
+import java.util.ResourceBundle;
 
 /**
  *
@@ -17,12 +18,14 @@ import java.util.List;
 public class VPrincipalUsuario extends javax.swing.JFrame {
 
     FachadaAplicacion fa;
+    ResourceBundle idioma;
     /**
      * Creates new form VPrincipalUsuario
      */
     public VPrincipalUsuario(FachadaAplicacion fa)
     {
         this.fa = fa;
+        idioma = fa.pedirBundle();
         initComponents();
         this.gestionarBicicletaEnUso();
         this.listarEstaciones();
@@ -53,33 +56,38 @@ public class VPrincipalUsuario extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        btnConfig.setText("Configuracion");
+        btnConfig.setText(idioma.getString("configuracion"));
         btnConfig.setMaximumSize(new java.awt.Dimension(130, 28));
         btnConfig.setMinimumSize(new java.awt.Dimension(130, 28));
         btnConfig.setPreferredSize(new java.awt.Dimension(130, 28));
+        btnConfig.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConfigActionPerformed(evt);
+            }
+        });
 
-        btnPerfil.setText("Perfil");
+        btnPerfil.setText(idioma.getString("perfil"));
 
-        lblListaDeEstaciones.setText("Lista de estaciones");
+        lblListaDeEstaciones.setText(idioma.getString("lista.de.estaciones"));
 
-        btnSalir.setText("Salir");
+        btnSalir.setText(idioma.getString("Salir"));
         btnSalir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSalirActionPerformed(evt);
             }
         });
 
-        btnDevolverBici.setText("Devolver bicicleta");
+        btnDevolverBici.setText(idioma.getString("devolver.bicicleta"));
         btnDevolverBici.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnDevolverBiciActionPerformed(evt);
             }
         });
 
-        chkBiciEnUso.setText("Bicicleta en uso");
+        chkBiciEnUso.setText(idioma.getString("bicicleta.en.uso"));
         chkBiciEnUso.setEnabled(false);
 
-        btnBicisEstacion.setText("Bicicletas");
+        btnBicisEstacion.setText(idioma.getString("bicicletas"));
         btnBicisEstacion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnBicisEstacionActionPerformed(evt);
@@ -89,14 +97,14 @@ public class VPrincipalUsuario extends javax.swing.JFrame {
         tablaEstaciones.setModel(new modeloTablaEstaciones());
         jScrollPane2.setViewportView(tablaEstaciones);
 
-        btnActualizar.setText("Actualizar");
+        btnActualizar.setText(idioma.getString("actualizar"));
         btnActualizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnActualizarActionPerformed(evt);
             }
         });
 
-        btnReservarBicicleta.setText("Reservar");
+        btnReservarBicicleta.setText(idioma.getString("reservar"));
         btnReservarBicicleta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnReservarBicicletaActionPerformed(evt);
@@ -193,7 +201,7 @@ public class VPrincipalUsuario extends javax.swing.JFrame {
             menuBicis.pack();
             menuBicis.setLocationRelativeTo(null);
         } else {
-            javax.swing.JOptionPane.showMessageDialog(this, "Debes seleccionar una estacion");
+            javax.swing.JOptionPane.showMessageDialog(this, idioma.getString("debes.seleccionar.una.estacion"));
         }
     }//GEN-LAST:event_btnBicisEstacionActionPerformed
 
@@ -217,7 +225,7 @@ public class VPrincipalUsuario extends javax.swing.JFrame {
         }
         else
         {
-            javax.swing.JOptionPane.showMessageDialog(this, "Debes seleccionar una estacion");
+            javax.swing.JOptionPane.showMessageDialog(this, idioma.getString("debes.seleccionar.una.estacion"));
         }
     }//GEN-LAST:event_btnDevolverBiciActionPerformed
 
@@ -225,16 +233,42 @@ public class VPrincipalUsuario extends javax.swing.JFrame {
         int filaSeleccionada = tablaEstaciones.getSelectedRow();
         if (filaSeleccionada != -1)
         {
+            boolean usuarioTieneBici = fa.usuarioTieneBici();
+
+            if(usuarioTieneBici)
+            {
+                javax.swing.JOptionPane.showMessageDialog(this, idioma.getString("ya.tienes.una.bicicleta.reservada") +
+                        idioma.getString("por.favor.devuelvela.antes.de.reservar.otra"));
+                return;
+            }
+
             Estacion estacionSeleccionada = ((modeloTablaEstaciones) tablaEstaciones.getModel()).obtenerEstacion(filaSeleccionada);
-            fa.reservarBicicleta(estacionSeleccionada);
+            int bicicleta_asignada = fa.reservarBicicleta(estacionSeleccionada);
+            if (bicicleta_asignada == -1)
+            {
+                javax.swing.JOptionPane.showMessageDialog(this, idioma.getString("no.hay.bicicletas.disponibles.en.esta.estacion"));
+            }
+            else
+            {
+                javax.swing.JOptionPane.showMessageDialog(this, MessageFormat.format(idioma.getString("bicicleta.numero.0.reservada"), bicicleta_asignada));
+            }
             listarEstaciones();
             gestionarBicicletaEnUso();
         }
         else
         {
-            javax.swing.JOptionPane.showMessageDialog(this, "Debes seleccionar una estacion");
+            javax.swing.JOptionPane.showMessageDialog(this, idioma.getString("debes.seleccionar.una.estacion"));
         }
     }//GEN-LAST:event_btnReservarBicicletaActionPerformed
+
+    private void btnConfigActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfigActionPerformed
+        // lanzo la interfaz de sel. de idioma
+        VIdioma idioma = new VIdioma(this,true,this.fa);
+        idioma.setLocationRelativeTo(null);
+        idioma.pack();
+        idioma.setVisible(true);
+
+    }//GEN-LAST:event_btnConfigActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnActualizar;

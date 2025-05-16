@@ -8,6 +8,7 @@ public final class Bicicleta
 
     public Bicicleta(int id, Estacion estacion, EstadoBicicleta estado) {
         this.id = id;
+        this.estacion = estacion;
         this.estado = estado;
     }
 
@@ -16,5 +17,9 @@ public final class Bicicleta
     }
     public EstadoBicicleta Estado() {
         return estado;
+    }
+
+    public Estacion estacion() {
+        return estacion;
     }
 }

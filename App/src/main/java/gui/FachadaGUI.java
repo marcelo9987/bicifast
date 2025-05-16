@@ -3,8 +3,8 @@ package gui;
 import aplicacion.FachadaAplicacion;
 import aplicacion.TipoUsuario;
 import aplicacion.Usuario;
-import gui.fomularios.DiaLogin;
-import gui.fomularios.VPrincipalUsuario;
+import gui.formularios.DiaLogin;
+import gui.formularios.VPrincipalUsuario;
 import java.util.Locale;
 
 import javax.swing.*;
@@ -44,10 +44,24 @@ public class FachadaGUI {
         frameTemporal.dispose();
 
         // En base al nivel de acceso, entro en una ventana u otra
-        escogerVentana(fa.nivelAcceso());
+        escogerVentana(fa.nivelAcceso(), false);
     }
 
-    private void escogerVentana(TipoUsuario tipoUsuario) {
+    public void lanzarInterfazSinAutenticacion()
+    {
+        // En base al nivel de acceso, entro en una ventana u otra
+        this.principal.dispose();
+        escogerVentana(fa.nivelAcceso(), true);
+    }
+
+    private void escogerVentana(TipoUsuario tipoUsuario, boolean byPass)
+    {
+        if(byPass)
+        {
+            System.out.println("[INFO] Procedo a permitir un acceso sin autenticar. Razón: I8Nized");
+            System.out.println("[INFO] Si no se está cambiando el idioma, algo muy grave ha pasado.");
+        }
+
         if(tipoUsuario == TipoUsuario.Admin) {
             // Lógica para el administrador
             System.out.println("Acceso de Administrador");
@@ -75,10 +89,6 @@ public class FachadaGUI {
         }
     }
 
-    public void estableceUsuarioLogado(Usuario usr)
-    {
-        fa.estableceUsuarioLogado(usr);
-    }
 
     public void setLocalizacionActual(Locale localizacion)
     {

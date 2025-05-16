@@ -9,6 +9,7 @@ import aplicacion.FachadaAplicacion;
 
 import javax.swing.*;
 import java.text.MessageFormat;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 /**
@@ -104,7 +105,7 @@ public class VIdioma extends javax.swing.JDialog {
         else
         {
             fa.cambiarIdioma(idioma);
-            JOptionPane.showMessageDialog(this, MessageFormat.format(bundleActual.getString("idioma.cambiado.a.0"), idioma.nombreIdioma()));
+            JOptionPane.showMessageDialog(this, MessageFormat.format(bundleActual.getString("idioma.cambiado.a.0"), Objects.requireNonNull(idioma).nombreIdioma()));
             this.dispose();
         }
 
@@ -113,7 +114,7 @@ public class VIdioma extends javax.swing.JDialog {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -126,13 +127,7 @@ public class VIdioma extends javax.swing.JDialog {
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(VIdioma.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(VIdioma.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(VIdioma.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(VIdioma.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>

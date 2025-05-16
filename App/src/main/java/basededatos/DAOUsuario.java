@@ -8,7 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class DAOUsuario extends AbstractDAO {
+public final class DAOUsuario extends AbstractDAO {
     public DAOUsuario(Connection conexion, FachadaAplicacion fa) {
         super.setConexion(conexion);
         super.setFachadaAplicacion(fa);
@@ -22,66 +22,54 @@ public class DAOUsuario extends AbstractDAO {
         String hashContrasenha = Criptografia.encriptar(contrasenha);
         System.out.println("[DEBUG] Hash de la contrasenha: " + hashContrasenha);
 
-        PreparedStatement stmUsuario = null;
-        ResultSet         rsUsuario;
-
+        ResultSet  rsUsuario;
         Connection con = this.getConexion();
-        try {
-            stmUsuario= con.prepareStatement
-                    (
-                            "SELECT " +
-                                    "id" +
-                                    "   nombre" +
-                                    "   , primer_apellido" +
-                                    "   , segundo_apellido" +
-                                    "   , dni" +
-                                    "   , email" +
-                                    "   , direccion" +
-                                    "   , fecha_nacimiento" +
-                                    "   , telefono" +
-                                    "   , contrasenha" +
-                                    "   , metodo_pago" +
-                                    "   , fecha_inicio_suscripcion" +
-                                    "   , fecha_fin_suscripcion" +
-                                    "   , tipo_usuario " +
-                                    "FROM usuario " +
-                                    "WHERE " +
-                                    "   email = ? "
+        try (PreparedStatement stmUsuario = con.prepareStatement
+                (
+                        "SELECT " +
+                                "id" +
+                                "   nombre" +
+                                "   , primer_apellido" +
+                                "   , segundo_apellido" +
+                                "   , dni" +
+                                "   , email" +
+                                "   , direccion" +
+                                "   , fecha_nacimiento" +
+                                "   , telefono" +
+                                "   , contrasenha" +
+                                "   , metodo_pago" +
+                                "   , fecha_inicio_suscripcion" +
+                                "   , fecha_fin_suscripcion" +
+                                "   , tipo_usuario " +
+                                "FROM usuario " +
+                                "WHERE " +
+                                "   email = ? "
 //                                    +"AND "
 //                                    +"   contrasenha = ?"
-                    );
-            stmUsuario.setString(1, email);
+                )) {
+            try {
+                //                                    +"AND "
+                //                                    +"   contrasenha = ?"
+                stmUsuario.setString(1, email);
 //            stmUsuario.setString(2, hashContrasenha);
-            rsUsuario = stmUsuario.executeQuery();
+                rsUsuario = stmUsuario.executeQuery();
 
-            if(rsUsuario.next())
-            {
-                String contrasinal = rsUsuario.getString("contrasenha");
-                if(Criptografia.verificar(contrasenha, contrasinal))
-                {
-                    System.out.println("[DEBUG] La contraseña coincide con la almacenada en la base de datos.");
+                if (rsUsuario.next()) {
+                    String contrasinal = rsUsuario.getString("contrasenha");
+                    if (Criptografia.verificar(contrasenha, contrasinal)) {
+                        System.out.println("[DEBUG] La contraseña coincide con la almacenada en la base de datos.");
 //                    TipoUsuario tipo = TipoUsuario.valueOf(rsUsuario.getString("tipo_usuario"));
-                    TipoUsuario tipo ;
-                    switch (rsUsuario.getString("tipo_usuario"))
-                    {
-                        case "NORMAL":
-                            tipo = TipoUsuario.NORMAL;
-                            break;
-                        case "ADMIN":
-                            tipo = TipoUsuario.Admin;
-                            break;
-                        case "MANT":
-                            tipo = TipoUsuario.Mant;
-                            break;
-                        default:
-                            tipo = TipoUsuario.NO_DEFINIDO;
-                    }
+                        TipoUsuario tipo = switch (rsUsuario.getString("tipo_usuario")) {
+                            case "NORMAL" -> TipoUsuario.NORMAL;
+                            case "ADMIN" -> TipoUsuario.Admin;
+                            case "MANT" -> TipoUsuario.Mant;
+                            default -> TipoUsuario.NO_DEFINIDO;
+                        };
 
-                    if(tipo == TipoUsuario.NO_DEFINIDO)
-                    {
-                        System.err.println("[ERROR] El usuario no tiene un tipo definido.");
-                        return null;
-                    }
+                        if (tipo == TipoUsuario.NO_DEFINIDO) {
+                            System.err.println("[ERROR] El usuario no tiene un tipo definido.");
+                            return null;
+                        }
 
 
                         usuarioResultante = new Usuario(
@@ -102,30 +90,23 @@ public class DAOUsuario extends AbstractDAO {
                         );
 
 //                        System.out.println("[DEBUG] Usuario: " + usuarioResultante);
-                    return usuarioResultante;
+                        return usuarioResultante;
 
+                    }
+                    else {
+                        System.err.println("[ERROR] La contraseña no coincide con la almacenada en la base de datos.");
+                        return null;
+                    }
                 }
-                else
-                {
-                    System.err.println("[ERROR] La contraseña no coincide con la almacenada en la base de datos.");
-                   return null;
+                else {
+                    System.err.println("[ERROR] No se ha encontrado el usuario con el email: " + email);
+                    return null;
                 }
+            } catch (Exception e) {
+                System.out.println("Algo ha fallado en la consulta para validar el usuario.  Más detalles: " + e.getMessage());
             }
-            else
-            {
-                System.err.println("[ERROR] No se ha encontrado el usuario con el email: " + email);
-                return null;
-            }
-        }
-        catch (Exception e)
-        {
-            System.out.println("Algo ha fallado en la consulta para validar el usuario.  Más detalles: " + e.getMessage());
-        } finally {
-            try {
-                stmUsuario.close();
-            } catch (SQLException e) {
-                System.out.println("Imposible cerrar cursores");
-            }
+        } catch (SQLException e) {
+            System.out.println("Imposible cerrar cursores");
         }
 
         return usuarioResultante;
@@ -133,62 +114,48 @@ public class DAOUsuario extends AbstractDAO {
 
     public boolean usuarioTieneBiciEnUso(Usuario usuarioLogado)
     {
-        PreparedStatement stmUsuario = null;
-        ResultSet         rsUsuario;
 
-        Connection con = this.getConexion();
         //SELECT count(1)
         //    FROM usuario u
         //             LEFT JOIN viaje v
         //                       ON u.id = v.usuario
         //    WHERE v.hora_fin IS NULL
         //      AND u.id = ?
+        ResultSet  rsUsuario;
+        Connection con = this.getConexion();
         String consulta = "SELECT count(1) " +
                 "FROM usuario u " +
                 "LEFT JOIN viaje v ON u.id = v.usuario " +
                 "WHERE v.hora_fin IS NULL " +
                 "AND u.id = ?";
-        try {
-            stmUsuario= con.prepareStatement(consulta);
-            stmUsuario.setInt(1, usuarioLogado.idUsuario());
-            rsUsuario = stmUsuario.executeQuery();
+        try (PreparedStatement stmUsuario = con.prepareStatement(consulta)) {
+            try {
+                stmUsuario.setInt(1, usuarioLogado.idUsuario());
+                rsUsuario = stmUsuario.executeQuery();
 
-            if(rsUsuario.next())
-            {
-                boolean tieneBici = rsUsuario.getInt(1) > 0;
-                if(tieneBici)
-                {
-                    System.out.println("[DEBUG] El usuario tiene una bici en uso.");
+                if (rsUsuario.next()) {
+                    boolean tieneBici = rsUsuario.getInt(1) > 0;
+                    if (tieneBici) {
+                        System.out.println("[DEBUG] El usuario tiene una bici en uso.");
+                    }
+                    else {
+                        System.out.println("[DEBUG] El usuario no tiene una bici en uso.");
+                    }
+                    return tieneBici;
                 }
-                else
-                {
-                    System.out.println("[DEBUG] El usuario no tiene una bici en uso.");
-                }
-                return tieneBici;
-            }
                 System.err.println("[ERROR] No se ha encontrado el usuario con el id: " + usuarioLogado.idUsuario());
                 System.exit(-1);
 
-        }
-        catch (Exception e)
-        {
-            System.out.println("Algo ha fallado en la consulta para validar el usuario.  Más detalles: " + e.getMessage());
-        } finally {
-            try {
-                stmUsuario.close();
-            } catch (SQLException e) {
-                System.out.println("Imposible cerrar cursores");
+            } catch (Exception e) {
+                System.out.println("Algo ha fallado en la consulta para validar el usuario.  Más detalles: " + e.getMessage());
             }
-
+        } catch (SQLException e) {
+            System.out.println("Imposible cerrar cursores");
         }
         return false;
     }
 
     public Bicicleta obtenerBicicletaPorUsuario(Usuario usuarioLogado) {
-        PreparedStatement stmUsuario = null;
-        ResultSet         rsUsuario;
-
-        Connection con = this.getConexion();
 
         //SELECT
         //    b.id
@@ -208,6 +175,8 @@ public class DAOUsuario extends AbstractDAO {
         //            v.usuario = ?
         //        )
 
+        ResultSet  rsUsuario;
+        Connection con = this.getConexion();
         String consulta = "SELECT " +
                 "   b.id" +
                 "   , b.estado" +
@@ -225,43 +194,36 @@ public class DAOUsuario extends AbstractDAO {
                 "            AND" +
                 "            v.usuario = ? " +
                 ")";
-        try {
-            stmUsuario= con.prepareStatement(consulta);
-            stmUsuario.setInt(1, usuarioLogado.idUsuario());
-            rsUsuario = stmUsuario.executeQuery();
-
-            if(rsUsuario.next())
-            {
-                System.out.println("[DEBUG] El usuario tiene una bici en uso.");
-                Bicicleta bici = new  Bicicleta(
-                        rsUsuario.getInt("id"),
-                        new Estacion(
-                                rsUsuario.getInt("id_e"),
-                                rsUsuario.getString("ubicacion"),
-                                rsUsuario.getInt("aforo")
-                        ),
-                        EstadoBicicleta.valueOf(rsUsuario.getString("estado"))
-
-                );
-                System.out.println("[DEBUG] La bicicleta es: " + bici);
-                return bici;
-
-            }
-            else
-            {
-                System.err.println("[ERROR] No se ha encontrado el usuario con el id: " + usuarioLogado.idUsuario());
-                System.exit(-1);
-            }
-        }
-        catch (Exception e)
-        {
-            System.out.println("Algo ha fallado en la consulta para validar el usuario.  Más detalles: " + e.getMessage());
-        } finally {
+        try (PreparedStatement stmUsuario = con.prepareStatement(consulta)) {
             try {
-                stmUsuario.close();
-            } catch (SQLException e) {
-                System.out.println("Imposible cerrar cursores");
+                stmUsuario.setInt(1, usuarioLogado.idUsuario());
+                rsUsuario = stmUsuario.executeQuery();
+
+                if (rsUsuario.next()) {
+                    System.out.println("[DEBUG] El usuario tiene una bici en uso.");
+                    Bicicleta bici = new Bicicleta(
+                            rsUsuario.getInt("id"),
+                            new Estacion(
+                                    rsUsuario.getInt("id_e"),
+                                    rsUsuario.getString("ubicacion"),
+                                    rsUsuario.getInt("aforo")
+                            ),
+                            EstadoBicicleta.valueOf(rsUsuario.getString("estado"))
+
+                    );
+                    System.out.println("[DEBUG] La bicicleta es: " + bici);
+                    return bici;
+
+                }
+                else {
+                    System.err.println("[ERROR] No se ha encontrado el usuario con el id: " + usuarioLogado.idUsuario());
+                    System.exit(-1);
+                }
+            } catch (Exception e) {
+                System.out.println("Algo ha fallado en la consulta para validar el usuario.  Más detalles: " + e.getMessage());
             }
+        } catch (SQLException e) {
+            System.out.println("Imposible cerrar cursores");
         }
         return null;
     }

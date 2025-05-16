@@ -6,7 +6,7 @@ import aplicacion.FachadaAplicacion;
 import java.sql.Connection;
 import java.util.List;
 
-public class DAOEstacion extends AbstractDAO
+public final class DAOEstacion extends AbstractDAO
 {
     public DAOEstacion(Connection conexion, FachadaAplicacion fa) {
         super.setConexion(conexion);
@@ -67,7 +67,7 @@ public class DAOEstacion extends AbstractDAO
                         "count(IF(NOT EXISTS (SELECT 1" +
                         "                       FROM viaje v" +
                         "                       WHERE v.bicicleta = b.id" +
-                        "                       AND v.hora_fin IS NULL), 1, NULL)) as ocupacion " +
+                        "                       AND v.hora_fin IS NULL), 1, 0)) as ocupacion " +
                         "FROM " +
                         "   estacion e LEFT JOIN " +
                         " bicicleta b ON e.id = b.estacion " +

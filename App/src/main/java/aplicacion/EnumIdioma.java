@@ -22,14 +22,13 @@ public enum EnumIdioma
 
     private final String idioma;
 
-    private EnumIdioma(String idioma) {
+    EnumIdioma(String idioma) {
         this.idioma = idioma;
     }
 
     /**
      * Buscar el idioma por su etiqueta
-     * Apoyado en el método creado por Baeldung
-     * @see https://www.baeldung.com/java-enum-values
+     * Apoyado en el método creado por Baeldung: <a href="https://www.baeldung.com/java-enum-values">fuente</a>
      */
     public static EnumIdioma valueOfLabel(String label) {
         for (EnumIdioma e : values()) {

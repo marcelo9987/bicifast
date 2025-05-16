@@ -10,10 +10,9 @@ import misc.Internacionalizacion;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class FachadaAplicacion {
+public final class FachadaAplicacion {
 
     private final FachadaGUI    fgui;
-    private final FachadaBaseDatos fbd;
     private final GestorUsuario  controladorUsuario;
     private final GestorEstacion  controladorEstacion;
     private final GestorBicicleta controladorBicicleta;
@@ -34,12 +33,12 @@ public class FachadaAplicacion {
     {
         // -- FAÇADAS --
         fgui = new FachadaGUI(this);
-        fbd = new FachadaBaseDatos(this);
+        FachadaBaseDatos fbd = new FachadaBaseDatos(this);
 
         // -- CONTROLADORES --
-        controladorUsuario = new GestorUsuario(this.fbd);
-        controladorEstacion = new GestorEstacion(this.fbd);
-        controladorBicicleta = new GestorBicicleta(this.fbd);
+        controladorUsuario = new GestorUsuario(fbd);
+        controladorEstacion = new GestorEstacion(fbd);
+        controladorBicicleta = new GestorBicicleta(fbd);
 
         // -- Clases misceláneas y utilidades --
         itz = Internacionalizacion.getInstance();
@@ -72,7 +71,7 @@ public class FachadaAplicacion {
 
     public ResourceBundle pedirBundle() {
         if(itz == null) {
-            System.out.println("[DEBUG] Acabas de solicitar un bundlde que no existe, lo hago por ti, por favor, revisa el código");
+            System.out.println("[WRN] Acabas de solicitar un bundle que no existe, lo hago por ti, por favor, revisa el código");
             itz = Internacionalizacion.getInstance();
         }
         return itz.getBundle();
@@ -98,9 +97,9 @@ public class FachadaAplicacion {
         return controladorUsuario.usuarioTieneBiciEnUso(usuarioLogado);
     }
 
-    public void devolverBicicleta(Estacion estacionSeleccionada)
+    public boolean devolverBicicleta(Estacion estacionSeleccionada)
     {
-        controladorBicicleta.devolverBicicleta(usuarioLogado, estacionSeleccionada);
+        return controladorBicicleta.devolverBicicleta(usuarioLogado, estacionSeleccionada);
     }
 
     public List<Integer> preguntaLasBicicletasPorEstacion()
@@ -111,5 +110,10 @@ public class FachadaAplicacion {
     public int reservarBicicleta(Estacion estacionSeleccionada)
     {
         return controladorBicicleta.reservarBicicleta(usuarioLogado, estacionSeleccionada);
+    }
+
+    public Usuario usuario()
+    {
+        return this.usuarioLogado;
     }
 }

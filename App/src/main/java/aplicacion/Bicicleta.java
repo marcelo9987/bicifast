@@ -2,8 +2,8 @@ package aplicacion;
 
 public final class Bicicleta
 {
-    private int id;
-    private EstadoBicicleta estado;
+    private final int             id;
+    private final EstadoBicicleta estado;
     Estacion estacion;
 
     public Bicicleta(int id, Estacion estacion, EstadoBicicleta estado) {
@@ -14,9 +14,6 @@ public final class Bicicleta
 
     public int Id() {
         return id;
-    }
-    public EstadoBicicleta Estado() {
-        return estado;
     }
 
     public Estacion estacion() {

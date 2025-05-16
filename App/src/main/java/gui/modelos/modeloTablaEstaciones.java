@@ -4,6 +4,8 @@ import aplicacion.Estacion;
 
 import javax.swing.table.AbstractTableModel;
 import java.util.List;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 public class modeloTablaEstaciones extends AbstractTableModel {
 
@@ -26,52 +28,31 @@ public class modeloTablaEstaciones extends AbstractTableModel {
 
     @Override
     public String getColumnName(int col) {
-        String nombre = "";
-
-        switch (col) {
-            case 0:
-                nombre = "Nombre";
-                break;
-            case 1:
-                nombre = "Capacidad máxima";
-                break;
-        }
-        return nombre;
+        ResourceBundle bundle = ResourceBundle.getBundle("gui.formularios.internacionalizacion", Locale.getDefault());
+        return switch (col) {
+            case 0 -> bundle.getString("estacion");
+            case 1 -> bundle.getString("capacidad");
+            default -> "";
+        };
     }
 
     @Override
     public Class getColumnClass(int col) {
-        Class clase = null;
 
-        switch (col) {
-            case 0:
-                clase = java.lang.String.class;
-                break;
-            case 1:
-                clase = java.lang.String.class;
-                break;
-        }
-        return clase;
-    }
-
-    @Override
-    public boolean isCellEditable(int row, int col) {
-        return false;
+        return switch (col) {
+            case 0, 1 -> String.class;
+            default -> null;
+        };
     }
 
     @Override
     public Object getValueAt(int row, int col) {
-        Object resultado = null;
 
-        switch (col) {
-            case 0:
-                resultado = estaciones.get(row).ubicacion();
-                break;
-            case 1:
-                resultado = capacidades.get(row) + "/" + estaciones.get(row).aforo();
-                break;
-        }
-        return resultado;
+        return switch (col) {
+            case 0 -> estaciones.get(row).ubicacion();
+            case 1 -> capacidades.get(row) + "/" + estaciones.get(row).aforo();
+            default -> null;
+        };
     }
 
     public void setFilas(java.util.List<Estacion> estaciones, List<Integer> capacidades) {

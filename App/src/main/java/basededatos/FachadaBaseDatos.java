@@ -7,19 +7,21 @@ import aplicacion.FachadaAplicacion;
 import aplicacion.Usuario;
 
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Properties;
 
 
-public class FachadaBaseDatos {
+public final class FachadaBaseDatos {
 
     private final DAOUsuario          daoUsuario;
     private final DAOEstacion         daoEstacion;
     private       java.sql.Connection conexion;
-    private       FachadaAplicacion fa;
-    private final DAOBicicleta      daoBicicleta;
+    private final FachadaAplicacion   fa;
+    private final DAOBicicleta        daoBicicleta;
     private final DAOViaje          daoViaje;
 
     public FachadaBaseDatos(FachadaAplicacion fa) {
@@ -27,10 +29,14 @@ public class FachadaBaseDatos {
         this.fa = fa;
         // ---- CONEXIÓN A BB.DD. ----
         Properties      configuracion = new Properties();
-        FileInputStream arqConfiguracion;
+        InputStream arqConfiguracion;
 
         try {
-            arqConfiguracion = new FileInputStream("App/baseDatos.properties");
+            arqConfiguracion = getClass().getResourceAsStream("/baseDatos.properties");
+                if (arqConfiguracion == null) {
+                    throw new FileNotFoundException("No se pudo encontrar baseDatos.properties");
+                }
+
             configuracion.load(arqConfiguracion);
             arqConfiguracion.close();
 

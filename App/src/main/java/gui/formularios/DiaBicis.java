@@ -11,6 +11,7 @@ import gui.modelos.modeloListaBicicletas;
 
 import javax.swing.*;
 import java.util.List;
+import java.util.ResourceBundle;
 
 /**
  *
@@ -20,6 +21,7 @@ public class DiaBicis extends javax.swing.JDialog {
 
     Estacion estacionUsada;
     FachadaAplicacion fa;
+    ResourceBundle rb;
     
     /**
      * Creates new form DiaBicis
@@ -28,6 +30,7 @@ public class DiaBicis extends javax.swing.JDialog {
     {
         super(parent, modal);
         this.fa = fa;
+        this.rb = fa.pedirBundle();
         this.estacionUsada = estacion;
         this.setLocationRelativeTo(null);
         initComponents();
@@ -60,18 +63,18 @@ public class DiaBicis extends javax.swing.JDialog {
         jlistBicisDisponibles.setModel(new modeloListaBicicletas());
         jScrollPane1.setViewportView(jlistBicisDisponibles);
 
-        lblEstacion.setText("Estacion:");
+        lblEstacion.setText(rb.getString("estacion"));
 
         lblNombreEstacion.setText("jLabel2");
 
-        btnActualizar.setText("Actualizar");
+        btnActualizar.setText(rb.getString("actualizar"));
         btnActualizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnActualizarActionPerformed(evt);
             }
         });
 
-        btnCancelar.setText("Cancelar");
+        btnCancelar.setText(rb.getString("cancelar"));
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCancelarActionPerformed(evt);

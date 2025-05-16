@@ -67,6 +67,11 @@ public class VPrincipalUsuario extends javax.swing.JFrame {
         });
 
         btnPerfil.setText(idioma.getString("perfil"));
+        btnPerfil.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPerfilActionPerformed(evt);
+            }
+        });
 
         lblListaDeEstaciones.setText(idioma.getString("lista.de.estaciones"));
 
@@ -219,7 +224,11 @@ public class VPrincipalUsuario extends javax.swing.JFrame {
         if (filaSeleccionada != -1)
         {
             aplicacion.Estacion estacionSeleccionada = ((modeloTablaEstaciones) tablaEstaciones.getModel()).obtenerEstacion(filaSeleccionada);
-            fa.devolverBicicleta(estacionSeleccionada);
+            if(!fa.devolverBicicleta(estacionSeleccionada))
+            {
+                javax.swing.JOptionPane.showMessageDialog(this, idioma.getString("el.aforo.de.la.estacion.no.es.suficiente.para.devolver.la.bicicleta"));
+            }
+
             listarEstaciones();
             gestionarBicicletaEnUso();
         }
@@ -269,6 +278,13 @@ public class VPrincipalUsuario extends javax.swing.JFrame {
         idioma.setVisible(true);
 
     }//GEN-LAST:event_btnConfigActionPerformed
+
+    private void btnPerfilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPerfilActionPerformed
+        DiaUsuario menuUsuario = new DiaUsuario(this, fa);
+        menuUsuario.setLocationRelativeTo(null);
+        menuUsuario.setVisible(true);
+
+    }//GEN-LAST:event_btnPerfilActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnActualizar;

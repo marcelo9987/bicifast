@@ -1,6 +1,5 @@
 package control;
 
-import aplicacion.TipoUsuario;
 import aplicacion.Usuario;
 import basededatos.FachadaBaseDatos;
 

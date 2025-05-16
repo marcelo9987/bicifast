@@ -30,7 +30,7 @@ CREATE TABLE `bicicleta` (
   UNIQUE KEY `id_UNIQUE` (`id`),
   KEY `fk_bicicleta_estacion1_idx` (`estacion`),
   CONSTRAINT `fk_bicicleta_estacion1` FOREIGN KEY (`estacion`) REFERENCES `estacion` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -39,7 +39,7 @@ CREATE TABLE `bicicleta` (
 
 LOCK TABLES `bicicleta` WRITE;
 /*!40000 ALTER TABLE `bicicleta` DISABLE KEYS */;
-INSERT INTO `bicicleta` VALUES (1,'CORRECTO',3),(2,'CORRECTO',10),(3,'CORRECTO',1),(4,'CORRECTO',2),(5,'CORRECTO',2),(6,'CORRECTO',5),(7,'CORRECTO',2),(8,'CORRECTO',2),(9,'CORRECTO',2),(10,'CORRECTO',2),(11,'CORRECTO',2),(12,'CORRECTO',2),(13,'CORRECTO',2),(14,'CORRECTO',2),(15,'CORRECTO',2),(16,'CORRECTO',2),(17,'CORRECTO',2),(18,'CORRECTO',2),(19,'CORRECTO',2),(20,'CORRECTO',2),(21,'CORRECTO',2),(22,'CORRECTO',2),(23,'CORRECTO',2);
+INSERT INTO `bicicleta` VALUES (1,'CORRECTO',2),(2,'CORRECTO',2),(3,'CORRECTO',2),(4,'CORRECTO',3),(5,'CORRECTO',2),(6,'CORRECTO',2),(7,'REVISION',3),(8,'CORRECTO',3),(9,'CORRECTO',1),(10,'CORRECTO',1),(11,'CORRECTO',2);
 /*!40000 ALTER TABLE `bicicleta` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -56,7 +56,7 @@ CREATE TABLE `estacion` (
   `aforo` tinyint unsigned DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -65,7 +65,7 @@ CREATE TABLE `estacion` (
 
 LOCK TABLES `estacion` WRITE;
 /*!40000 ALTER TABLE `estacion` DISABLE KEYS */;
-INSERT INTO `estacion` VALUES (1,'8001 VILLA PARK DRIVE',1),(2,'86 boulevard Haussmann',24),(3,'1008 OAK STREET',3),(4,'P.O. BOX 406',4),(5,'ONE PENN\'S WAY',5),(6,'MAC N9301-041',6),(7,'Av Alfonso IX, 7',7),(8,'720 HIGHWAY 15 SOUTH',8),(9,'Hamngatan 2',9),(10,'3RD FLOOR',10),(11,'320 1ST STREET',11),(12,'Bahnhofstraße 23',12),(13,'Altenburger Straße 13',13),(14,'PIAZZA FILIPPO MEDA 4',14),(15,'1200 E. WARRENVILLE RD',15),(16,'PO BOX 7009',16),(17,'ul. Piłsudskiego 36',17),(18,'16 BOULEVARD DES ITALIENS',18),(19,'Balasta dambis 15',19),(20,'Heinemannstraße 15',20),(21,'4140 EAST STATE STREET',21),(22,'Tilžės g. 149',22),(23,'8001 VILLA PARK DRIVE',23),(24,'111 S. CASAVER',24),(25,'110 S FERRALL STREET',25),(26,'MAC N9301-041',26),(27,'12 PLACE DES ETATS UNIS',27),(28,'7800 E IMPERIAL HWY',28),(29,'Nieheimer Straße 14',29),(30,'1200 E. WARRENVILLE ROAD',30);
+INSERT INTO `estacion` VALUES (1,'Plaza Mayor',2),(2,'Estación de tren',15),(3,'Universidad',20);
 /*!40000 ALTER TABLE `estacion` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -95,7 +95,7 @@ CREATE TABLE `usuario` (
   UNIQUE KEY `id_UNIQUE` (`id`),
   UNIQUE KEY `dni_UNIQUE` (`dni`),
   UNIQUE KEY `email_UNIQUE` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -104,7 +104,7 @@ CREATE TABLE `usuario` (
 
 LOCK TABLES `usuario` WRITE;
 /*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
-INSERT INTO `usuario` (`id`, `nombre`, `primer_apellido`, `segundo_apellido`, `dni`, `email`, `direccion`, `fecha_nacimiento`, `telefono`, `contrasenha`, `metodo_pago`, `fecha_inicio_suscripcion`, `tipo_usuario`) VALUES (1,'Juan','Alfonso','Ramirez','41111111Y','a@a.a','a','2025-05-15','666666660','$2b$12$YVPWtgnr2qrV0Epb.owGue58eGWapAFc8Mi3edI9xMVZmCMx/uuoG','TARJETA','2025-05-15 16:57:51','NORMAL');
+INSERT INTO `usuario` (`id`, `nombre`, `primer_apellido`, `segundo_apellido`, `dni`, `email`, `direccion`, `fecha_nacimiento`, `telefono`, `contrasenha`, `metodo_pago`, `fecha_inicio_suscripcion`, `tipo_usuario`) VALUES (1,'Juan','Alfonso','Ramirez','41111111Y','a@a.a','a','2025-05-15','666666660','$2b$12$YVPWtgnr2qrV0Epb.owGue58eGWapAFc8Mi3edI9xMVZmCMx/uuoG','TARJETA','2025-05-15 22:20:34','NORMAL'),(2,'Laura','Gómez','Pérez','12345678A','laura@example.com','Calle A, 1','1990-05-10','600123456','$2b$12$o1iAa7fmN2aZDARqU6QNIuXSFiDJ6U82G2o5IQ20w96rbwB2kphaS','TARJETA','2025-05-15 22:20:34','NORMAL'),(3,'Carlos','Ruiz',NULL,'87654321B','carlos@example.com','Av. B, 2','1985-08-15','600654321','$2b$12$h8OJB57bGowswCW1jJbOS.rY7G7cSQyzV4pa9mujKBpkqwDRmqXvm','EFECTIVO','2025-05-15 22:20:34','NORMAL'),(4,'Ana','López','Martínez','11223344C','ana@example.com','Calle C, 3','2000-01-20','600111222','$2b$12$qi/loQmOcY15yugcTpcaYugb4K.zxc7WQN2PZ7lkdHGnr7bIlv2Da','TARJETA','2025-05-15 22:20:34','NORMAL');
 /*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -133,7 +133,7 @@ CREATE TABLE `viaje` (
   CONSTRAINT `fk_usuario` FOREIGN KEY (`usuario`) REFERENCES `usuario` (`id`),
   CONSTRAINT `fk_viaje_estacion1` FOREIGN KEY (`origen`) REFERENCES `estacion` (`id`),
   CONSTRAINT `fk_viaje_estacion2` FOREIGN KEY (`destino`) REFERENCES `estacion` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -142,7 +142,7 @@ CREATE TABLE `viaje` (
 
 LOCK TABLES `viaje` WRITE;
 /*!40000 ALTER TABLE `viaje` DISABLE KEYS */;
-INSERT INTO `viaje` VALUES (1,1,1,'2025-05-15 16:59:01','2025-05-15 17:00:45',1,3),(1,2,2,'2025-05-15 16:59:17','2025-05-15 18:12:56',2,10);
+INSERT INTO `viaje` VALUES (1,1,1,'2025-05-10 08:00:00','2025-05-10 08:30:00',1,2),(1,2,4,'2025-05-11 09:15:00','2025-05-15 22:21:18',1,3),(1,4,4,'2025-05-16 12:38:23','2025-05-16 12:38:39',3,1),(1,5,4,'2025-05-16 12:38:27','2025-05-16 12:38:39',3,1),(1,6,4,'2025-05-16 12:38:30','2025-05-16 12:38:39',3,1),(1,7,8,'2025-05-16 12:38:44','2025-05-16 12:38:50',3,3),(1,8,1,'2025-05-16 12:38:53','2025-05-16 12:38:56',1,3),(1,9,2,'2025-05-16 12:52:24','2025-05-16 12:52:28',1,3),(1,10,1,'2025-05-16 12:54:02','2025-05-16 12:54:06',3,3),(1,11,7,'2025-05-16 12:54:15','2025-05-16 12:54:30',2,3),(1,12,3,'2025-05-16 12:54:46','2025-05-16 12:54:49',1,3),(1,13,1,'2025-05-16 12:54:55','2025-05-16 13:04:12',3,1),(1,14,4,'2025-05-16 13:02:30','2025-05-16 13:04:21',1,3),(1,15,10,'2025-05-16 13:04:04','2025-05-16 13:10:48',2,1),(1,16,1,'2025-05-16 13:04:17','2025-05-16 13:10:54',1,1),(1,17,11,'2025-05-16 13:10:50','2025-05-16 13:11:01',2,2),(1,18,2,'2025-05-16 13:10:58','2025-05-16 13:14:24',3,3),(1,19,11,'2025-05-16 13:11:06','2025-05-16 13:11:19',2,2),(1,20,11,'2025-05-16 13:11:11','2025-05-16 13:11:19',2,2),(1,21,2,'2025-05-16 13:11:15','2025-05-16 13:14:24',3,3),(1,22,1,'2025-05-16 13:14:28','2025-05-16 13:14:39',1,2),(1,23,2,'2025-05-16 13:16:20','2025-05-16 13:16:24',3,1),(1,24,1,'2025-05-16 13:18:15','2025-05-16 13:18:22',2,3),(1,25,2,'2025-05-16 13:19:06','2025-05-16 13:19:10',1,2),(1,26,1,'2025-05-16 13:20:48','2025-05-16 13:20:51',3,2),(1,27,1,'2025-05-16 13:32:33','2025-05-16 13:32:53',2,2),(1,28,5,'2025-05-16 13:32:56','2025-05-16 13:33:34',1,2),(1,29,1,'2025-05-16 14:37:02','2025-05-16 14:37:07',2,1),(1,30,2,'2025-05-16 16:38:45','2025-05-16 16:38:48',2,3),(1,31,1,'2025-05-16 16:38:53','2025-05-16 16:38:56',1,2),(1,32,6,'2025-05-16 16:38:57','2025-05-16 16:39:12',1,2),(1,33,1,'2025-05-16 16:41:09','2025-05-16 16:41:18',2,3),(1,34,1,'2025-05-16 17:06:37','2025-05-16 17:06:41',3,2),(1,35,2,'2025-05-16 17:06:48','2025-05-16 17:06:52',3,2),(1,36,3,'2025-05-16 18:03:40','2025-05-16 18:03:57',3,2),(2,3,2,'2025-05-09 17:00:00','2025-05-09 17:45:00',2,3);
 /*!40000 ALTER TABLE `viaje` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -155,4 +155,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-05-15 18:36:40
+-- Dump completed on 2025-05-16 18:10:05

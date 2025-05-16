@@ -2,7 +2,6 @@ package gui;
 
 import aplicacion.FachadaAplicacion;
 import aplicacion.TipoUsuario;
-import aplicacion.Usuario;
 import gui.formularios.DiaLogin;
 import gui.formularios.VPrincipalUsuario;
 import java.util.Locale;
@@ -65,10 +64,6 @@ public class FachadaGUI {
         if(tipoUsuario == TipoUsuario.Admin) {
             // Lógica para el administrador
             System.out.println("Acceso de Administrador");
-//            VPrincipalAdmin vPrincipalAdmin = new VPrincipalAdmin();
-//            vPrincipalAdmin.setVisible(true);
-//            vPrincipalAdmin.pack();
-//            vPrincipalAdmin.setLocationRelativeTo(null);
             JOptionPane.showMessageDialog(null, "Acceso de Administrador no implementado", "Error", JOptionPane.ERROR_MESSAGE);
 
 
@@ -87,19 +82,5 @@ public class FachadaGUI {
             // Lógica para el acceso no definido
             System.out.println("Acceso No Definido");
         }
-    }
-
-
-    public void setLocalizacionActual(Locale localizacion)
-    {
-        this.localizacionActual = localizacion;
-        // Actualizar la localización de la interfaz gráfica
-        if (principal != null) {
-            // Actualizar la localización de la ventana principal
-            principal.setLocale(localizacion);
-            principal.revalidate();
-            principal.repaint();
-        }
-
     }
 }

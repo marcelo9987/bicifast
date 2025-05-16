@@ -32,6 +32,7 @@ public class DiaLogin extends JDialog {
         initComponents();
         this.lblLoginIncorrecto.setVisible(false);
 
+
         this.addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
             public void windowClosing(java.awt.event.WindowEvent e) {

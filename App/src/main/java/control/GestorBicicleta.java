@@ -14,19 +14,26 @@ public class GestorBicicleta {
         this.fbd = fbd;
     }
 
-    public void devolverBicicleta(Usuario usuarioLogado, Estacion estacionSeleccionada) {
+
+    public boolean devolverBicicleta(Usuario usuarioLogado, Estacion estacionSeleccionada) {
         Bicicleta bicicleta = fbd.obtenerBicicletaPorUsuario(usuarioLogado);
         if (bicicleta != null) {
             // Si la estación tiene el aforo completo, NO se puede devolver la bicicleta
             int aforo = fbd.obtenerOcupacionEstacion(estacionSeleccionada);
+            if (aforo >= estacionSeleccionada.aforo()) {
+                System.out.println("[DEBUG] La estación está llena. No se puede devolver la bicicleta.");
+                return false;
+            }
             fbd.estacionarBicicleta(bicicleta, estacionSeleccionada);
             fbd.devolverBicicleta(usuarioLogado, bicicleta, estacionSeleccionada);
+            return true;
         }
+        System.out.println("[DEBUG] No se encontró la bicicleta asociada al usuario.");
+        return false;
     }
 
     public List<Integer> preguntaLasBicicletasPorEstacion() {
-        List<Integer> bicicletas = fbd.preguntaLasBicicletasPorEstacion();
-        return bicicletas;
+        return fbd.preguntaLasBicicletasPorEstacion();
     }
 
     public int reservarBicicleta(Usuario usuarioLogado, Estacion estacionSeleccionada) {

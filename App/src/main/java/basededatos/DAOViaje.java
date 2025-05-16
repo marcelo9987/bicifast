@@ -7,7 +7,7 @@ import aplicacion.Usuario;
 
 import java.sql.Connection;
 
-public class DAOViaje extends AbstractDAO {
+public final class DAOViaje extends AbstractDAO {
     public DAOViaje(Connection conexion, FachadaAplicacion fa) {
         super.setConexion(conexion);
         super.setFachadaAplicacion(fa);
@@ -15,7 +15,6 @@ public class DAOViaje extends AbstractDAO {
 
 
     public void devolverBicicleta(Usuario usuarioLogado, Bicicleta bicicleta, Estacion estacionSeleccionada) {
-        java.sql.PreparedStatement stmBicisLibres = null;
         Connection                 con            = this.getConexion();
         String consulta =
                 "UPDATE viaje " +
@@ -24,24 +23,19 @@ public class DAOViaje extends AbstractDAO {
                         + "WHERE usuario = ?"
                         + " AND bicicleta = ? "
                         + " AND hora_fin IS NULL";
-        try {
-            stmBicisLibres = con.prepareStatement(consulta);
-            stmBicisLibres.setInt(1, estacionSeleccionada.idEstacion());
-            stmBicisLibres.setInt(2, usuarioLogado.idUsuario());
-            stmBicisLibres.setInt(3, bicicleta.Id());
-            stmBicisLibres.executeUpdate();
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.err.println("Error al devolver la bicicleta");
-        } finally {
+        try (java.sql.PreparedStatement stmBicisLibres = con.prepareStatement(consulta)) {
             try {
-                if (stmBicisLibres != null) {
-                    stmBicisLibres.close();
-                }
+                stmBicisLibres.setInt(1, estacionSeleccionada.idEstacion());
+                stmBicisLibres.setInt(2, usuarioLogado.idUsuario());
+                stmBicisLibres.setInt(3, bicicleta.Id());
+                stmBicisLibres.executeUpdate();
             } catch (Exception e) {
                 e.printStackTrace();
-                System.err.println("Imposible cerrar el cursor");
+                System.err.println("Error al devolver la bicicleta");
             }
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.err.println("Imposible cerrar el cursor");
         }
     }
 }

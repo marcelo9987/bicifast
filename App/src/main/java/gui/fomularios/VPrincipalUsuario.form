@@ -66,6 +66,7 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="btnBicisEstacion" min="-2" max="-2" attributes="0"/>
                       <Component id="btnActualizar" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnReservarBicicleta" alignment="0" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="54" max="-2" attributes="0"/>
               </Group>
@@ -93,6 +94,8 @@
                           <EmptySpace min="-2" pref="55" max="-2" attributes="0"/>
                           <Component id="btnActualizar" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="btnReservarBicicleta" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
                           <Component id="btnBicisEstacion" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="32767" attributes="0"/>
                           <Component id="btnSalir" min="-2" max="-2" attributes="0"/>
@@ -192,6 +195,14 @@
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnActualizarActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="btnReservarBicicleta">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Reservar"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnReservarBicicletaActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>

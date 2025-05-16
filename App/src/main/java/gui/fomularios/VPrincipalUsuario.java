@@ -49,10 +49,11 @@ public class VPrincipalUsuario extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         tablaEstaciones = new javax.swing.JTable();
         btnActualizar = new javax.swing.JButton();
+        btnReservarBicicleta = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        btnConfig.setText("Configuración");
+        btnConfig.setText("Configuracion");
         btnConfig.setMaximumSize(new java.awt.Dimension(130, 28));
         btnConfig.setMinimumSize(new java.awt.Dimension(130, 28));
         btnConfig.setPreferredSize(new java.awt.Dimension(130, 28));
@@ -95,6 +96,13 @@ public class VPrincipalUsuario extends javax.swing.JFrame {
             }
         });
 
+        btnReservarBicicleta.setText("Reservar");
+        btnReservarBicicleta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnReservarBicicletaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -120,7 +128,8 @@ public class VPrincipalUsuario extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnBicisEstacion)
-                    .addComponent(btnActualizar))
+                    .addComponent(btnActualizar)
+                    .addComponent(btnReservarBicicleta))
                 .addGap(54, 54, 54))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
@@ -142,6 +151,8 @@ public class VPrincipalUsuario extends javax.swing.JFrame {
                         .addGap(55, 55, 55)
                         .addComponent(btnActualizar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnReservarBicicleta)
+                        .addGap(15, 15, 15)
                         .addComponent(btnBicisEstacion)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnSalir)
@@ -210,12 +221,28 @@ public class VPrincipalUsuario extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnDevolverBiciActionPerformed
 
+    private void btnReservarBicicletaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReservarBicicletaActionPerformed
+        int filaSeleccionada = tablaEstaciones.getSelectedRow();
+        if (filaSeleccionada != -1)
+        {
+            Estacion estacionSeleccionada = ((modeloTablaEstaciones) tablaEstaciones.getModel()).obtenerEstacion(filaSeleccionada);
+            fa.reservarBicicleta(estacionSeleccionada);
+            listarEstaciones();
+            gestionarBicicletaEnUso();
+        }
+        else
+        {
+            javax.swing.JOptionPane.showMessageDialog(this, "Debes seleccionar una estacion");
+        }
+    }//GEN-LAST:event_btnReservarBicicletaActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnActualizar;
     private javax.swing.JButton btnBicisEstacion;
     private javax.swing.JButton btnConfig;
     private javax.swing.JButton btnDevolverBici;
     private javax.swing.JButton btnPerfil;
+    private javax.swing.JButton btnReservarBicicleta;
     private javax.swing.JButton btnSalir;
     private javax.swing.JCheckBox chkBiciEnUso;
     private javax.swing.JPanel jPanel1;

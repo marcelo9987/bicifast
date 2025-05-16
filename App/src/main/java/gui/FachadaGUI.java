@@ -4,16 +4,24 @@ import aplicacion.FachadaAplicacion;
 import aplicacion.TipoUsuario;
 import aplicacion.Usuario;
 import gui.fomularios.DiaLogin;
-import gui.fomularios.VPrincipalAdmin;
 import gui.fomularios.VPrincipalUsuario;
+import java.util.Locale;
 
 import javax.swing.*;
 
 public class FachadaGUI {
+
+    // -- CONSTANTES --
+    private static final String LENGUA_POR_DEFECTO = "gl"; // Galego
+
+    // -- ATRIBUTOS --
     FachadaAplicacion fa;
+    Locale localizacionActual;
+    VPrincipalUsuario principal;
 
     public FachadaGUI(FachadaAplicacion fa)
     {
+        this.localizacionActual =  Locale.of(LENGUA_POR_DEFECTO);
         this.fa = fa;
     }
 
@@ -25,7 +33,7 @@ public class FachadaGUI {
         frameTemporal.setLocationRelativeTo(null);
         frameTemporal.setVisible(true); // necesario para que funcione como parent real
 
-        DiaLogin dialogo_login = new DiaLogin(frameTemporal, fa);
+        DiaLogin dialogo_login = new DiaLogin(this.localizacionActual,frameTemporal, fa);
 
         // Configurar el tamaño y visibilidad
         dialogo_login.pack();
@@ -43,22 +51,24 @@ public class FachadaGUI {
         if(tipoUsuario == TipoUsuario.Admin) {
             // Lógica para el administrador
             System.out.println("Acceso de Administrador");
-            VPrincipalAdmin vPrincipalAdmin = new VPrincipalAdmin();
-            vPrincipalAdmin.setVisible(true);
-            vPrincipalAdmin.pack();
-            vPrincipalAdmin.setLocationRelativeTo(null);
+//            VPrincipalAdmin vPrincipalAdmin = new VPrincipalAdmin();
+//            vPrincipalAdmin.setVisible(true);
+//            vPrincipalAdmin.pack();
+//            vPrincipalAdmin.setLocationRelativeTo(null);
+            JOptionPane.showMessageDialog(null, "Acceso de Administrador no implementado", "Error", JOptionPane.ERROR_MESSAGE);
 
 
         } else if(tipoUsuario == TipoUsuario.Mant) {
             // Lógica para el mantenimiento
             System.out.println("Acceso de Mantenimiento");
+            JOptionPane.showMessageDialog(null, "Acceso de Mantenimiento no implementado", "Error", JOptionPane.ERROR_MESSAGE);
         } else if(tipoUsuario == TipoUsuario.NORMAL) {
             // Lógica para el usuario normal
             System.out.println("Acceso Normal");
-            VPrincipalUsuario vPrincipalUsuario = new VPrincipalUsuario(this.fa);
-            vPrincipalUsuario.setVisible(true);
-            vPrincipalUsuario.pack();
-            vPrincipalUsuario.setLocationRelativeTo(null);
+            principal = new VPrincipalUsuario(this.fa);
+            principal.setVisible(true);
+            principal.pack();
+            principal.setLocationRelativeTo(null);
         } else {
             // Lógica para el acceso no definido
             System.out.println("Acceso No Definido");
@@ -68,5 +78,18 @@ public class FachadaGUI {
     public void estableceUsuarioLogado(Usuario usr)
     {
         fa.estableceUsuarioLogado(usr);
+    }
+
+    public void setLocalizacionActual(Locale localizacion)
+    {
+        this.localizacionActual = localizacion;
+        // Actualizar la localización de la interfaz gráfica
+        if (principal != null) {
+            // Actualizar la localización de la ventana principal
+            principal.setLocale(localizacion);
+            principal.revalidate();
+            principal.repaint();
+        }
+
     }
 }

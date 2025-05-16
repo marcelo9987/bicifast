@@ -18,9 +18,9 @@ public class FachadaBaseDatos {
     private final DAOUsuario          daoUsuario;
     private final DAOEstacion         daoEstacion;
     private       java.sql.Connection conexion;
-    private       FachadaAplicacion   fa;
-    private       DAOBicicleta        daoBicicleta;
-    private       DAOViaje            daoViaje;
+    private       FachadaAplicacion fa;
+    private final DAOBicicleta      daoBicicleta;
+    private final DAOViaje          daoViaje;
 
     public FachadaBaseDatos(FachadaAplicacion fa) {
         // ---- INICIALIZACIÓN DE VARIABLES ----

@@ -69,7 +69,7 @@
                             <archive>
                                 <manifest>
                                     <mainClass>
-                                        Main
+                                        com.bicisoft.bicifast.Main
                                     </mainClass>
                                 </manifest>
                             </archive>

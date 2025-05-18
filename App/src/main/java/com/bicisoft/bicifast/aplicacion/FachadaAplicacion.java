@@ -15,7 +15,7 @@ import java.util.ResourceBundle;
  * los controladores de la aplicación. Proporciona métodos para interactuar con
  * los controladores y gestionar el estado de la aplicación.
  */
-public final class FachadaAplicacion {
+public class FachadaAplicacion {
 
     private final FachadaGUI           fgui;
     private final GestorUsuario        controladorUsuario;

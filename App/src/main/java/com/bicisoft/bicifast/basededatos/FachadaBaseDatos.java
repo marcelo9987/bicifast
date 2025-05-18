@@ -163,9 +163,10 @@ public final class FachadaBaseDatos {
      * @param usuarioLogado Usuario que ha iniciado sesión
      * @param bicicleta Bicicleta que se va a devolver
      * @param estacionSeleccionada Estación a la que se va a devolver la bicicleta
+     * @return true si la devolución se ha realizado correctamente, false en caso contrario
      */
-    public void devolverBicicleta(Usuario usuarioLogado, Bicicleta bicicleta, Estacion estacionSeleccionada) {
-        this.daoViaje.devolverBicicleta(usuarioLogado, bicicleta, estacionSeleccionada);
+    public boolean devolverBicicleta(Usuario usuarioLogado, Bicicleta bicicleta, Estacion estacionSeleccionada) {
+        return this.daoViaje.devolverBicicleta(usuarioLogado, bicicleta, estacionSeleccionada);
     }
 
     /**

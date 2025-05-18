@@ -27,9 +27,11 @@ final class DAOViaje extends AbstractDAO {
      * @param usuarioLogado Usuario que ha iniciado sesión
      * @param bicicleta Bicicleta que se va a devolver
      * @param estacionSeleccionada Estación a la que se va a devolver la bicicleta
+     * @return true si se ha devuelto correctamente, false en caso contrario
      */
-    void devolverBicicleta(Usuario usuarioLogado, Bicicleta bicicleta, Estacion estacionSeleccionada) {
+    boolean devolverBicicleta(Usuario usuarioLogado, Bicicleta bicicleta, Estacion estacionSeleccionada) {
         Connection                 con            = this.getConexion();
+        int numViajesAlterados = 0;
         String consulta =
                 "UPDATE viaje " +
                         "SET destino = ? " +
@@ -42,14 +44,17 @@ final class DAOViaje extends AbstractDAO {
                 stmBicisLibres.setInt(1, estacionSeleccionada.idEstacion());
                 stmBicisLibres.setInt(2, usuarioLogado.idUsuario());
                 stmBicisLibres.setInt(3, bicicleta.Id());
-                stmBicisLibres.executeUpdate();
+                numViajesAlterados=  stmBicisLibres.executeUpdate();
             } catch (Exception e) {
                 e.printStackTrace();
                 System.err.println("Error al devolver la bicicleta");
+                return false;
             }
         } catch (Exception e) {
             e.printStackTrace();
             System.err.println("Imposible cerrar el cursor");
+            return false;
         }
+        return numViajesAlterados > 0;
     }
 }

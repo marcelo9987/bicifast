@@ -47,7 +47,7 @@ final class DAOUsuario extends AbstractDAO {
                 (
                         "SELECT " +
                                 "id" +
-                                "   nombre" +
+                                ",   nombre" +
                                 "   , primer_apellido" +
                                 "   , segundo_apellido" +
                                 "   , dni" +

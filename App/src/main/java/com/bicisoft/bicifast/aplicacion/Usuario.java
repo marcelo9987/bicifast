@@ -58,6 +58,27 @@ public final class Usuario {
         this.tipoUsuario = tipoUsuario;
     }
 
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("Usuario{");
+        sb.append("apellido1='").append(apellido1).append('\'');
+        sb.append(", idUsuario=").append(idUsuario);
+        sb.append(", nombre='").append(nombre).append('\'');
+        sb.append(", apellido2='").append(apellido2).append('\'');
+        sb.append(", dni='").append(dni).append('\'');
+        sb.append(", email='").append(email).append('\'');
+        sb.append(", direccion='").append(direccion).append('\'');
+        sb.append(", fecha_nacimiento=").append(fecha_nacimiento);
+        sb.append(", telefono='").append(telefono).append('\'');
+        sb.append(", contrasenha='").append(contrasenha).append('\'');
+        sb.append(", metodoPago=").append(metodoPago);
+        sb.append(", inicio_suscripcion=").append(inicio_suscripcion);
+        sb.append(", fin_suscripcion=").append(fin_suscripcion);
+        sb.append(", tipoUsuario=").append(tipoUsuario);
+        sb.append('}');
+        return sb.toString();
+    }
+
     /**
      * Getter del primer apellido del usuario.
      * @return Primer apellido del usuario

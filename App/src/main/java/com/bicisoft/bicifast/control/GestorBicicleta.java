@@ -40,8 +40,8 @@ public final class GestorBicicleta {
                 return false;
             }
             this.fbd.estacionarBicicleta(bicicleta, estacionSeleccionada);
-            this.fbd.devolverBicicleta(usuarioLogado, bicicleta, estacionSeleccionada);
-            return true;
+            return this.fbd.devolverBicicleta(usuarioLogado, bicicleta, estacionSeleccionada);
+
         }
         System.out.println("[DEBUG] No se encontró la bicicleta asociada al usuario.");
         return false;

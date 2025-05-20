@@ -43,7 +43,7 @@ public final class VPrincipalUsuario extends javax.swing.JFrame {
     /**
      * Inicializa los componentes de la interfaz gráfica.
      */
-    
+
     private void initComponents() {
 
         javax.swing.JPanel  jPanel1              = new javax.swing.JPanel();
@@ -106,14 +106,14 @@ public final class VPrincipalUsuario extends javax.swing.JFrame {
         layout.setVerticalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE));
 
         this.pack();
-    }// </editor-fold>//GEN-END:initComponents
+    }
 
     private void _gestionarBicicletaEnUso() {
         boolean usuarioTieneBici = this.fa.usuarioTieneBici();
         if (usuarioTieneBici) {
             this.btnDevolverBici.setEnabled(true);
             this.chkBiciEnUso.setSelected(true);
-//            chkBiciEnUso.set
+
 
 
         }
@@ -135,7 +135,7 @@ public final class VPrincipalUsuario extends javax.swing.JFrame {
         idioma.pack();
         idioma.setVisible(true);
 
-    }//GEN-LAST:event_btnConfigActionPerformed
+    }
 
     private void btnPerfilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPerfilActionPerformed
         DiaUsuario menuUsuario = new DiaUsuario(this, this.fa);
@@ -163,7 +163,7 @@ public final class VPrincipalUsuario extends javax.swing.JFrame {
 
         this._listarEstaciones();
         this._gestionarBicicletaEnUso();
-    }//GEN-LAST:event_btnDevolverBiciActionPerformed
+    }
 
     private void btnBicisEstacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBicisEstacionActionPerformed
         // TODO add your handling code here:

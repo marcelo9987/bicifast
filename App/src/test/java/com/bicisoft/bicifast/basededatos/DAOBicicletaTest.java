@@ -25,7 +25,7 @@ class DAOBicicletaTest {
     @BeforeEach
     void setUp() throws SQLException {
         Properties usuario = new Properties();
-        usuario.setProperty("user", "root");
+        usuario.setProperty("user", "test");
         usuario.setProperty("password", "root");
         conexion = java.sql.DriverManager.getConnection("jdbc:" + GESTOR + "://" + SERVIDOR + ":" + PUERTO + "/" + BASEDATOS, usuario);
 

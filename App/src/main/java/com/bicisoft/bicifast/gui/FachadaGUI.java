@@ -4,6 +4,8 @@ import com.bicisoft.bicifast.aplicacion.FachadaAplicacion;
 import com.bicisoft.bicifast.aplicacion.TipoUsuario;
 import com.bicisoft.bicifast.gui.formularios.DiaLogin;
 import com.bicisoft.bicifast.gui.formularios.VPrincipalUsuario;
+import mdlaf.MaterialLookAndFeel;
+import mdlaf.themes.MaterialLiteTheme;
 
 import javax.swing.*;
 
@@ -29,7 +31,17 @@ public final class FachadaGUI {
     /**
      * Método que inicia la gui
      */
-    public void iniciarVista() {
+    public void iniciarVista()
+    {
+
+        try
+        {
+            UIManager.setLookAndFeel(new MaterialLookAndFeel(new MaterialLiteTheme()));
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+
         JFrame frameTemporal = new JFrame();
         frameTemporal.setUndecorated(true); // sen bordes nin barra
         frameTemporal.setSize(0, 0);

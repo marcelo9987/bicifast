@@ -3,8 +3,14 @@ package com.bicisoft.bicifast.gui.formularios;
 import com.bicisoft.bicifast.aplicacion.FachadaAplicacion;
 import com.bicisoft.bicifast.aplicacion.TipoUsuario;
 import com.bicisoft.bicifast.aplicacion.Usuario;
+import mdlaf.MaterialLookAndFeel;
+import mdlaf.themes.MaterialLiteTheme;
+import mdlaf.themes.MaterialOceanicTheme;
 
 import javax.swing.*;
+import javax.swing.plaf.nimbus.NimbusLookAndFeel;
+
+
 import java.awt.*;
 import java.util.Objects;
 import java.util.ResourceBundle;
@@ -32,6 +38,7 @@ public final class DiaLogin extends JDialog {
         this.textos = fa.pedirBundle();
         this.initComponents();
         this.lblLoginIncorrecto.setVisible(false);
+        this.setTitle(this.textos.getString("login.titulo"));
 
 
         this.addWindowListener(new java.awt.event.WindowAdapter() {
@@ -65,8 +72,6 @@ public final class DiaLogin extends JDialog {
         btnSalir.setText("Salir");
         btnSalir.addActionListener(this::btnSalirActionPerformed);
 
-        this.pwdLogin.setText("pswd_contrasenha");
-
         lblUsuario.setText("Usuario");
 
         lblContrasenha.setText("Contraseña");
@@ -76,15 +81,94 @@ public final class DiaLogin extends JDialog {
 
         GroupLayout panelPrincipalLoginLayout = new GroupLayout(panelPrincipalLogin);
         panelPrincipalLogin.setLayout(panelPrincipalLoginLayout);
-        panelPrincipalLoginLayout.setHorizontalGroup(panelPrincipalLoginLayout.createParallelGroup(GroupLayout.Alignment.LEADING).addGroup(panelPrincipalLoginLayout.createSequentialGroup().addGroup(panelPrincipalLoginLayout.createParallelGroup(GroupLayout.Alignment.LEADING).addGroup(panelPrincipalLoginLayout.createSequentialGroup().addGap(1, 1, 1).addComponent(lblUsuario).addGap(32, 32, 32)).addGroup(GroupLayout.Alignment.TRAILING, panelPrincipalLoginLayout.createSequentialGroup().addComponent(lblContrasenha).addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED))).addGroup(panelPrincipalLoginLayout.createParallelGroup(GroupLayout.Alignment.LEADING).addGroup(panelPrincipalLoginLayout.createSequentialGroup().addGroup(panelPrincipalLoginLayout.createParallelGroup(GroupLayout.Alignment.LEADING).addComponent(jLabel1, GroupLayout.PREFERRED_SIZE, 198, GroupLayout.PREFERRED_SIZE).addGroup(panelPrincipalLoginLayout.createSequentialGroup().addGroup(panelPrincipalLoginLayout.createParallelGroup(GroupLayout.Alignment.LEADING, false).addComponent(this.txtEmail).addComponent(this.pwdLogin, GroupLayout.DEFAULT_SIZE, 182, Short.MAX_VALUE)).addPreferredGap(LayoutStyle.ComponentPlacement.RELATED).addComponent(btnAceptar))).addGap(0, 38, Short.MAX_VALUE)).addGroup(panelPrincipalLoginLayout.createSequentialGroup().addComponent(this.lblLoginIncorrecto, GroupLayout.PREFERRED_SIZE, 182, GroupLayout.PREFERRED_SIZE).addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 60, Short.MAX_VALUE).addComponent(btnSalir))).addContainerGap()));
-        panelPrincipalLoginLayout.setVerticalGroup(panelPrincipalLoginLayout.createParallelGroup(GroupLayout.Alignment.LEADING).addGroup(GroupLayout.Alignment.TRAILING, panelPrincipalLoginLayout.createSequentialGroup().addContainerGap().addComponent(jLabel1, GroupLayout.PREFERRED_SIZE, 108, GroupLayout.PREFERRED_SIZE).addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE).addGroup(panelPrincipalLoginLayout.createParallelGroup(GroupLayout.Alignment.LEADING).addGroup(GroupLayout.Alignment.TRAILING, panelPrincipalLoginLayout.createSequentialGroup().addGroup(panelPrincipalLoginLayout.createParallelGroup(GroupLayout.Alignment.LEADING).addComponent(this.txtEmail, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE).addComponent(lblUsuario)).addGap(18, 18, 18).addGroup(panelPrincipalLoginLayout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(this.pwdLogin, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE).addComponent(lblContrasenha)).addPreferredGap(LayoutStyle.ComponentPlacement.RELATED).addComponent(this.lblLoginIncorrecto).addGap(18, 18, 18)).addGroup(GroupLayout.Alignment.TRAILING, panelPrincipalLoginLayout.createSequentialGroup().addComponent(btnAceptar).addGap(27, 27, 27).addComponent(btnSalir).addContainerGap()))));
 
+        this.pwdLogin.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                if (evt.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER) {
+                    btnAceptarActionPerformed(null);
+                }
+            }
+        });
+
+        this.txtEmail.addKeyListener(new java.awt.event.KeyAdapter()
+        {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                if (evt.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER) {
+                    btnAceptarActionPerformed(null);
+                }
+            }
+        });
+
+// Configuración horizontal
+        panelPrincipalLoginLayout.setHorizontalGroup(
+                panelPrincipalLoginLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                        .addGroup(panelPrincipalLoginLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(panelPrincipalLoginLayout.createParallelGroup(GroupLayout.Alignment.TRAILING)
+                                        // Fila de usuario
+                                        .addGroup(panelPrincipalLoginLayout.createSequentialGroup()
+                                                .addComponent(lblUsuario)
+                                                .addGap(15, 15, 15)
+                                                .addComponent(this.txtEmail, GroupLayout.PREFERRED_SIZE, 182, GroupLayout.PREFERRED_SIZE))
+                                        // Fila de contraseña
+                                        .addGroup(panelPrincipalLoginLayout.createSequentialGroup()
+                                                .addComponent(lblContrasenha)
+                                                .addGap(15, 15, 15)
+                                                .addComponent(this.pwdLogin, GroupLayout.PREFERRED_SIZE, 182, GroupLayout.PREFERRED_SIZE))
+                                )
+                                .addGap(15, 15, 15)
+                                .addComponent(btnAceptar)
+                                .addContainerGap(20, Short.MAX_VALUE))
+                        // Título/Logo
+                        .addGroup(panelPrincipalLoginLayout.createSequentialGroup()
+                                .addGap(50, 50, 50)
+                                .addComponent(jLabel1, GroupLayout.PREFERRED_SIZE, 198, GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(50, Short.MAX_VALUE))
+                        // Mensaje de error y botón salir
+                        .addGroup(panelPrincipalLoginLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(this.lblLoginIncorrecto, GroupLayout.PREFERRED_SIZE, 182, GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnSalir)
+                                .addContainerGap())
+        );
+
+// Configuración vertical
+        panelPrincipalLoginLayout.setVerticalGroup(
+                panelPrincipalLoginLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                        .addGroup(panelPrincipalLoginLayout.createSequentialGroup()
+                                .addContainerGap()
+                                // Logo/Título
+                                .addComponent(jLabel1, GroupLayout.PREFERRED_SIZE, 108, GroupLayout.PREFERRED_SIZE)
+                                .addGap(30, 30, 30)
+                                // Campos de entrada y botón aceptar
+                                .addGroup(panelPrincipalLoginLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                                        // Grupo de campos
+                                        .addGroup(panelPrincipalLoginLayout.createSequentialGroup()
+                                                .addGroup(panelPrincipalLoginLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                                        .addComponent(lblUsuario)
+                                                        .addComponent(this.txtEmail, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                                                .addGap(15, 15, 15)
+                                                .addGroup(panelPrincipalLoginLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                                        .addComponent(lblContrasenha)
+                                                        .addComponent(this.pwdLogin, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+                                        // Botón aceptar alineado verticalmente con los campos
+                                        .addComponent(btnAceptar, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE))
+                                .addGap(15, 15, 15)
+                                // Mensaje de error y botón salir
+                                .addGroup(panelPrincipalLoginLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                        .addComponent(this.lblLoginIncorrecto)
+                                        .addComponent(btnSalir))
+                                .addContainerGap(20, Short.MAX_VALUE))
+        );
         Container   contentPane = this.getContentPane();
         GroupLayout layout      = new GroupLayout(contentPane);
         contentPane.setLayout(layout);
         layout.setHorizontalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING).addComponent(panelPrincipalLogin, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE));
         layout.setVerticalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING).addComponent(panelPrincipalLogin, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE));
     }
+
+
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
         this._comprobarLoginCorrecto();

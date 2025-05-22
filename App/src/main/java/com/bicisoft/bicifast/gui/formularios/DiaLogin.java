@@ -3,9 +3,10 @@ package com.bicisoft.bicifast.gui.formularios;
 import com.bicisoft.bicifast.aplicacion.FachadaAplicacion;
 import com.bicisoft.bicifast.aplicacion.TipoUsuario;
 import com.bicisoft.bicifast.aplicacion.Usuario;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.swing.*;
-import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 
 
 import java.awt.*;
@@ -17,11 +18,12 @@ import java.util.ResourceBundle;
  */
 
 public final class DiaLogin extends JDialog {
-    private final FachadaAplicacion          fa;
+    private final FachadaAplicacion fa;
     private final ResourceBundle             textos;
     private       javax.swing.JLabel         lblLoginIncorrecto;
     private       javax.swing.JPasswordField pwdLogin;
-    private       javax.swing.JTextPane      txtEmail;
+    private       javax.swing.JTextPane txtEmail;
+    private final Logger                logger = LoggerFactory.getLogger(DiaLogin.class);
 
     /**
      * Crea un nuevo dialogo de login.
@@ -80,8 +82,8 @@ public final class DiaLogin extends JDialog {
         panelPrincipalLogin.setLayout(panelPrincipalLoginLayout);
 
         this.pwdLogin.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                if (evt.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER) {
+            public void keyPressed(java.awt.event.KeyEvent e) {
+                if (e.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER) {
                     btnAceptarActionPerformed(null);
                 }
             }
@@ -89,8 +91,8 @@ public final class DiaLogin extends JDialog {
 
         this.txtEmail.addKeyListener(new java.awt.event.KeyAdapter()
         {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                if (evt.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER) {
+            public void keyPressed(java.awt.event.KeyEvent e) {
+                if (e.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER) {
                     btnAceptarActionPerformed(null);
                 }
             }
@@ -184,7 +186,7 @@ public final class DiaLogin extends JDialog {
             permisosDelUsuario = usr.tipoUsuario();
         }
 
-        System.out.println("Permisos del usuario: " + permisosDelUsuario.toString());
+        logger.info("Permisos del usuario:{}", permisosDelUsuario.toString());
         if (permisosDelUsuario == TipoUsuario.NO_DEFINIDO) {
             JOptionPane.showMessageDialog(this, "Login incorrecto", "Error", JOptionPane.ERROR_MESSAGE);
             this.lblLoginIncorrecto.setText("Contraseña/Usuario incorrectos");

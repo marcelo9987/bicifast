@@ -1,6 +1,8 @@
 package com.bicisoft.bicifast.basededatos;
 
 import com.bicisoft.bicifast.aplicacion.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.Connection;
 import java.util.List;
@@ -10,15 +12,15 @@ import java.util.List;
  * Esta clase se encarga de realizar las operaciones de acceso a datos relacionadas con las bicicletas.
  */
 final class DAOBicicleta extends AbstractDAO {
+    private static final Logger logger = LoggerFactory.getLogger(DAOBicicleta.class);
+
     /**
      * Constructor de la clase DAOBicicleta.
      * @param conexion Conexión a la base de datos.
-     * @param fa Fachada de la aplicación.
      */
-    DAOBicicleta(Connection conexion, FachadaAplicacion fa) {
+    DAOBicicleta(Connection conexion) {
         super();
         this.setConexion(conexion);
-        this.setFachadaAplicacion(fa);
     }
 
 
@@ -47,7 +49,7 @@ final class DAOBicicleta extends AbstractDAO {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            System.err.println("EXCEPCION_CONSULTA_BICICLETAS");
+            logger.error("Fallo en la consulta de bicicletas: {}", e.getMessage());
         } finally {
             try {
                 if (stmBicisLibres != null) {
@@ -55,7 +57,7 @@ final class DAOBicicleta extends AbstractDAO {
                 }
             } catch (Exception e) {
                 e.printStackTrace();
-                System.err.println("IMPOSIBLE_CERRAR_CONEXION");
+                logger.error("Error al cerrar la conexión: {}", e.getMessage());
             }
         }
 
@@ -94,7 +96,7 @@ final class DAOBicicleta extends AbstractDAO {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            System.err.println("EXCEPCION_CONSULTA_BICICLETAS");
+            logger.error("Error en la consulta de bicicletas en uso: {}", e.getMessage());
         } finally {
             try {
                 if (stmBicisLibres != null) {
@@ -102,7 +104,7 @@ final class DAOBicicleta extends AbstractDAO {
                 }
             } catch (Exception e) {
                 e.printStackTrace();
-                System.err.println("IMPOSIBLE_CERRAR_CONEXION");
+                logger.error("Error al cerrar cursores: {}", e.getMessage());
             }
         }
         return resultado;
@@ -128,11 +130,11 @@ final class DAOBicicleta extends AbstractDAO {
                 stmBicisLibres.executeUpdate();
             } catch (Exception e) {
                 e.printStackTrace();
-                System.err.println("EXCEPCION_CONSULTA_BICICLETAS");
+                logger.error("Error al estacionar la bicicleta: {}", e.getMessage());
             }
         } catch (Exception e) {
             e.printStackTrace();
-            System.err.println("IMPOSIBLE_CERRAR_CONEXION");
+            logger.error("Imposible cerrar el cursor");
         }
     }
 
@@ -170,7 +172,7 @@ final class DAOBicicleta extends AbstractDAO {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            System.err.println("EXCEPCION_CONSULTA_BICICLETAS");
+            logger.error("Error en la consulta de bicicletas libres por estación: {}", e.getMessage());
         } finally {
             try {
                 if (stmBicisLibres != null) {
@@ -178,7 +180,7 @@ final class DAOBicicleta extends AbstractDAO {
                 }
             } catch (Exception e) {
                 e.printStackTrace();
-                System.err.println("IMPOSIBLE_CERRAR_CONEXION");
+                logger.error("Error al cerrar cursores - {}", e.getMessage());
             }
         }
         return resultado;
@@ -208,12 +210,12 @@ final class DAOBicicleta extends AbstractDAO {
                 stmBicisLibres.executeUpdate();
             } catch (Exception e) {
                 e.printStackTrace();
-                System.err.println("EXCEPCION_CONSULTA_BICICLETAS");
+                logger.error("Error al reservar la bicicleta: {}", e.getMessage());
                 return false;
             }
         } catch (Exception e) {
             e.printStackTrace();
-            System.err.println("IMPOSIBLE_CERRAR_CONEXION");
+            logger.error("Error al cerrar el cursor: {}", e.getMessage());
             return false;
         }
         return true;

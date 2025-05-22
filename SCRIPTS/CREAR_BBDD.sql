@@ -7,7 +7,6 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 -- -----------------------------------------------------
 -- Schema BiciFast
 -- -----------------------------------------------------
-DROP SCHEMA IF EXISTS `BiciFast` ;
 
 -- -----------------------------------------------------
 -- Schema BiciFast
@@ -18,8 +17,6 @@ USE `BiciFast` ;
 -- -----------------------------------------------------
 -- Table `BiciFast`.`usuario`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `BiciFast`.`usuario` ;
-
 CREATE TABLE IF NOT EXISTS `BiciFast`.`usuario` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `nombre` VARCHAR(255) NOT NULL,
@@ -45,8 +42,6 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `BiciFast`.`estacion`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `BiciFast`.`estacion` ;
-
 CREATE TABLE IF NOT EXISTS `BiciFast`.`estacion` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `ubicacion` TINYTEXT NOT NULL,
@@ -59,8 +54,6 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `BiciFast`.`bicicleta`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `BiciFast`.`bicicleta` ;
-
 CREATE TABLE IF NOT EXISTS `BiciFast`.`bicicleta` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `estado` ENUM('CORRECTO', 'REVISION') NOT NULL DEFAULT 'CORRECTO',
@@ -79,8 +72,6 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `BiciFast`.`viaje`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `BiciFast`.`viaje` ;
-
 CREATE TABLE IF NOT EXISTS `BiciFast`.`viaje` (
   `usuario` INT NOT NULL,
   `id` INT NOT NULL AUTO_INCREMENT,

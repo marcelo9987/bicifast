@@ -1,6 +1,5 @@
 package com.bicisoft.bicifast.basededatos;
 
-import com.bicisoft.bicifast.aplicacion.FachadaAplicacion;
 
 import java.sql.Connection;
 
@@ -11,7 +10,6 @@ import java.sql.Connection;
  */
 abstract class AbstractDAO {
 
-    private FachadaAplicacion fa;
     private Connection        conexion;
 
 
@@ -23,9 +21,6 @@ abstract class AbstractDAO {
         this.conexion = conexion;
     }
 
-    void setFachadaAplicacion(FachadaAplicacion fa) {
-        this.fa = fa;
-    }
 
 
 }

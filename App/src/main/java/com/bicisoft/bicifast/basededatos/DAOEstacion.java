@@ -1,7 +1,8 @@
 package com.bicisoft.bicifast.basededatos;
 
 import com.bicisoft.bicifast.aplicacion.Estacion;
-import com.bicisoft.bicifast.aplicacion.FachadaAplicacion;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.Connection;
 import java.util.List;
@@ -10,16 +11,15 @@ import java.util.List;
  * Clase DAOEstacion
  * Esta clase se encarga de gestionar la base de datos de las estaciones.
  */
-final class DAOEstacion extends AbstractDAO
-{
+final class DAOEstacion extends AbstractDAO {
+    private final Logger logger = LoggerFactory.getLogger(DAOEstacion.class);
+
     /**
      * @param conexion conexion a la base de datos
-     * @param fa Fachada de la aplicacion
      */
-    DAOEstacion(Connection conexion, FachadaAplicacion fa) {
+    DAOEstacion(Connection conexion) {
         super();
         setConexion(conexion);
-        setFachadaAplicacion(fa);
     }
 
 
@@ -28,12 +28,11 @@ final class DAOEstacion extends AbstractDAO
      *
      * @return lista de estaciones
      */
-    List<Estacion> preguntaLasEstaciones()
-    {
+    List<Estacion> preguntaLasEstaciones() {
         java.sql.PreparedStatement stmEstaciones = null;
-        java.sql.ResultSet rsEstaciones;
-        Connection con;
-        List<Estacion> estaciones = new java.util.ArrayList<>();
+        java.sql.ResultSet         rsEstaciones;
+        Connection                 con;
+        List<Estacion>             estaciones    = new java.util.ArrayList<>();
         con = this.getConexion();
         // Una consulta SQL para obtener todas las estaciones
         // SELECCIONA id, ubicacion y aforo DE TUPLAS DE estacion ORDENADO POR ubicacion
@@ -50,14 +49,15 @@ final class DAOEstacion extends AbstractDAO
             stmEstaciones = con.prepareStatement(consulta);
             rsEstaciones = stmEstaciones.executeQuery();
             while (rsEstaciones.next()) {
-                int idEstacion = rsEstaciones.getInt("id");
-                String ubicacion = rsEstaciones.getString("ubicacion");
-                int aforo = rsEstaciones.getInt("aforo");
+                int    idEstacion = rsEstaciones.getInt("id");
+                String ubicacion  = rsEstaciones.getString("ubicacion");
+                int    aforo      = rsEstaciones.getInt("aforo");
                 estaciones.add(new Estacion(idEstacion, ubicacion, aforo));
             }
         } catch (Exception e) {
             e.printStackTrace();
-            System.err.println("EXCEPCION_CONSULTA_ESTACIONES");
+//            System.err.println("EXCEPCION_CONSULTA_ESTACIONES");
+            this.logger.error("Error al consultar las estaciones: {}", e.getMessage());
         } finally {
             try {
                 if (stmEstaciones != null) {
@@ -65,7 +65,7 @@ final class DAOEstacion extends AbstractDAO
                 }
             } catch (Exception e) {
                 e.printStackTrace();
-                System.err.println("IMPOSIBLE_CERRAR_CONEXION");
+                this.logger.error("No se ha podido cerrar la conexión para consultar las estaciones: {}", e.getMessage());
             }
         }
         return estaciones;
@@ -73,15 +73,15 @@ final class DAOEstacion extends AbstractDAO
 
     /**
      * Devuelve la ocupacion de una estacion
-     * @param id_estacion estacion a consultar
+     *
+     * @param id estacion a consultar
      * @return ocupacion de la estacion
      */
-    int obtenerOcupacionEstacion(int id_estacion)
-    {
+    int obtenerOcupacionEstacion(int id) {
         java.sql.PreparedStatement stmEstaciones = null;
-        java.sql.ResultSet rsEstaciones;
-        Connection con;
-        int ocupacion = 0;
+        java.sql.ResultSet         rsEstaciones;
+        Connection                 con;
+        int                        ocupacion     = 0;
         con = this.getConexion();
         // Una consulta SQL para obtener la ocupacion de una estacion
         // SELECCIONA la ocupacion DE TUPLAS DE estacion
@@ -103,14 +103,14 @@ final class DAOEstacion extends AbstractDAO
                         "   e.id";
         try {
             stmEstaciones = con.prepareStatement(consulta);
-            stmEstaciones.setInt(1, id_estacion);
+            stmEstaciones.setInt(1, id);
             rsEstaciones = stmEstaciones.executeQuery();
             if (rsEstaciones.next()) {
                 ocupacion = rsEstaciones.getInt("ocupacion");
             }
         } catch (Exception e) {
             e.printStackTrace();
-            System.err.println("EXCEPCION_CONSULTA_ESTACIONES");
+            this.logger.error("Error al consultar la ocupación de la estación: {}", e.getMessage());
         } finally {
             try {
                 if (stmEstaciones != null) {
@@ -118,7 +118,7 @@ final class DAOEstacion extends AbstractDAO
                 }
             } catch (Exception e) {
                 e.printStackTrace();
-                System.err.println("IMPOSIBLE_CERRAR_CONEXION");
+                this.logger.error("No se ha podido cerrar la conexión para consultar la ocupación de la estación: {}", e.getMessage());
             }
         }
         return ocupacion;

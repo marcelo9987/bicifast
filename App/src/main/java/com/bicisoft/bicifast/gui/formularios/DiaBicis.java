@@ -4,6 +4,7 @@ import com.bicisoft.bicifast.aplicacion.Bicicleta;
 import com.bicisoft.bicifast.aplicacion.Estacion;
 import com.bicisoft.bicifast.aplicacion.FachadaAplicacion;
 import com.bicisoft.bicifast.gui.modelos.modeloListaBicicletas;
+import com.bicisoft.bicifast.misc.Internacionalizacion;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,7 +15,7 @@ import java.util.ResourceBundle;
  * Diálogo que muestra las bicicletas disponibles en una estación
  */
 
-final class DiaBicis extends JDialog {
+public final class DiaBicis extends JDialog {
 
     private final Estacion          estacionUsada;
     private final FachadaAplicacion fa;
@@ -22,13 +23,14 @@ final class DiaBicis extends JDialog {
     private       JList<String>     jlistBicisDisponibles;
     private       JLabel            lblNombreEstacion;
 
-    DiaBicis(JFrame parent, boolean modal, FachadaAplicacion fa, Estacion estacion) {
+
+    public DiaBicis(JFrame parent, boolean modal, FachadaAplicacion fa, Estacion estacion) {
         super(parent, modal);
         this.fa = fa;
         this.rb = fa.pedirBundle();
         this.estacionUsada = estacion;
         this.setLocationRelativeTo(null);
-        this.initComponents();
+        this._lanzarInterfaz();
 
         String ubicacion = estacion.ubicacion();
         this.lblNombreEstacion.setText(ubicacion);
@@ -37,7 +39,7 @@ final class DiaBicis extends JDialog {
         this.pack();
     }
 
-    private void initComponents() {
+    private void _lanzarInterfaz() {
 
         JPanel      jpanPanelPrincipal = new JPanel();
         JScrollPane jScrollPane1       = new JScrollPane();

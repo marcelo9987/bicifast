@@ -2,6 +2,8 @@ package com.bicisoft.bicifast.basededatos;
 
 import com.bicisoft.bicifast.aplicacion.*;
 import com.bicisoft.bicifast.misc.Criptografia;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -16,10 +18,12 @@ final class DAOUsuario extends AbstractDAO {
     //---- CONSTANTES ----
     private final static Boolean DEBUG = false;
 
-    DAOUsuario(Connection conexion, FachadaAplicacion fa) {
+    //---- LOGGER ----
+    private final Logger logger = LoggerFactory.getLogger(DAOUsuario.class);
+
+    DAOUsuario(Connection conexion) {
         super();
         this.setConexion(conexion);
-        this.setFachadaAplicacion(fa);
     }
 
 
@@ -31,12 +35,12 @@ final class DAOUsuario extends AbstractDAO {
      * @return Usuario objeto Usuario con los datos del usuario validado
      */
     Usuario validarUsuario(String email, String contrasenha) {
-        System.out.println("email a validar: " + email);
+        logger.info("email a validar: {}", email);
         Usuario usuarioResultante = null;
 
         String hashContrasenha = Criptografia.encriptar(contrasenha);
         if (DAOUsuario.DEBUG) {
-            System.out.println("[DEBUG] Hash de la contrasenha: " + hashContrasenha);
+            logger.debug("[DEBUG] Hash de la contrasenha: {}", hashContrasenha);
         }
 
         ResultSet  rsUsuario;
@@ -73,7 +77,7 @@ final class DAOUsuario extends AbstractDAO {
                 if (rsUsuario.next()) {
                     String contrasinal = rsUsuario.getString("contrasenha");
                     if (Criptografia.verificar(contrasenha, contrasinal)) {
-                        System.out.println("[DEBUG] La contraseña coincide con la almacenada en la base de datos.");
+                        logger.debug("La contraseña coincide con la almacenada en la base de datos.");
 //                    TipoUsuario tipo = TipoUsuario.valueOf(rsUsuario.getString("tipo_usuario"));
                         TipoUsuario tipo = switch (rsUsuario.getString("tipo_usuario")) {
                             case "NORMAL" -> TipoUsuario.NORMAL;
@@ -83,7 +87,7 @@ final class DAOUsuario extends AbstractDAO {
                         };
 
                         if (TipoUsuario.NO_DEFINIDO == tipo) {
-                            System.err.println("[ERROR] El usuario no tiene un tipo definido.");
+                            logger.error("El usuario no tiene un tipo definido.");
                             return null;
                         }
 
@@ -110,22 +114,30 @@ final class DAOUsuario extends AbstractDAO {
 
                     }
                     else {
-                        System.err.println("[ERROR] La contraseña no coincide con la almacenada en la base de datos.");
+                        logger.error("La contraseña no coincide con la almacenada en la base de datos.");
                         return null;
                     }
                 }
                 else {
-                    System.err.println("[ERROR] No se ha encontrado el usuario con el email: " + email);
+                    logger.error("No se ha encontrado el usuario con el email: {}", email);
                     return null;
                 }
             } catch (Exception e) {
-                System.out.println("Algo ha fallado en la consulta para validar el usuario.  Más detalles: " + e.getMessage());
+                _logarFalloValidacionConsulta(e);
             }
         } catch (SQLException e) {
-            System.out.println("Imposible cerrar cursores");
+            _logarNoHePodidoCerrarCursores();
         }
 
         return usuarioResultante;
+    }
+
+    private void _logarFalloValidacionConsulta(Exception e) {
+        logger.warn("Algo ha fallado en la consulta para validar el usuario.  Más detalles: {}", e.getMessage());
+    }
+
+    private void _logarNoHePodidoCerrarCursores() {
+        logger.error("Imposible cerrar cursores.");
     }
 
     /**
@@ -151,23 +163,31 @@ final class DAOUsuario extends AbstractDAO {
                 if (rsUsuario.next()) {
                     boolean tieneBici = rsUsuario.getInt(1) > 0;
                     if (tieneBici) {
-                        System.out.println("[DEBUG] El usuario tiene una bici en uso.");
+                        _logarUsuarioBiciEnUso();
                     }
                     else {
-                        System.out.println("[DEBUG] El usuario no tiene una bici en uso.");
+                        logger.debug("El usuario no tiene una bici en uso.");
                     }
                     return tieneBici;
                 }
-                System.err.println("[ERROR] No se ha encontrado el usuario con el id: " + usuarioLogado.idUsuario());
+                _quejarseNoExisteUsuario(usuarioLogado);
                 System.exit(-1);
 
             } catch (Exception e) {
-                System.out.println("Algo ha fallado en la consulta para validar el usuario.  Más detalles: " + e.getMessage());
+                _logarFalloValidacionConsulta(e);
             }
         } catch (SQLException e) {
-            System.out.println("Imposible cerrar cursores");
+            _logarNoHePodidoCerrarCursores();
         }
         return false;
+    }
+
+    private void _logarUsuarioBiciEnUso() {
+        logger.debug("El usuario tiene una bici en uso.");
+    }
+
+    private void _quejarseNoExisteUsuario(Usuario usuarioLogado) {
+        logger.error("No se ha encontrado el usuario con el id: {}", usuarioLogado.idUsuario());
     }
 
     /**
@@ -202,7 +222,7 @@ final class DAOUsuario extends AbstractDAO {
                 rsUsuario = stmUsuario.executeQuery();
 
                 if (rsUsuario.next()) {
-                    System.out.println("[DEBUG] El usuario tiene una bici en uso.");
+                    _logarUsuarioBiciEnUso();
                     Bicicleta bici = new Bicicleta(
                             rsUsuario.getInt("id"),
                             new Estacion(
@@ -213,19 +233,19 @@ final class DAOUsuario extends AbstractDAO {
                             EstadoBicicleta.valueOf(rsUsuario.getString("estado"))
 
                     );
-                    System.out.println("[DEBUG] La bicicleta es: " + bici);
+                    logger.debug("La bicicleta es: {}", bici);
                     return bici;
 
                 }
                 else {
-                    System.err.println("[ERROR] No se ha encontrado el usuario con el id: " + usuarioLogado.idUsuario());
+                    _quejarseNoExisteUsuario(usuarioLogado);
                     System.exit(-1);
                 }
             } catch (Exception e) {
-                System.out.println("Algo ha fallado en la consulta para validar el usuario.  Más detalles: " + e.getMessage());
+                _logarFalloValidacionConsulta(e);
             }
         } catch (SQLException e) {
-            System.out.println("Imposible cerrar cursores");
+            _logarNoHePodidoCerrarCursores();
         }
         return null;
     }

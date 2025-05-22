@@ -8,7 +8,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.util.ResourceBundle;
 
-final class DiaUsuario extends JDialog {
+public final class DiaUsuario extends JDialog {
 
     private final Usuario            usuario;
     private final ResourceBundle     textos;
@@ -16,7 +16,7 @@ final class DiaUsuario extends JDialog {
     private       GridBagConstraints gbc;
     private       int                fila;
 
-    DiaUsuario(JFrame parent, FachadaAplicacion fa) {
+    public DiaUsuario(JFrame parent, FachadaAplicacion fa) {
         super(parent, fa.pedirBundle().getString("datos.do.usuario"), true);
         this.usuario = fa.usuario();
         this.textos = fa.pedirBundle();
@@ -78,5 +78,4 @@ final class DiaUsuario extends JDialog {
         this.dispose();
     }
 }
-
 

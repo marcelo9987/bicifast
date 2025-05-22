@@ -48,8 +48,8 @@ public final class Bicicleta {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (!(o instanceof Bicicleta bicicleta)) {
+    public boolean equals(Object obj) {
+        if (!(obj instanceof Bicicleta bicicleta)) {
             return false;
         }
 

@@ -5,38 +5,32 @@ import com.bicisoft.bicifast.misc.Criptografia;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.slf4j.Logger;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class DAOViajeTest {
-    private static final String GESTOR    = "mysql";
-    private static final String SERVIDOR  = "localhost";
-    private static final String PUERTO    = "3306";
-    private static final String     BASEDATOS = "bicifast";
+    private static final String     GESTOR         = "mysql";
+    private static final String     SERVIDOR       = "46.101.113.177";
+    private static final String     PUERTO         = "3306";
+    private static final String     BASEDATOS      = "BiciTest";
     private              Connection conexion;
     private              DAOViaje   daoViaje;
-    private int      idEstacionTest = 999;
-    private int          idBiciTest     = 999;
-    private int          idUsuarioTest  = 999;
-    private int         idViajeTest    = 999;
+    private              int        idEstacionTest = 1;
+    private              int        idBiciTest     = 1;
+    private              int        idUsuarioTest  = 1;
+    private              int        idViajeTest    = 1;
+    private final Logger logger = org.slf4j.LoggerFactory.getLogger(DAOViajeTest.class);
 
     @BeforeEach
-    void setUp() throws SQLException
-    {
+    void setUp() throws SQLException {
         // Conexión a la base de datos
-        conexion = java.sql.DriverManager.getConnection("jdbc:" + GESTOR + "://" + SERVIDOR + ":" + PUERTO + "/" + BASEDATOS, "root", "root");
+        conexion = DriverManager.getConnection("jdbc:" + GESTOR + "://" + SERVIDOR + ":" + PUERTO + "/" + BASEDATOS, "test", "test");
 
-        // Eliminar si ya existen (respectando dependencias)
-        conexion.createStatement().executeUpdate("DELETE FROM viaje WHERE usuario = " + idUsuarioTest);
-        conexion.createStatement().executeUpdate("DELETE FROM bicicleta WHERE id = " + idBiciTest);
-        conexion.createStatement().executeUpdate("DELETE FROM estacion WHERE id = " + idEstacionTest);
-        conexion.createStatement().executeUpdate("DELETE FROM usuario WHERE id = " + idUsuarioTest);
+        this.logger.debug("Conectando a la base de datos: " + GESTOR + "://" + SERVIDOR + ":" + PUERTO + "/" + BASEDATOS);
 
         // Insertar estación
         PreparedStatement ps = conexion.prepareStatement("INSERT INTO estacion (id, ubicacion, aforo) VALUES (?, ?, ?)");
@@ -79,29 +73,32 @@ class DAOViajeTest {
         ps.executeUpdate();
         ps.close();
 
-        // Crear DAO
-        FachadaAplicacion faDummie = new FachadaAplicacion() {
-        };
-        daoViaje = new DAOViaje(conexion, faDummie);
 
+        daoViaje = new DAOViaje(conexion);
 
+        this.logger.debug("Conexión a la base de datos establecida correctamente");
 
     }
 
     @AfterEach
     void tearDown() throws SQLException {
+        this.logger.debug("Cerrando conexión a la base de datos");
         Statement st = conexion.createStatement();
-        st.executeUpdate("DELETE FROM viaje WHERE usuario = " + idUsuarioTest);
-        st.executeUpdate("DELETE FROM bicicleta WHERE id = " + idBiciTest);
-        st.executeUpdate("DELETE FROM estacion WHERE id = " + idEstacionTest);
-        st.executeUpdate("DELETE FROM usuario WHERE id = " + idUsuarioTest);
+
+        // Restablecer todas las tablas a su estado original
+        st.executeUpdate("DELETE FROM viaje");
+        st.executeUpdate("DELETE FROM bicicleta");
+        st.executeUpdate("DELETE FROM estacion");
+        st.executeUpdate("DELETE FROM usuario");
         st.close();
         conexion.close();
     }
 
     @Test
-    void devolverBicicleta()
-    {
+    void devolverBicicleta() {
+        logger.debug("INICIANDO PRUEBA de devolución de bicicleta");
+
+
         Estacion  estacion  = new Estacion(idEstacionTest, "Estación Test", 10);
         Bicicleta bicicleta = new Bicicleta(idBiciTest, estacion, EstadoBicicleta.CORRECTO);
         //         Usuario prueba = new Usuario(1, "Juan", "Alfonso", "Ramirez", "41111111Y", "a@a.a", "a", new java.sql.Date(new SimpleDateFormat("dd-MM-yyyy").parse("15-05-2025").getTime()), "666666660", "$2b$12$YVPWtgnr2qrV0Epb.owGue58eGWapAFc8Mi3edI9xMVZmCMx/uuoG", MetodoPago.TARJETA, new Date(new SimpleDateFormat("dd-MM-yyyy").parse("15-05-2025").getTime()), new Date(new SimpleDateFormat("dd-MM-yyyy").parse("14-06-2025").getTime()), TipoUsuario.NORMAL);
@@ -109,11 +106,13 @@ class DAOViajeTest {
 
         boolean resultado = daoViaje.devolverBicicleta(usuario, bicicleta, estacion);
         assertTrue(resultado, "La devolución debería completarse correctamente: " + resultado);
+
+        this.logger.debug("TEST PASADO: Prueba de devolución de bicicleta completada con éxito");
     }
 
     @Test
-    void ningunaBicicletaReservada()
-    {
+    void ningunaBicicletaReservada() {
+        logger.debug("INICIANDO PRUEBA de devolución de bicicleta sin reserva");
         Estacion  estacion  = new Estacion(idEstacionTest, "Estación Test", 10);
         Bicicleta bicicleta = new Bicicleta(idBiciTest, estacion, EstadoBicicleta.CORRECTO);
         //         Usuario prueba = new Usuario(1, "Juan", "Alfonso", "Ramirez", "41111111Y", "a@a.a", "a", new java.sql.Date(new SimpleDateFormat("dd-MM-yyyy").parse("15-05-2025").getTime()), "666666660", "$2b$12$YVPWtgnr2qrV0Epb.owGue58eGWapAFc8Mi3edI9xMVZmCMx/uuoG", MetodoPago.TARJETA, new Date(new SimpleDateFormat("dd-MM-yyyy").parse("15-05-2025").getTime()), new Date(new SimpleDateFormat("dd-MM-yyyy").parse("14-06-2025").getTime()), TipoUsuario.NORMAL);
@@ -132,5 +131,6 @@ class DAOViajeTest {
         // Intentar devolver la bicicleta
         boolean resultado = daoViaje.devolverBicicleta(usuario, bicicleta, estacion);
         assertFalse(resultado, "No debería poder devolver una bicicleta que no está reservada: " + resultado);
+        this.logger.debug("TEST PASADO: Prueba de devolución de bicicleta sin reserva completada con éxito");
     }
 }

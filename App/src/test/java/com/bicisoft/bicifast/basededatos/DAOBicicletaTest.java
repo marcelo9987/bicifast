@@ -2,7 +2,6 @@ package com.bicisoft.bicifast.basededatos;
 
 import com.bicisoft.bicifast.aplicacion.*;
 import com.bicisoft.bicifast.misc.Criptografia;
-import com.bicisoft.bicifast.misc.Internacionalizacion;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -80,8 +79,7 @@ class DAOBicicletaTest {
         ps.close();
         st.close();
 
-        FachadaAplicacion faDummie = new FachadaAplicacion() {
-        };
+
         daoBicicleta = new DAOBicicleta(conexion);
     }
 

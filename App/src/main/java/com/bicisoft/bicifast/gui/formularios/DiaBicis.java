@@ -4,7 +4,6 @@ import com.bicisoft.bicifast.aplicacion.Bicicleta;
 import com.bicisoft.bicifast.aplicacion.Estacion;
 import com.bicisoft.bicifast.aplicacion.FachadaAplicacion;
 import com.bicisoft.bicifast.gui.modelos.modeloListaBicicletas;
-import com.bicisoft.bicifast.misc.Internacionalizacion;
 
 import javax.swing.*;
 import java.awt.*;

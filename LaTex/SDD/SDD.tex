@@ -4,6 +4,8 @@
 \usepackage{graphicx}
 % Create clickable links in the pdf
 \usepackage[bookmarks=true,pdfborder={0 0 0}]{hyperref}
+
+\usepackage{csquotes}
 % Format links
 \usepackage{url}
 
@@ -40,7 +42,13 @@
 \subsubsectionfont{\color{blue2}}
 
 \usepackage[spanish]{babel}
+\usepackage{amsmath}
 
+% --- Personalización de nombres para figuras y tablas en español ---
+\renewcommand{\figurename}{Figura}
+\renewcommand{\figureautorefname}{Figura}
+\renewcommand{\tablename}{Tabla}
+\renewcommand{\tableautorefname}{Tabla}
 
 % Set the color of the Table of Contents header to black
 \renewcommand{\contentsname}{\textcolor{black}{Table of Contents}}
@@ -70,11 +78,15 @@
     Este documento describe el diseño del sistema de software para este proyecto.
     Se propondrán soluciones para los problemas de diseño y se describirán las decisiones de diseño tomadas.
     El documento de diseño del sistema (SDD) es un documento de referencia para el diseño del sistema de software y la arquitectura del software.
-    Es un documento vinculante para el desarrollo del software y la implementación de los subsistemas.\autocite{identifier}
+    Es un documento vinculante para el desarrollo del software y la implementación de los subsistemas.
+
+    El contenido de este documento sigue y se ajusta a los requisitos especificados en el IEEE 1016--1998\autocite{IEEE1016-1998}
+
 
     % Set the Table of Contents depth and inert the ToC.
     \setcounter{tocdepth}{2}
     \tableofcontents
+
 
     \section{Introducción}\label{sec:introduccion}
     % Content: The purpose of the Introduction is to provide a brief overview of the software architecture. 
@@ -88,25 +100,135 @@
     \printbibliography
 
 
+    \section{Objetivos de diseño}\label{sec:objetivos-de-diseno}
+    Para diseñar este sistema, se ha priorizado:
+    \begin{enumerate}
+        \item \textbf{Modularidad:} Hacer que las partes del sistema sean independientes entre ellas, permitiendo la fácil modificación de los módulos.
+        \item \textbf{Simplicidad:} Hacer que el sistema sea fácil de entender y de usar.
+        \item \textbf{Separación de responsabilidades:} Separar las diferentes partes del sistema en módulos independientes, cada uno con su propia responsabilidad.
+        \item \textbf{Escalabilidad:} Hacer que el sistema sea fácil de escalar y de modificar en el futuro.
+    \end{enumerate}
 
-    \section{Design Goals}
-    % Content: This section describes the design goals and their prioritization (e.g. usability over extensibility). These are additional nonfunctional requirements that are of interest to the developers. Any trade-offs between design goals  (e.g., usability vs. functionality, build vs. buy, memory space vs. response time), and the rationale behind the specific solution should be described in this section. Also the rationale of all other decisions must be consistent with described design goals.
-    % NOTE: You may find a description list snippet at the end of this document.
+
+
+    \section{Composición del sistema, arquitectura y capas}\label{sec:composicion-del-sistema-arquitectura-y-capas}
+    La aplicación sigue una arquitectura por capas, añadiendo el patrón \textquote{Façade} para la comunicación entre capas.
+    El objetivo de dicha arquitectura es facilitar el desarrollo, mantenimiento y escalabilidad de la aplicación.
+
+    \subsection{Capas del sistema y sus responsabilidades}\label{subsec:capas-del-sistema}
+    \begin{itemize}
+        \item \textbf{Capa de presentación:} Gestiona la interacción con el exterior (usuarios) y muestra información, centralizando mediante \textit{FachadaAplicacion}.
+        Las operaciones de esta capa son canalizadas a través de la \textit{FachadaGUI}, que es la responsable de la interfaz de usuario.
+        \item \textbf{Capa aplicación:} Es la capa de coordinación entre la capa de presentación y la capa de negocio.
+        A ella la GUI le envía las peticiones de los usuarios y el estado de la aplicación.
+        Delegando en la capa de negocio (Control) la lógica de negocio.
+        \item \textbf{Capa de control:} Contiene la lógica de negocio y las reglas de negocio.
+        Centralizada en \textit{ControladorAplicacion}, controla el flujo de la aplicación y delega en los \textit{Controladores} específicos de cada módulo.
+        Esta capa es la responsable de la persistencia de los datos, delegando en el módulo \textit{Capa de datos} la gestión de la base de datos.
+        \item{\textbf{Capa de datos:}} Contiene la lógica de acceso a datos y la persistencia de los mismos.
+        Esta capa es la responsable de la gestión de la base de datos y de la persistencia de los datos.
+        Hace uso de \textit{DAO} (Data Access Object) para la gestión de la base de datos.
+        Está centralizada en \textit{FachadaBaseDatos}, que es la responsable de la gestión de la base de datos.
+    \end{itemize}
+
+    \subsection{Diagrama de capas/arquitectura}\label{subsec:diagrama-de-capas}
+    La \autoref{fig:diagrama_arquitectura_simple_paquetes} muestra la arquitectura de capas del sistema, mostrando las principales fachadas que conectan cada capa y las relaciones entre ellas.
+    Estas fachadas encapsulan la funcionalidad de cada capa, promoviendo el desacoplamiento y la claridad en el flujo de datos.
+
+    \begin{figure}[hbt]
+        \centering
+        \includegraphics[width=0.59 \linewidth,keepaspectratio]{imagenes/bicifast}
+        \caption[Diagrama de arquitectura]{Diagrama de arquitectura por capas}
+        \label{fig:diagrama_arquitectura_simple_paquetes}
+    \end{figure}
+
+    \subsection{Componentes identificados y sus responsabilidades}\label{subsec:componentes-identificados-y-sus-responsabilidades}
+    Después de hacer un análisis de los requisitos funcionales y no funcionales,
+    hemos definido los siguientes componentes y sus responsabilidades:
+
+    \subsubsection{Componentes identificados}
+    \begin{itemize}
+        \item \textbf{Formularios de la GUI:} Son los responsables de la interacción con el usuario y de la presentación de la información.
+        \item \textbf{Controladores (Servicios y lógica de negocio):} Gestionan la lógica de la aplicación e interceden entre los DAO y la interfaz gráfica.
+        \item \textbf{DAO:} Se encargan de «hablar» con la base de datos.
+                            Permiten encapsular y abstraer la base de datos y a los datos mismos de la lógica de la aplicación.
+        \item \textbf{Base de datos:} Gestiona los datos «permanentes».
+    \end{itemize}
+
+    \subsubsection{Responsabilidades}
+    Para cada componente, hemos identificado las siguientes responsabilidades funcionales:
+    \begin{description}
+        \item[\textbf{GUI (Presentación)}]
+        \begin{itemize}
+            \item Mostrar la interfaz gráfica.
+            \item Gestionar las diferentes vistas.
+        \end{itemize}
+        \item[\textbf{Controladores (Servicios)}]
+        \begin{itemize}
+            \item Gestionar usuarios.
+            \item Autentificar.
+            \item Cambiar datos.
+            \item Gestionar alquileres.
+            \item Gestionar la criptografía.
+        \end{itemize}
+        \item[\textbf{DAOs (Data Access Object)}]
+        \begin{itemize}
+            \item Hacer consultas a la base de datos.
+            \item Modificar la base de datos.
+            \item Eliminar entradas de la base de datos.
+        \end{itemize}
+        \item[\textbf{Base de datos (Persistencia)}]
+        \begin{itemize}
+            \item Guardar los datos de:
+            \begin{itemize}
+                \item Usuarios
+                \item Bicicletas
+                \item Estaciones
+                \item Alquileres
+            \end{itemize}
+        \end{itemize}
+    \end{description}
+
+
+    \subsection{Dependencias y flujos de control}\label{subsec:dependencias-y-flujos-de-control}
+    El flujo habitual de control de la aplicación es el que se muestra en la \autoref{fig:flujo_control}.
+    \begin{figure}[hbpt]
+        \centering
+        \fbox
+        {
+        \( \text{[GUI]} \rightarrow \text{[FachadaAplicacion]} \rightarrow \text{[FachadaControl]} \rightarrow \text{[Gestores / BD]} \)
+        }
+        \caption[Flujo de control]{Flujo de control}
+        \label{fig:flujo_control}
+    \end{figure}
+    En este flujo, la \textit{GUI} envía una petición a la \textit{FachadaAplicacion}, que delega en la \textit{FachadaControl} para que gestione la petición y
+    pueda solicitar a la \textit{FachadaBaseDatos} el acceso/almacenamiento de datos en la base de datos.
+
+    Ciertamente, existen algunas dependencias cíclicas entre las clases de la capa de presentación, la fachada de presentación
+    y la fachada de aplicación, ya que la \textit{FachadaAplicacion} necesita conocer la \textit{FachadaGUI} para poder enviarle mensajes.
+    Puede parecer alarmante, pero no es un problema, ya que el ciclo ocurre principalmente dentro de la capa de presentación y no afecta a la lógica de negocio.
+    Además, las llamadas desde la \textit{FachadaAplicacion} a la \textit{FachadaGUI} son para situaciones muy específicas, como cambiar el idioma o relanzar la interfaz.
 
 
 
-    \section{Subsystem decomposition}
-    % Content: This section describes the decomposition of the system into subsystems and the services provided by each subsystem.
+
+    \subsection{Rationale de la arquitectura}\label{subsec:justificacion-de-la-arquitectura}
+    La elección de la arquitectura por capas se ha tomado por su capacidad de desacoplar y diferencias las responsabilidades de las distintas capas.
+    Gracias a esta arquitectura, este sistema gana mayor facilidad de mantenimiento, escalabilidad y modularidad.
 
 
+    Por otro lado, la elección del patrón \textit{Façade} se ha tomado por su capacidad de simplificar la interfaz de las capas y facilitar la comunicación entre ellas.
+    Este patrón permite ocultar la complejidad de las capas y proporcionar una interfaz más sencilla y fácil de usar.
+    El otro patrón utilizado es el \textit{DAO}, que centraliza y separa el acceso a datos en módulos específicos.
+    Evitando malas prácticas como el acceso directo a la base de datos desde la capa de presentación o la capa de negocio.
 
     \section{Hardware/software mapping}
     % Content: This section describes how the subsystems are mapped onto existing hardware and software components. A UML deployment diagram accompanies the description. The existing components are often off-the-shelf components. If the components are distributed on different nodes, the network infrastructure and the protocols are also described.
     % NOTE: You may find a figure snippet at the end of this document.
 
+
     \section{Persistent data management} % Optional
     % Content: This section describes how the entity objects are mapped to persistent storage. It contains a rationale of the selected storage scheme, file system or database, a description of the selected database and database administration issues.
-
 
 
     \section{Access control and security} % Optional
@@ -117,9 +239,9 @@
     % Content: This section describes the control flow of the system, in particular, whether a monolithic, event-driven control flow or concurrent processes have been selected, how requests are initiated and specific synchronization issues.
 
 
-
     \section{Boundary conditions} % Optional
     % Content: This section describes the use cases how to start up the separate components of the system, how to shut them down, and what to do if a component or the system fails.
 
 
 \end{document}
+

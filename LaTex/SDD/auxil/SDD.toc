@@ -1,0 +1,18 @@
+\babel@toc {spanish}{}\relax 
+\contentsline {section}{\numberline {1}Introducción}{2}{section.1}%
+\contentsline {subsection}{\numberline {1.1}Overview}{2}{subsection.1.1}%
+\contentsline {subsection}{\numberline {1.2}Definitions, acronyms, and abbreviations}{2}{subsection.1.2}%
+\contentsline {section}{\numberline {2}Design Goals}{2}{section.2}%
+\contentsline {section}{\numberline {3}Composición del sistema, arquitectura y capas}{2}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Capas del sistema y sus responsabilidades}{2}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}Diagrama de capas/arquitectura}{3}{subsection.3.2}%
+\contentsline {subsection}{\numberline {3.3}Componentes identificados y sus responsabilidades}{4}{subsection.3.3}%
+\contentsline {subsubsection}{\numberline {3.3.1}Componentes identificados}{4}{subsubsection.3.3.1}%
+\contentsline {subsubsection}{\numberline {3.3.2}Responsabilidades}{4}{subsubsection.3.3.2}%
+\contentsline {subsection}{\numberline {3.4}Dependencias y flujos de control}{5}{subsection.3.4}%
+\contentsline {subsection}{\numberline {3.5}Justificación de la arquitectura (Rationale)}{5}{subsection.3.5}%
+\contentsline {section}{\numberline {4}Hardware/software mapping}{5}{section.4}%
+\contentsline {section}{\numberline {5}Persistent data management}{5}{section.5}%
+\contentsline {section}{\numberline {6}Access control and security}{5}{section.6}%
+\contentsline {section}{\numberline {7}Global software control}{6}{section.7}%
+\contentsline {section}{\numberline {8}Boundary conditions}{6}{section.8}%

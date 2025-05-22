@@ -2,7 +2,6 @@ package com.bicisoft.bicifast.aplicacion;
 
 import com.bicisoft.bicifast.control.FachadaControl;
 import com.bicisoft.bicifast.gui.FachadaGUI;
-import com.bicisoft.bicifast.gui.formularios.VPrincipalUsuario;
 import com.bicisoft.bicifast.misc.Internacionalizacion;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -18,12 +18,12 @@ class DAOViajeTest {
     private static final String     PUERTO         = "3306";
     private static final String     BASEDATOS      = "BiciTest";
     private              Connection conexion;
-    private              DAOViaje   daoViaje;
-    private              int        idEstacionTest = 1;
-    private              int        idBiciTest     = 1;
-    private              int        idUsuarioTest  = 1;
-    private              int        idViajeTest    = 1;
-    private final Logger logger = org.slf4j.LoggerFactory.getLogger(DAOViajeTest.class);
+    private       DAOViaje daoViaje;
+    private final int      idEstacionTest = 1;
+    private final int      idBiciTest     = 1;
+    private final int    idUsuarioTest = 1;
+    private final int    idViajeTest   = 1;
+    private final Logger logger        = org.slf4j.LoggerFactory.getLogger(DAOViajeTest.class);
 
     @BeforeEach
     void setUp() throws SQLException {

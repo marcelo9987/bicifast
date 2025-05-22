@@ -1,6 +1,5 @@
 package com.bicisoft.bicifast;
 import com.bicisoft.bicifast.aplicacion.FachadaAplicacion;
-import com.bicisoft.bicifast.misc.Internacionalizacion;
 
 
 /**

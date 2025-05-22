@@ -17,7 +17,7 @@ import java.util.ResourceBundle;
  * Diálogo que permite seleccionar el idioma de la aplicación.
  */
 
-final class VIdioma extends javax.swing.JDialog {
+public final class VIdioma extends javax.swing.JDialog {
     private final FachadaAplicacion             fa;
     private final ResourceBundle                rb;
     private       javax.swing.JComboBox<String> jComboBox1;
@@ -25,7 +25,7 @@ final class VIdioma extends javax.swing.JDialog {
     /**
      * Crea un nuevo diálogo de selección de idioma.
      */
-    VIdioma(JFrame parent, boolean modal, FachadaAplicacion fa) {
+    public VIdioma(JFrame parent, boolean modal, FachadaAplicacion fa) {
         super(parent, modal);
         this.fa = fa;
         this.rb = fa.pedirBundle();

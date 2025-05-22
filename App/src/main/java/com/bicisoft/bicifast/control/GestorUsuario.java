@@ -2,13 +2,19 @@ package com.bicisoft.bicifast.control;
 
 import com.bicisoft.bicifast.aplicacion.Usuario;
 import com.bicisoft.bicifast.basededatos.FachadaBaseDatos;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *  Gestiona los usuarios.
  */
 public final class GestorUsuario {
 
+    //--- FAÇADAS ---
     private final FachadaBaseDatos fbd;
+
+    //---- LOGGER ----
+    private static final Logger logger = LoggerFactory.getLogger(GestorUsuario.class);
 
 
     /**
@@ -29,7 +35,7 @@ public final class GestorUsuario {
     public Usuario comprobarLogin(String email, String contrasenha)
     {
         Usuario usuario_obtenido =  fbd.validarUsuario(email, contrasenha);
-        System.out.println("[DEBUG] Usuario obtenido: " + usuario_obtenido);
+        logger.debug("Usuario obtenido: {}", usuario_obtenido);
         return usuario_obtenido;
     }
 
@@ -43,7 +49,7 @@ public final class GestorUsuario {
         if (usuarioLogado != null) {
             return fbd.usuarioTieneBiciEnUso(usuarioLogado);
         } else {
-            System.out.println("[DEBUG] Usuario no logado");
+            logger.debug("Usuario no logado");
             return false;
         }
     }

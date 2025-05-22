@@ -32,15 +32,15 @@ public final class Usuario {
      * @param dni                DNI del usuario
      * @param email              Email del usuario
      * @param direccion          Dirección del usuario
-     * @param fecha_nacimiento   Fecha de nacimiento del usuario
+     * @param fechaNacimiento   Fecha de nacimiento del usuario
      * @param telefono           Teléfono del usuario
      * @param contrasenha        Contraseña del usuario
      * @param metodoPago         Método de pago del usuario
-     * @param inicio_suscripcion Fecha de inicio de la suscripción del usuario
-     * @param fin_suscripcion    Fecha de fin de la suscripción del usuario
+     * @param inicioSuscripcion Fecha de inicio de la suscripción del usuario
+     * @param finSuscripcion    Fecha de fin de la suscripción del usuario
      * @param tipoUsuario        Tipo de usuario
      */
-    public Usuario(int id, String nombre, String apellido1, String apellido2, String dni, String email, String direccion, Date fecha_nacimiento, String telefono, String contrasenha, MetodoPago metodoPago, Date inicio_suscripcion, Date fin_suscripcion, TipoUsuario tipoUsuario) {
+    public Usuario(int id, String nombre, String apellido1, String apellido2, String dni, String email, String direccion, Date fechaNacimiento, String telefono, String contrasenha, MetodoPago metodoPago, Date inicioSuscripcion, Date finSuscripcion, TipoUsuario tipoUsuario) {
         super();
         this.idUsuario = id;
         this.nombre = nombre;
@@ -49,34 +49,32 @@ public final class Usuario {
         this.dni = dni;
         this.email = email;
         this.direccion = direccion;
-        this.fecha_nacimiento = fecha_nacimiento;
+        this.fecha_nacimiento = fechaNacimiento;
         this.telefono = telefono;
         this.contrasenha = contrasenha;
         this.metodoPago = metodoPago;
-        this.inicio_suscripcion = inicio_suscripcion;
-        this.fin_suscripcion = fin_suscripcion;
+        this.inicio_suscripcion = inicioSuscripcion;
+        this.fin_suscripcion = finSuscripcion;
         this.tipoUsuario = tipoUsuario;
     }
 
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder("Usuario{");
-        sb.append("apellido1='").append(apellido1).append('\'');
-        sb.append(", idUsuario=").append(idUsuario);
-        sb.append(", nombre='").append(nombre).append('\'');
-        sb.append(", apellido2='").append(apellido2).append('\'');
-        sb.append(", dni='").append(dni).append('\'');
-        sb.append(", email='").append(email).append('\'');
-        sb.append(", direccion='").append(direccion).append('\'');
-        sb.append(", fecha_nacimiento=").append(fecha_nacimiento);
-        sb.append(", telefono='").append(telefono).append('\'');
-        sb.append(", contrasenha='").append(contrasenha).append('\'');
-        sb.append(", metodoPago=").append(metodoPago);
-        sb.append(", inicio_suscripcion=").append(inicio_suscripcion);
-        sb.append(", fin_suscripcion=").append(fin_suscripcion);
-        sb.append(", tipoUsuario=").append(tipoUsuario);
-        sb.append('}');
-        return sb.toString();
+        return "Usuario{" + "apellido1='" + apellido1 + '\'' +
+                ", idUsuario=" + idUsuario +
+                ", nombre='" + nombre + '\'' +
+                ", apellido2='" + apellido2 + '\'' +
+                ", dni='" + dni + '\'' +
+                ", email='" + email + '\'' +
+                ", direccion='" + direccion + '\'' +
+                ", fecha_nacimiento=" + fecha_nacimiento +
+                ", telefono='" + telefono + '\'' +
+                ", contrasenha='" + contrasenha + '\'' +
+                ", metodoPago=" + metodoPago +
+                ", inicio_suscripcion=" + inicio_suscripcion +
+                ", fin_suscripcion=" + fin_suscripcion +
+                ", tipoUsuario=" + tipoUsuario +
+                '}';
     }
 
     /**

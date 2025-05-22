@@ -6,6 +6,7 @@ package com.bicisoft.bicifast.gui.formularios;
 
 import com.bicisoft.bicifast.aplicacion.Estacion;
 import com.bicisoft.bicifast.aplicacion.FachadaAplicacion;
+import com.bicisoft.bicifast.gui.FachadaGUI;
 import com.bicisoft.bicifast.gui.modelos.modeloTablaEstaciones;
 
 import javax.swing.*;
@@ -21,6 +22,7 @@ public final class VPrincipalUsuario extends JFrame {
 
     private final ResourceBundle    idioma;
     private final FachadaAplicacion fa;
+    private final FachadaGUI       fgui;
     private       JButton           btnDevolverBici;
     private       JCheckBox         chkBiciEnUso;
     private       JTable            tablaEstaciones;
@@ -30,9 +32,10 @@ public final class VPrincipalUsuario extends JFrame {
      *
      * @param fa Fachada de la aplicación.
      */
-    public VPrincipalUsuario(FachadaAplicacion fa) {
+    public VPrincipalUsuario(FachadaAplicacion fa, FachadaGUI fgui) {
         super();
         this.fa = fa;
+        this.fgui = fgui;
         this.idioma = fa.pedirBundle();
         this.initComponents();
         this._gestionarBicicletaEnUso();
@@ -183,21 +186,13 @@ public final class VPrincipalUsuario extends JFrame {
         modelo.setFilas(this.fa.preguntaLasEstaciones(), this.fa.preguntaLasBicicletasPorEstacion());
     }
 
-    private void btnConfigActionPerformed(ActionEvent evt) {//GEN-FIRST:event_btnConfigActionPerformed
-        // lanzo la interfaz de sel. de idioma
-        VIdioma idioma = new VIdioma(this, true, this.fa);
-        idioma.setLocationRelativeTo(null);
-        idioma.pack();
-        idioma.setVisible(true);
-
+    private void btnConfigActionPerformed(ActionEvent evt) {
+        this.fgui.lanzarSeleccionIdioma(this);
     }
 
-    private void btnPerfilActionPerformed(ActionEvent evt) {//GEN-FIRST:event_btnPerfilActionPerformed
-        DiaUsuario menuUsuario = new DiaUsuario(this, this.fa);
-        menuUsuario.setLocationRelativeTo(null);
-        menuUsuario.setVisible(true);
-
-    }//GEN-LAST:event_btnPerfilActionPerformed
+    private void btnPerfilActionPerformed(ActionEvent evt) {
+        this.fgui.lanzarPerfilUsuario(this);
+    }
 
     private void btnSalirActionPerformed(ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
         this.dispose();
@@ -229,10 +224,8 @@ public final class VPrincipalUsuario extends JFrame {
         }
 
         Estacion estacionSeleccionada = ((modeloTablaEstaciones) this.tablaEstaciones.getModel()).obtenerEstacion(index);
-        DiaBicis menuBicis            = new DiaBicis(this, true, this.fa, estacionSeleccionada);
-        menuBicis.setVisible(true);
-        menuBicis.pack();
-        menuBicis.setLocationRelativeTo(null);
+
+        this.fgui.lanzarMenuBicis(this, estacionSeleccionada);
 
     }
 

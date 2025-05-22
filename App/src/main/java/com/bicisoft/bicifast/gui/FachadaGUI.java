@@ -1,22 +1,34 @@
 package com.bicisoft.bicifast.gui;
 
+import com.bicisoft.bicifast.aplicacion.Estacion;
 import com.bicisoft.bicifast.aplicacion.FachadaAplicacion;
 import com.bicisoft.bicifast.aplicacion.TipoUsuario;
+import com.bicisoft.bicifast.gui.formularios.DiaBicis;
 import com.bicisoft.bicifast.gui.formularios.DiaLogin;
 import com.bicisoft.bicifast.gui.formularios.VPrincipalUsuario;
 import mdlaf.MaterialLookAndFeel;
 import mdlaf.themes.MaterialLiteTheme;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.swing.*;
+
+import com.bicisoft.bicifast.gui.formularios.VIdioma;
+import com.bicisoft.bicifast.gui.formularios.DiaUsuario;
 
 /**
  * Clase fachada de la GUI.
  */
 public final class FachadaGUI {
 
-    // -- ATRIBUTOS --
+    // -- LOGGER --
+    private static final Logger logger = LoggerFactory.getLogger(FachadaGUI.class);
+
+    // -- FAÇADA --
     private final FachadaAplicacion fa;
-    private       VPrincipalUsuario principal;
+
+    // -- ATRIBUTOS --
+    private VPrincipalUsuario principal;
 
     /**
      * Constructor de la fachada de la GUI.
@@ -31,14 +43,11 @@ public final class FachadaGUI {
     /**
      * Método que inicia la gui
      */
-    public void iniciarVista()
-    {
+    public void iniciarVista() {
 
-        try
-        {
+        try {
             UIManager.setLookAndFeel(new MaterialLookAndFeel(new MaterialLiteTheme()));
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -71,32 +80,32 @@ public final class FachadaGUI {
      */
     private void _escogerVentana(TipoUsuario tipoUsuario, boolean byPass) {
         if (byPass) {
-            System.out.println("[INFO] Procedo a permitir un acceso sin autenticar. Razón: I18nized");
-            System.out.println("[INFO] Si no se está cambiando el idioma, algo muy grave ha pasado.");
+            logger.warn("Procedo a permitir un acceso sin autenticar. Razón: I18nized");
+            logger.warn("Si no se está cambiando el idioma, algo muy grave ha pasado.");
         }
 
         switch (tipoUsuario) {
             case Admin -> {
                 // Lógica para el administrador
-                System.out.println("Acceso de Administrador");
+                logger.info("Acceso de Administrador");
                 JOptionPane.showMessageDialog(null, "Acceso de Administrador no implementado", "Error", JOptionPane.ERROR_MESSAGE);
             }
             case Mant -> {
                 // Lógica para el mantenimiento
-                System.out.println("Acceso de Mantenimiento");
+                logger.info("Acceso de Mantenimiento");
                 JOptionPane.showMessageDialog(null, "Acceso de Mantenimiento no implementado", "Error", JOptionPane.ERROR_MESSAGE);
             }
             case NORMAL -> {
                 // Lógica para el usuario normal
-                System.out.println("Acceso Normal");
-                this.principal = new VPrincipalUsuario(this.fa);
+                logger.info("Acceso Normal");
+                this.principal = new VPrincipalUsuario(this.fa,this);
                 this.principal.setVisible(true);
                 this.principal.pack();
                 this.principal.setLocationRelativeTo(null);
             }
             case null, default ->
                 // Lógica para el acceso no definido
-                    System.out.println("Acceso No Definido");
+                    logger.warn("Acceso No Definido");
         }
     }
 
@@ -109,5 +118,38 @@ public final class FachadaGUI {
 
         TipoUsuario nivelDeAcceso = this.fa.nivelAcceso();
         this._escogerVentana(nivelDeAcceso, true);
+    }
+
+    /**
+     * Método que lanza el menú de bicicletas
+     *
+     * @param vPrincipalUsuario    Ventana principal del usuario
+     * @param estacionSeleccionada Estación seleccionada
+     */
+    public void lanzarMenuBicis(JFrame vPrincipalUsuario, Estacion estacionSeleccionada){
+        DiaBicis menuBicis = new DiaBicis(vPrincipalUsuario, true, this.fa, estacionSeleccionada);
+        menuBicis.setVisible(true);
+        menuBicis.pack();
+        menuBicis.setLocationRelativeTo(null);
+    }
+
+    /**
+     * Método que lanza el diálogo de selección de idioma.
+     *
+     * @param parent Ventana principal del usuario
+     */
+    public void lanzarSeleccionIdioma(JFrame parent) {
+        VIdioma idioma = new VIdioma(parent, true, this.fa);
+        idioma.setVisible(true);
+    }
+
+    /**
+     * Método que lanza el diálogo de perfil de usuario.
+     *
+     * @param parent Ventana principal del usuario
+     */
+    public void lanzarPerfilUsuario(JFrame parent) {
+        DiaUsuario menuUsuario = new DiaUsuario(parent, this.fa);
+        menuUsuario.setVisible(true);
     }
 }

@@ -3,8 +3,9 @@ package com.bicisoft.bicifast.basededatos;
 
 import com.bicisoft.bicifast.aplicacion.Bicicleta;
 import com.bicisoft.bicifast.aplicacion.Estacion;
-import com.bicisoft.bicifast.aplicacion.FachadaAplicacion;
 import com.bicisoft.bicifast.aplicacion.Usuario;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -18,17 +19,18 @@ import java.util.Properties;
  */
 public final class FachadaBaseDatos {
 
-    private final DAOUsuario          daoUsuario;
+    private static final Logger log = LoggerFactory.getLogger(FachadaBaseDatos.class);
+    private final DAOUsuario daoUsuario;
     private final DAOEstacion         daoEstacion;
     private       java.sql.Connection conexion;
     private final DAOBicicleta        daoBicicleta;
     private final DAOViaje          daoViaje;
 
+
     /**
      * Constructor de la clase FachadaBaseDatos
-     * @param fa Fachada de la aplicacion
      */
-    public FachadaBaseDatos(FachadaAplicacion fa) {
+    public FachadaBaseDatos() {
         super();
         // ---- INICIALIZACIÓN DE VARIABLES ----
         // ---- CONEXIÓN A BB.DD. ----
@@ -60,16 +62,16 @@ public final class FachadaBaseDatos {
 
         } catch (SQLException | IOException exc) {
             String directorio = System.getProperty("user.dir");
-            System.out.println("Estoy en el dir:" + directorio);
+            log.debug("Estoy en el dir:{}", directorio);
             String mensaje = exc.getMessage();
-            System.out.println(mensaje);
+            log.debug(mensaje);
         }
 
         // ------ INICIALIZACIÓN DE CONECTORES A BBDD (D.A.O.) ------
-        this.daoUsuario = new DAOUsuario(this.conexion, fa);
-        this.daoEstacion = new DAOEstacion(this.conexion, fa);
-        this.daoBicicleta = new DAOBicicleta(this.conexion, fa);
-        this.daoViaje = new DAOViaje(this.conexion, fa);
+        this.daoUsuario = new DAOUsuario(this.conexion);
+        this.daoEstacion = new DAOEstacion(this.conexion);
+        this.daoBicicleta = new DAOBicicleta(this.conexion);
+        this.daoViaje = new DAOViaje(this.conexion);
     }
 
 
@@ -81,13 +83,13 @@ public final class FachadaBaseDatos {
         // Prueba de conexión
         try {
             if (this.conexion != null && !this.conexion.isClosed()) {
-                System.out.println("Conexión exitosa a la base de datos.");
+                log.debug("Conexión exitosa a la base de datos.");
             }
             else {
-                System.out.println("No se pudo establecer la conexión a la base de datos.");
+                log.warn("No se pudo establecer la conexión a la base de datos.");
             }
         } catch (SQLException e) {
-            System.out.println("Error al verificar la conexión: " + e.getMessage());
+            log.error("Error al verificar la conexión: {}", e.getMessage());
         }
     }
 

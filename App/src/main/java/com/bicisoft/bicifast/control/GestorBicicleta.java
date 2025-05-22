@@ -4,6 +4,8 @@ import com.bicisoft.bicifast.aplicacion.Bicicleta;
 import com.bicisoft.bicifast.aplicacion.Estacion;
 import com.bicisoft.bicifast.aplicacion.Usuario;
 import com.bicisoft.bicifast.basededatos.FachadaBaseDatos;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
@@ -11,7 +13,12 @@ import java.util.List;
  * Clase de control para gestionar las bicicletas (Business Logic)
  */
 public final class GestorBicicleta {
+
+    //---- FAÇADAS ----
     private final FachadaBaseDatos fbd;
+
+    //---- LOGGER ----
+    private static final Logger logger = LoggerFactory.getLogger(GestorBicicleta.class);
 
     /**
      * Constructor de la clase GestorBicicleta.
@@ -36,14 +43,14 @@ public final class GestorBicicleta {
             // Si la estación tiene el aforo completo, NO se puede devolver la bicicleta
             int aforo = this.fbd.obtenerOcupacionEstacion(estacionSeleccionada);
             if (aforo >= estacionSeleccionada.aforo()) {
-                System.out.println("[DEBUG] La estación está llena. No se puede devolver la bicicleta.");
+                logger.debug("La estación está llena. No se puede devolver la bicicleta.");
                 return false;
             }
             this.fbd.estacionarBicicleta(bicicleta, estacionSeleccionada);
             return this.fbd.devolverBicicleta(usuarioLogado, bicicleta, estacionSeleccionada);
 
         }
-        System.out.println("[DEBUG] No se encontró la bicicleta asociada al usuario.");
+        logger.debug("No se encontró la bicicleta asociada al usuario.");
         return false;
     }
 
@@ -67,12 +74,12 @@ public final class GestorBicicleta {
         List<Bicicleta> bicicletasLibres = obtenerBicisLibresPorEstacion(estacionSeleccionada);
 
         if (bicicletasLibres.isEmpty()) {
-            System.out.println("[DEBUG] No hay bicicletas libres en la estación seleccionada.");
+            logger.debug("No hay bicicletas libres en la estación seleccionada.");
             return -1; // Indica que no hay bicicletas disponibles
         }
         Bicicleta bicicletaReservada = bicicletasLibres.getFirst(); // Reservar la primera bicicleta libre
         if (!this.fbd.reservarBicicleta(usuarioLogado, bicicletaReservada)) {
-            System.out.println("[DEBUG] No se pudo reservar la bicicleta.");
+            logger.warn("No se pudo reservar la bicicleta.");
             return -1; // Indica que no se pudo reservar la bicicleta
         }
 //            System.err.println("[DEBUG] ¿Como ha llegado aquí? <.>_<.> | Fallo en la BBDD o SQL");

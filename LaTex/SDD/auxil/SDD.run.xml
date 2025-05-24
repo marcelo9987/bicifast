@@ -82,7 +82,7 @@
       <file>SDD.bcf</file>
     </requires>
     <requires type="editable">
-      <file>referencias.bib</file>
+      <file>auxil/referencias.bib</file>
     </requires>
   </external>
 </requests>

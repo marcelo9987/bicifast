@@ -1,14 +1,14 @@
-[0] Config.pm:308> INFO - This is Biber 2.20
-[0] Config.pm:311> INFO - Logfile is 'SDD.blg'
-[146] biber-MSWIN64:340> INFO - === 
-[188] Biber.pm:420> INFO - Reading 'SDD.bcf'
-[329] Biber.pm:994> INFO - Found 1 citekeys in bib section 0
-[346] Biber.pm:4463> INFO - Processing section 0
-[360] Biber.pm:4654> INFO - Looking for bibtex file 'referencias.bib' for section 0
-[416] bibtex.pm:1713> INFO - LaTeX decoding ...
-[422] bibtex.pm:1519> INFO - Found BibTeX data source 'E:\bicifast2\LaTex\SDD\referencias.bib'
-[459] UCollate.pm:68> INFO - Overriding locale 'es-ES' defaults 'variable = shifted' with 'variable = non-ignorable'
-[459] UCollate.pm:68> INFO - Overriding locale 'es-ES' defaults 'normalization = NFD' with 'normalization = prenormalized'
-[460] Biber.pm:4283> INFO - Sorting list 'none/global//global/global/global' of type 'entry' with template 'none' and locale 'es-ES'
-[461] bbl.pm:676> INFO - Writing 'SDD.bbl' with encoding 'UTF-8'
-[461] bbl.pm:779> INFO - Output to SDD.bbl
+[1] Config.pm:308> INFO - This is Biber 2.20
+[1] Config.pm:311> INFO - Logfile is 'SDD.blg'
+[183] biber-MSWIN64:340> INFO - === 
+[235] Biber.pm:420> INFO - Reading 'SDD.bcf'
+[382] Biber.pm:994> INFO - Found 1 citekeys in bib section 0
+[403] Biber.pm:4463> INFO - Processing section 0
+[419] Biber.pm:4654> INFO - Looking for bibtex file 'auxil/referencias.bib' for section 0
+[483] bibtex.pm:1713> INFO - LaTeX decoding ...
+[490] bibtex.pm:1519> INFO - Found BibTeX data source 'E:\bicifast2\LaTex\SDD\auxil\referencias.bib'
+[533] UCollate.pm:68> INFO - Overriding locale 'es-ES' defaults 'variable = shifted' with 'variable = non-ignorable'
+[534] UCollate.pm:68> INFO - Overriding locale 'es-ES' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[534] Biber.pm:4283> INFO - Sorting list 'none/global//global/global/global' of type 'entry' with template 'none' and locale 'es-ES'
+[535] bbl.pm:676> INFO - Writing 'SDD.bbl' with encoding 'UTF-8'
+[535] bbl.pm:779> INFO - Output to SDD.bbl

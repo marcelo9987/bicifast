@@ -1,17 +1,17 @@
 \babel@toc {spanish}{}\relax 
 \contentsline {section}{\numberline {1}Introducción}{2}{section.1}%
-\contentsline {subsection}{\numberline {1.1}Overview}{2}{subsection.1.1}%
-\contentsline {subsection}{\numberline {1.2}Definitions, acronyms, and abbreviations}{2}{subsection.1.2}%
+\contentsline {subsection}{\numberline {1.1}Propósito del documento}{2}{subsection.1.1}%
+\contentsline {subsection}{\numberline {1.2}Definiciones, acrónimos y abreviaturas}{2}{subsection.1.2}%
 \contentsline {section}{Referencias}{2}{section*.3}%
 \contentsline {section}{\numberline {2}Objetivos de diseño}{2}{section.2}%
-\contentsline {section}{\numberline {3}Composición del sistema, arquitectura y capas}{2}{section.3}%
+\contentsline {section}{\numberline {3}Composición del sistema, arquitectura y capas}{3}{section.3}%
 \contentsline {subsection}{\numberline {3.1}Capas del sistema y sus responsabilidades}{3}{subsection.3.1}%
 \contentsline {subsection}{\numberline {3.2}Diagrama de capas/arquitectura}{3}{subsection.3.2}%
 \contentsline {subsection}{\numberline {3.3}Componentes identificados y sus responsabilidades}{3}{subsection.3.3}%
-\contentsline {subsubsection}{\numberline {3.3.1}Componentes identificados}{3}{subsubsection.3.3.1}%
-\contentsline {subsubsection}{\numberline {3.3.2}Responsabilidades}{4}{subsubsection.3.3.2}%
+\contentsline {subsubsection}{\numberline {3.3.1}Componentes identificados}{4}{subsubsection.3.3.1}%
+\contentsline {subsubsection}{\numberline {3.3.2}Responsabilidades}{5}{subsubsection.3.3.2}%
 \contentsline {subsection}{\numberline {3.4}Dependencias y flujos de control}{5}{subsection.3.4}%
-\contentsline {subsection}{\numberline {3.5}Rationale de la arquitectura}{5}{subsection.3.5}%
+\contentsline {subsection}{\numberline {3.5}Rationale de la arquitectura}{6}{subsection.3.5}%
 \contentsline {section}{\numberline {4}Diseño de la Interfaz Gráfica de Usuario (GUI)}{6}{section.4}%
 \contentsline {subsection}{\numberline {4.1}Resumen de las Pantallas}{6}{subsection.4.1}%
 \contentsline {subsubsection}{\numberline {4.1.1}Pantalla 1: Iniciar sesión}{6}{subsubsection.4.1.1}%
@@ -22,8 +22,3 @@
 \contentsline {subsection}{\numberline {4.2}Estilo visual y usabilidad}{8}{subsection.4.2}%
 \contentsline {subsection}{\numberline {4.3}Diagrama de navegación}{8}{subsection.4.3}%
 \contentsline {subsection}{\numberline {4.4}Bocetos}{9}{subsection.4.4}%
-\contentsline {section}{\numberline {5}Hardware/software mapping}{14}{section.5}%
-\contentsline {section}{\numberline {6}Persistent data management}{14}{section.6}%
-\contentsline {section}{\numberline {7}Access control and security}{14}{section.7}%
-\contentsline {section}{\numberline {8}Global software control}{14}{section.8}%
-\contentsline {section}{\numberline {9}Boundary conditions}{14}{section.9}%

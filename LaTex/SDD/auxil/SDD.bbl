@@ -35,6 +35,48 @@
       \verb 10.1109/IEEESTD.2009.5167255
       \endverb
     \endentry
+    \entry{SRD-BiciFast}{report}{}{}
+      \name{author}{4}{}{%
+        {{hash=7e76922418f7ed9984844f1bbdf98594}{%
+           family={Fort\bibnamedelima Muñoz},
+           familyi={F\bibinitperiod\bibinitdelim M\bibinitperiod},
+           given={Marcelo},
+           giveni={M\bibinitperiod}}}%
+        {{hash=7ce650a79ebd89b58b83697c4e375b53}{%
+           family={Cruces\bibnamedelima Uruñuela},
+           familyi={C\bibinitperiod\bibinitdelim U\bibinitperiod},
+           given={Alba},
+           giveni={A\bibinitperiod}}}%
+        {{hash=7b72e1042f23bba915663d7c679fcb86}{%
+           family={Duque\bibnamedelimb Sán\bibnamedelima Milán},
+           familyi={D\bibinitperiod\bibinitdelim S\bibinitperiod\bibinitdelim M\bibinitperiod},
+           given={Fernando},
+           giveni={F\bibinitperiod}}}%
+        {{hash=1367604164b645b8addb92490550e01d}{%
+           family={Giménez\bibnamedelima Palomo},
+           familyi={G\bibinitperiod\bibinitdelim P\bibinitperiod},
+           given={Héctor},
+           giveni={H\bibinitperiod}}}%
+      }
+      \list{institution}{1}{%
+        {Universidad de Antonio Nebrija}%
+      }
+      \strng{namehash}{2b5719e0cd2d858677333cb85069820f}
+      \strng{fullhash}{f56b02ff1d9c0046c4a11cf31c8e6ec0}
+      \strng{fullhashraw}{f56b02ff1d9c0046c4a11cf31c8e6ec0}
+      \strng{bibnamehash}{f56b02ff1d9c0046c4a11cf31c8e6ec0}
+      \strng{authorbibnamehash}{f56b02ff1d9c0046c4a11cf31c8e6ec0}
+      \strng{authornamehash}{2b5719e0cd2d858677333cb85069820f}
+      \strng{authorfullhash}{f56b02ff1d9c0046c4a11cf31c8e6ec0}
+      \strng{authorfullhashraw}{f56b02ff1d9c0046c4a11cf31c8e6ec0}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{{BiciFast Software Requirements Document}}
+      \field{type}{SRD}
+      \field{year}{2025}
+    \endentry
   \enddatalist
 \endrefsection
 \endinput

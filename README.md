@@ -12,16 +12,20 @@ BiciFast es una aplicación de gestión de alquiler de bicicletas que permite a 
 ## Índice
 
 <!-- TOC -->
-
 * [BiciFast](#bicifast)
-    * [Índice](#índice)
-    * [Autor@s](#autors)
-    * [Fecha](#fecha)
-    * [Fuentes](#fuentes)
-    * [Instalación y puesta en marcha](#instalación-y-puesta-en-marcha)
-        * [📦 Dependencias](#-dependencias)
-    * [API](#api)
-
+  * [Índice](#índice)
+  * [Autor@s](#autors)
+  * [Fecha](#fecha)
+  * [Fuentes](#fuentes)
+  * [Instalación y puesta en marcha](#instalación-y-puesta-en-marcha)
+    * [Requisitos previos](#requisitos-previos)
+    * [🗄️ Configuración de Base de Datos](#-configuración-de-base-de-datos)
+      * [Opción 1: Creación desde cero](#opción-1-creación-desde-cero)
+      * [Opción 2: Importar dump completo (Recomendado)](#opción-2-importar-dump-completo-recomendado)
+      * [Configuración de conexión](#configuración-de-conexión)
+    * [Compilación y ejecución](#compilación-y-ejecución)
+  * [📦 Dependencias](#-dependencias)
+  * [API](#api)
 <!-- TOC -->
 
 ## Autor@s
@@ -139,7 +143,7 @@ Se recomienda hacerlo así, ya que es como se ha hecho durante el desarrollo de 
 Nota: Asegúrate de reemplazar `VERSIONXX` con la versión actual del proyecto.
 Nota2: Hay habilitado por defecto un usuario con el usuario: `a@a.a` y la contraseña: `a`, para que puedas probar la aplicación sin necesidad de crear un usuario nuevo.
 
-### 📦 Dependencias
+## 📦 Dependencias
 
 - [**ch.qos.logback:logback-core** (1.5.13)](https://logback.qos.ch/)
 - [**ch.qos.logback:logback-classic** (1.5.13)](https://logback.qos.ch/)

@@ -7,6 +7,7 @@ import com.bicisoft.bicifast.gui.modelos.modeloListaBicicletas;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -16,18 +17,24 @@ import java.util.ResourceBundle;
 
 public final class DiaBicis extends JDialog {
 
-    private final Estacion          estacionUsada;
+    //---- RECURSOS ----
+    private final ResourceBundle rb;
+
+    //---- FACHADAS ----
     private final FachadaAplicacion fa;
-    private final ResourceBundle    rb;
-    private       JList<String>     jlistBicisDisponibles;
-    private       JLabel            lblNombreEstacion;
+
+    //---- ATRIBUTOS ----
+    private final Estacion      estacionUsada;
+    private       JList<String> jListBicisDisponibles;
+    private       JLabel        lblNombreEstacion;
 
 
     /**
      * Constructor de la clase DiaBicis.
-     * @param parent Formulario padre
-     * @param modal Indica si el diálogo es modal
-     * @param fa Fachada de la aplicación
+     *
+     * @param parent   Formulario padre
+     * @param modal    Indica si el diálogo es modal
+     * @param fa       Fachada de la aplicación
      * @param estacion Estación para la que se mostrarán las bicicletas disponibles
      */
     public DiaBicis(JFrame parent, boolean modal, FachadaAplicacion fa, Estacion estacion) {
@@ -49,7 +56,7 @@ public final class DiaBicis extends JDialog {
 
         JPanel      jpanPanelPrincipal = new JPanel();
         JScrollPane jScrollPane1       = new JScrollPane();
-        this.jlistBicisDisponibles = new javax.swing.JList<>();
+        this.jListBicisDisponibles = new javax.swing.JList<>();
         JLabel lblEstacion = new JLabel();
         this.lblNombreEstacion = new javax.swing.JLabel();
 
@@ -58,8 +65,8 @@ public final class DiaBicis extends JDialog {
 
         this.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 
-        this.jlistBicisDisponibles.setModel(new modeloListaBicicletas());
-        jScrollPane1.setViewportView(this.jlistBicisDisponibles);
+        this.jListBicisDisponibles.setModel(new modeloListaBicicletas());
+        jScrollPane1.setViewportView(this.jListBicisDisponibles);
 
         String estacion = this.rb.getString("estacion");
         lblEstacion.setText(estacion);
@@ -74,13 +81,13 @@ public final class DiaBicis extends JDialog {
         btnCancelar.setText(cancelar);
         btnCancelar.addActionListener(this::btnCancelarActionPerformed);
 
-        javax.swing.GroupLayout panelPrincipalLayout = new javax.swing.GroupLayout(jpanPanelPrincipal);
+        GroupLayout panelPrincipalLayout = new GroupLayout(jpanPanelPrincipal);
         jpanPanelPrincipal.setLayout(panelPrincipalLayout);
         panelPrincipalLayout.setHorizontalGroup(
-                panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                panelPrincipalLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
                         .addGroup(panelPrincipalLayout.createSequentialGroup()
                                 .addGap(91, 91, 91)
-                                .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(panelPrincipalLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
                                         .addGroup(panelPrincipalLayout.createSequentialGroup()
                                                 .addGap(0, 0, Short.MAX_VALUE)
                                                 .addComponent(btnCancelar))
@@ -91,58 +98,58 @@ public final class DiaBicis extends JDialog {
                                                 .addComponent(this.lblNombreEstacion)
                                                 .addGap(0, 0, Short.MAX_VALUE))
                                         .addGroup(panelPrincipalLayout.createSequentialGroup()
-                                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(jScrollPane1, GroupLayout.PREFERRED_SIZE, 177, GroupLayout.PREFERRED_SIZE)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
                                                 .addComponent(btnActualizar)))
                                 .addContainerGap())
         );
         panelPrincipalLayout.setVerticalGroup(
-                panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelPrincipalLayout.createSequentialGroup()
+                panelPrincipalLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                        .addGroup(GroupLayout.Alignment.TRAILING, panelPrincipalLayout.createSequentialGroup()
                                 .addContainerGap()
-                                .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addGroup(panelPrincipalLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                         .addComponent(lblEstacion)
                                         .addComponent(this.lblNombreEstacion))
                                 .addGap(18, 18, 18)
-                                .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(panelPrincipalLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
                                         .addGroup(panelPrincipalLayout.createSequentialGroup()
-                                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(jScrollPane1, GroupLayout.PREFERRED_SIZE, 199, GroupLayout.PREFERRED_SIZE)
                                                 .addGap(0, 55, Short.MAX_VALUE))
                                         .addGroup(panelPrincipalLayout.createSequentialGroup()
                                                 .addComponent(btnActualizar)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                                 .addComponent(btnCancelar)))
                                 .addContainerGap())
         );
 
-        Container               contentPane = this.getContentPane();
-        javax.swing.GroupLayout layout      = new javax.swing.GroupLayout(contentPane);
+        Container   contentPane = this.getContentPane();
+        GroupLayout layout      = new GroupLayout(contentPane);
         contentPane.setLayout(layout);
         layout.setHorizontalGroup(
-                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jpanPanelPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                        .addComponent(jpanPanelPrincipal, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
-                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jpanPanelPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                        .addComponent(jpanPanelPrincipal, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         this.pack();
     }
 
     private void _listarBicicletas() {
-        modeloListaBicicletas modelo                = (modeloListaBicicletas) this.jlistBicisDisponibles.getModel();
+        modeloListaBicicletas modelo                = (modeloListaBicicletas) this.jListBicisDisponibles.getModel();
         List<Bicicleta>       bicicletasSinReservar = this.fa.obtenerBicisLibresPorEstacion(this.estacionUsada);
         modelo.setFilas(bicicletasSinReservar);
 
     }
 
-    private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
+    private void btnActualizarActionPerformed(ActionEvent evt) {
         this._listarBicicletas();
     }
 
 
-    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+    private void btnCancelarActionPerformed(ActionEvent evt) {
         this.dispose();
     }
 }

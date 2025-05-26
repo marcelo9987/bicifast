@@ -22,8 +22,7 @@ class DAOViajeTest {
     private final int      idEstacionTest = 1;
     private final int      idBiciTest     = 1;
     private final int    idUsuarioTest = 1;
-    private final int    idViajeTest   = 1;
-    private final Logger logger        = org.slf4j.LoggerFactory.getLogger(DAOViajeTest.class);
+    private final static Logger logger        = org.slf4j.LoggerFactory.getLogger(DAOViajeTest.class);
 
     @BeforeEach
     void setUp() throws SQLException {
@@ -64,6 +63,7 @@ class DAOViajeTest {
 
         // Insertar viaje
         ps = conexion.prepareStatement("INSERT INTO viaje (id, hora_inicio, usuario, bicicleta,origen) VALUES (?, ?, ?, ?, ?)");
+        int idViajeTest = 1;
         ps.setInt(1, idViajeTest);
         ps.setDate(2, java.sql.Date.valueOf("2023-10-01"));
         ps.setInt(3, idUsuarioTest);

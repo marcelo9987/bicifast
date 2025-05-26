@@ -26,6 +26,7 @@ public enum EnumIdioma {
     /**
      * Buscar el idioma por su etiqueta
      * Apoyado en el método creado por Baeldung: <a href="https://www.baeldung.com/java-enum-values">fuente</a>
+     *
      * @param label Etiqueta del idioma
      * @return El idioma correspondiente a la etiqueta
      */

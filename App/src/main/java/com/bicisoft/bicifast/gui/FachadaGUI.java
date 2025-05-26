@@ -3,18 +3,14 @@ package com.bicisoft.bicifast.gui;
 import com.bicisoft.bicifast.aplicacion.Estacion;
 import com.bicisoft.bicifast.aplicacion.FachadaAplicacion;
 import com.bicisoft.bicifast.aplicacion.TipoUsuario;
-import com.bicisoft.bicifast.gui.formularios.DiaBicis;
-import com.bicisoft.bicifast.gui.formularios.DiaLogin;
-import com.bicisoft.bicifast.gui.formularios.VPrincipalUsuario;
+import com.bicisoft.bicifast.gui.formularios.*;
 import mdlaf.MaterialLookAndFeel;
 import mdlaf.themes.MaterialLiteTheme;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.swing.*;
-
-import com.bicisoft.bicifast.gui.formularios.VIdioma;
-import com.bicisoft.bicifast.gui.formularios.DiaUsuario;
+import java.awt.*;
 
 /**
  * Clase fachada de la GUI.
@@ -22,7 +18,7 @@ import com.bicisoft.bicifast.gui.formularios.DiaUsuario;
 public final class FachadaGUI {
 
     // -- LOGGER --
-    private static final Logger logger = LoggerFactory.getLogger(FachadaGUI.class);
+    private final static Logger logger = LoggerFactory.getLogger(FachadaGUI.class);
 
     // -- FAÇADA --
     private final FachadaAplicacion fa;
@@ -57,12 +53,13 @@ public final class FachadaGUI {
         frameTemporal.setLocationRelativeTo(null);
         frameTemporal.setVisible(true); // necesario para que funcione como parent real
 
-        DiaLogin dialogoLogin = new DiaLogin(frameTemporal, this.fa);
+        DiaLogin dialogoLogin = new DiaLogin(frameTemporal, this.fa, this);
 
         // Configurar el tamaño y visibilidad
         dialogoLogin.pack();
         dialogoLogin.setLocationRelativeTo(null);
         dialogoLogin.setVisible(true);
+        dialogoLogin.pack();
 
         // Cerrar el JFrame temporal después de cerrar el diálogo
         frameTemporal.dispose();
@@ -98,7 +95,7 @@ public final class FachadaGUI {
             case NORMAL -> {
                 // Lógica para el usuario normal
                 logger.info("Acceso Normal");
-                this.principal = new VPrincipalUsuario(this.fa,this);
+                this.principal = new VPrincipalUsuario(this.fa, this);
                 this.principal.setVisible(true);
                 this.principal.pack();
                 this.principal.setLocationRelativeTo(null);
@@ -126,7 +123,7 @@ public final class FachadaGUI {
      * @param vPrincipalUsuario    Ventana principal del usuario
      * @param estacionSeleccionada Estación seleccionada
      */
-    public void lanzarMenuBicis(JFrame vPrincipalUsuario, Estacion estacionSeleccionada){
+    public void lanzarMenuBicis(JFrame vPrincipalUsuario, Estacion estacionSeleccionada) {
         DiaBicis menuBicis = new DiaBicis(vPrincipalUsuario, true, this.fa, estacionSeleccionada);
         menuBicis.setVisible(true);
         menuBicis.pack();
@@ -150,6 +147,32 @@ public final class FachadaGUI {
      */
     public void lanzarPerfilUsuario(JFrame parent) {
         DiaUsuario menuUsuario = new DiaUsuario(parent, this.fa);
+
         menuUsuario.setVisible(true);
+    }
+
+    /**
+     * Método que lanza un mensaje de aviso.
+     *
+     * @param mensaje Mensaje que se mostrará en el aviso
+     */
+    public void lanzarMensajeAviso(String mensaje) {
+        JLabel label = new JLabel(mensaje);
+        label.setFont(new Font("SansSerif", Font.PLAIN, 14));
+
+        final int AJUSTAR_LINEA = 7; // Ajuste de línea para el ancho del mensaje
+
+        // Tamaño mínimo de línea
+        int ancho = Math.max(300, mensaje.length() * AJUSTAR_LINEA);
+        int alto  = 50;
+
+        label.setPreferredSize(new Dimension(ancho, alto));
+        label.setHorizontalAlignment(SwingConstants.LEFT);
+        label.setVerticalAlignment(SwingConstants.CENTER);
+
+        JPanel panel = new JPanel(new BorderLayout());
+        panel.add(label, BorderLayout.CENTER);
+
+        JOptionPane.showMessageDialog(null, panel, "AVISO", JOptionPane.INFORMATION_MESSAGE);
     }
 }

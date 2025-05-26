@@ -2,19 +2,18 @@ package com.bicisoft.bicifast.misc;
 
 import com.bicisoft.bicifast.aplicacion.EnumIdioma;
 
-
 import java.util.Locale;
 import java.util.ResourceBundle;
 
 
 /**
  * Clase que se encarga de la internacionalización de la aplicación.
- * @version  2.0
+ *
+ * @version 2.0
  */
 public final class Internacionalizacion {
-    private ResourceBundle bundle;
-
     private static Internacionalizacion instance;
+    private        ResourceBundle       bundle;
 
     private Internacionalizacion() {
         super();
@@ -70,6 +69,7 @@ public final class Internacionalizacion {
 
     /**
      * Devuelve el ResourceBundle actual.
+     *
      * @return Devuelve el ResourceBundle actual.
      */
     public ResourceBundle getBundle() {

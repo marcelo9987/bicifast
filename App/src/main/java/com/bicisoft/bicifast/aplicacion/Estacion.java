@@ -14,9 +14,10 @@ public final class Estacion {
 
     /**
      * Constructor de la clase Estacion.
+     *
      * @param idEstacion id de la estación
-     * @param ubicacion ubicación de la estación
-     * @param aforo aforo de la estación
+     * @param ubicacion  ubicación de la estación
+     * @param aforo      aforo de la estación
      */
     public Estacion(int idEstacion, String ubicacion, int aforo) {
         super();
@@ -47,6 +48,11 @@ public final class Estacion {
     }
 
     @Override
+    public int hashCode() {
+        return Objects.hash(this.idEstacion, this.ubicacion, this.aforo);
+    }
+
+    @Override
     public boolean equals(Object obj) {
         if (this == obj) {
             return true;
@@ -61,16 +67,11 @@ public final class Estacion {
     }
 
     @Override
-    public int hashCode() {
-        return Objects.hash(idEstacion, ubicacion, aforo);
-    }
-
-    @Override
     public String toString() {
         return "Estacion[" +
-                "idEstacion=" + idEstacion + ", " +
-                "ubicacion=" + ubicacion + ", " +
-                "aforo=" + aforo + ']';
+                "idEstacion=" + this.idEstacion + ", " +
+                "ubicacion=" + this.ubicacion + ", " +
+                "aforo=" + this.aforo + ']';
     }
 
 }

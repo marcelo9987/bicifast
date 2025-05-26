@@ -1,6 +1,9 @@
 package com.bicisoft.bicifast.basededatos;
 
-import com.bicisoft.bicifast.aplicacion.*;
+import com.bicisoft.bicifast.aplicacion.Bicicleta;
+import com.bicisoft.bicifast.aplicacion.Estacion;
+import com.bicisoft.bicifast.aplicacion.EstadoBicicleta;
+import com.bicisoft.bicifast.aplicacion.Usuario;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,10 +15,12 @@ import java.util.List;
  * Esta clase se encarga de realizar las operaciones de acceso a datos relacionadas con las bicicletas.
  */
 final class DAOBicicleta extends AbstractDAO {
-    private static final Logger logger = LoggerFactory.getLogger(DAOBicicleta.class);
+    //---- LOGGER ----
+    private final static Logger logger = LoggerFactory.getLogger(DAOBicicleta.class);
 
     /**
      * Constructor de la clase DAOBicicleta.
+     *
      * @param conexion Conexión a la base de datos.
      */
     DAOBicicleta(Connection conexion) {

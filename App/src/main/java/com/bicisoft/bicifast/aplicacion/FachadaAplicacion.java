@@ -6,7 +6,6 @@ import com.bicisoft.bicifast.misc.Internacionalizacion;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.swing.*;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -16,22 +15,24 @@ import java.util.ResourceBundle;
  * los controladores y gestionar el estado de la aplicación.
  */
 public class FachadaAplicacion {
+    // -- LOGGER --
+    private final static Logger logger = LoggerFactory.getLogger(FachadaAplicacion.class);
 
-    private final FachadaGUI           fgui;
-    private final FachadaControl       fc;
-    private final Logger               logger;
-    private       Usuario              usuarioLogado;
-    private       Internacionalizacion itz;
+    // -- FACHADAS --
+    private final FachadaGUI     fgui;
+    private final FachadaControl fc;
+
+    // -- ATRIBUTOS --
+    private Usuario              usuarioLogado;
+    private Internacionalizacion itz;
 
     /**
      * Constructor de la clase FachadaAplicacion.
      */
     public FachadaAplicacion() {
         super();
-        // -- LOGGING --
-        this.logger = LoggerFactory.getLogger(FachadaAplicacion.class);
 
-        // -- FAÇADAS --
+        // -- FACHADAS --
         this.fgui = new FachadaGUI(this);
         this.fc = new FachadaControl();
 
@@ -105,7 +106,6 @@ public class FachadaAplicacion {
      * @return Usuario si el usuario está autenticado, null en caso contrario.
      */
     public Usuario comprobarLogin(String email, String contrasenha) {
-//        return this.controladorUsuario.comprobarLogin(email, contrasenha);
         return this.fc.comprobarLogin(email, contrasenha);
     }
 
@@ -115,7 +115,6 @@ public class FachadaAplicacion {
      * @return Lista de estaciones.
      */
     public List<Estacion> preguntaLasEstaciones() {
-//        return this.controladorEstacion.preguntaLasEstaciones();
         return this.fc.preguntaLasEstaciones();
     }
 
@@ -135,7 +134,6 @@ public class FachadaAplicacion {
      * @return true si el usuario tiene una bicicleta en uso, false en caso contrario.
      */
     public boolean usuarioTieneBici() {
-//        return this.controladorUsuario.usuarioTieneBiciEnUso(this.usuarioLogado);
         return this.fc.usuarioTieneBiciEnUso(this.usuarioLogado);
     }
 
@@ -146,7 +144,6 @@ public class FachadaAplicacion {
      * @return true si la devolución se ha realizado correctamente, false en caso contrario.
      */
     public boolean devolverBicicleta(Estacion estacionSeleccionada) {
-//        return this.controladorBicicleta.devolverBicicleta(this.usuarioLogado, estacionSeleccionada);
         return this.fc.devolverBicicleta(this.usuarioLogado, estacionSeleccionada);
     }
 
@@ -156,7 +153,6 @@ public class FachadaAplicacion {
      * @return Lista de enteros que representan el número de bicicletas por estación.
      */
     public List<Integer> preguntaLasBicicletasPorEstacion() {
-//        return this.controladorBicicleta.preguntaLasBicicletasPorEstacion();
         return this.fc.preguntaLasBicicletasPorEstacion();
     }
 
@@ -167,7 +163,6 @@ public class FachadaAplicacion {
      * @return ID de la bicicleta reservada, o -1 si no se pudo reservar.
      */
     public int reservarBicicleta(Estacion estacionSeleccionada) {
-//        return this.controladorBicicleta.reservarBicicleta(this.usuarioLogado, estacionSeleccionada);
         return this.fc.reservarBicicleta(this.usuarioLogado, estacionSeleccionada);
     }
 
@@ -180,8 +175,4 @@ public class FachadaAplicacion {
         return this.usuarioLogado;
     }
 
-    public void lanzaMenuBicis(JFrame vPrincipalUsuario, Estacion estacionSeleccionada)
-    {
-        fgui.lanzarMenuBicis(vPrincipalUsuario, estacionSeleccionada);
-    }
 }

@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class CriptografiaTest {
-    private final Logger logger = LoggerFactory.getLogger(CriptografiaTest.class);
+    private final static Logger logger = LoggerFactory.getLogger(CriptografiaTest.class);
 
     @Test
     void encriptar() {

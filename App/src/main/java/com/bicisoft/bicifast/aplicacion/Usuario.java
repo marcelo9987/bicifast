@@ -7,6 +7,7 @@ import java.sql.Date;
  * Clase que representa un usuario.
  */
 public final class Usuario {
+    // -- Atributos de la clase Usuario --
     private final int         idUsuario;
     private final String      nombre;
     private final String      apellido1;
@@ -25,20 +26,20 @@ public final class Usuario {
     /**
      * Constructor de la clase Usuario
      *
-     * @param id                 Id del usuario
-     * @param nombre             Nombre del usuario
-     * @param apellido1          Primer apellido del usuario
-     * @param apellido2          Segundo apellido del usuario
-     * @param dni                DNI del usuario
-     * @param email              Email del usuario
-     * @param direccion          Dirección del usuario
+     * @param id                Id del usuario
+     * @param nombre            Nombre del usuario
+     * @param apellido1         Primer apellido del usuario
+     * @param apellido2         Segundo apellido del usuario
+     * @param dni               DNI del usuario
+     * @param email             Email del usuario
+     * @param direccion         Dirección del usuario
      * @param fechaNacimiento   Fecha de nacimiento del usuario
-     * @param telefono           Teléfono del usuario
-     * @param contrasenha        Contraseña del usuario
-     * @param metodoPago         Método de pago del usuario
+     * @param telefono          Teléfono del usuario
+     * @param contrasenha       Contraseña del usuario
+     * @param metodoPago        Método de pago del usuario
      * @param inicioSuscripcion Fecha de inicio de la suscripción del usuario
      * @param finSuscripcion    Fecha de fin de la suscripción del usuario
-     * @param tipoUsuario        Tipo de usuario
+     * @param tipoUsuario       Tipo de usuario
      */
     public Usuario(int id, String nombre, String apellido1, String apellido2, String dni, String email, String direccion, Date fechaNacimiento, String telefono, String contrasenha, MetodoPago metodoPago, Date inicioSuscripcion, Date finSuscripcion, TipoUsuario tipoUsuario) {
         super();
@@ -60,25 +61,26 @@ public final class Usuario {
 
     @Override
     public String toString() {
-        return "Usuario{" + "apellido1='" + apellido1 + '\'' +
-                ", idUsuario=" + idUsuario +
-                ", nombre='" + nombre + '\'' +
-                ", apellido2='" + apellido2 + '\'' +
-                ", dni='" + dni + '\'' +
-                ", email='" + email + '\'' +
-                ", direccion='" + direccion + '\'' +
-                ", fecha_nacimiento=" + fecha_nacimiento +
-                ", telefono='" + telefono + '\'' +
-                ", contrasenha='" + contrasenha + '\'' +
-                ", metodoPago=" + metodoPago +
-                ", inicio_suscripcion=" + inicio_suscripcion +
-                ", fin_suscripcion=" + fin_suscripcion +
-                ", tipoUsuario=" + tipoUsuario +
+        return "Usuario{" + "apellido1='" + this.apellido1 + '\'' +
+                ", idUsuario=" + this.idUsuario +
+                ", nombre='" + this.nombre + '\'' +
+                ", apellido2='" + this.apellido2 + '\'' +
+                ", dni='" + this.dni + '\'' +
+                ", email='" + this.email + '\'' +
+                ", direccion='" + this.direccion + '\'' +
+                ", fecha_nacimiento=" + this.fecha_nacimiento +
+                ", telefono='" + this.telefono + '\'' +
+                ", contrasenha='" + this.contrasenha + '\'' +
+                ", metodoPago=" + this.metodoPago +
+                ", inicio_suscripcion=" + this.inicio_suscripcion +
+                ", fin_suscripcion=" + this.fin_suscripcion +
+                ", tipoUsuario=" + this.tipoUsuario +
                 '}';
     }
 
     /**
      * Getter del primer apellido del usuario.
+     *
      * @return Primer apellido del usuario
      */
     public String apellido1() {
@@ -87,6 +89,7 @@ public final class Usuario {
 
     /**
      * Getter del segundo apellido del usuario.
+     *
      * @return Segundo apellido del usuario
      */
     public String apellido2() {
@@ -95,6 +98,7 @@ public final class Usuario {
 
     /**
      * Getter de la contraseña del usuario.
+     *
      * @return Contraseña del usuario
      */
     public String contrasenha() {
@@ -103,6 +107,7 @@ public final class Usuario {
 
     /**
      * Getter de la dirección del usuario.
+     *
      * @return Dirección del usuario
      */
     public String direccion() {
@@ -111,6 +116,7 @@ public final class Usuario {
 
     /**
      * Getter del DNI del usuario.
+     *
      * @return DNI del usuario
      */
     public String dni() {
@@ -119,6 +125,7 @@ public final class Usuario {
 
     /**
      * Getter del email del usuario.
+     *
      * @return Email del usuario
      */
     public String email() {
@@ -127,6 +134,7 @@ public final class Usuario {
 
     /**
      * Getter de la fecha de nacimiento del usuario.
+     *
      * @return Fecha de nacimiento del usuario
      */
     public Date fecha_nacimiento() {
@@ -135,6 +143,7 @@ public final class Usuario {
 
     /**
      * Getter de la fecha de fin de suscripción del usuario.
+     *
      * @return Fecha de fin de suscripción del usuario
      */
     public Date fin_suscripcion() {
@@ -143,6 +152,7 @@ public final class Usuario {
 
     /**
      * Getter de la id del usuario.
+     *
      * @return Id del usuario
      */
     public int idUsuario() {
@@ -151,6 +161,7 @@ public final class Usuario {
 
     /**
      * Getter de la fecha de inicio de suscripción del usuario.
+     *
      * @return Fecha de inicio de suscripción del usuario
      */
     public Date inicio_suscripcion() {
@@ -159,6 +170,7 @@ public final class Usuario {
 
     /**
      * Getter del método de pago del usuario.
+     *
      * @return Método de pago del usuario
      */
     public MetodoPago metodoPago() {
@@ -167,6 +179,7 @@ public final class Usuario {
 
     /**
      * Getter del nombre del usuario.
+     *
      * @return Nombre del usuario
      */
     public String nombre() {
@@ -175,6 +188,7 @@ public final class Usuario {
 
     /**
      * Getter del teléfono del usuario.
+     *
      * @return Teléfono del usuario
      */
     public String telefono() {
@@ -183,6 +197,7 @@ public final class Usuario {
 
     /**
      * Getter del tipo de usuario.
+     *
      * @return Tipo de usuario
      */
     public TipoUsuario tipoUsuario() {

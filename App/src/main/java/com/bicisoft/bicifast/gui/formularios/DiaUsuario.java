@@ -12,7 +12,7 @@ import java.util.ResourceBundle;
  * Clase que representa un diálogo para mostrar los datos del usuario autenticado.
  */
 public final class DiaUsuario extends JDialog {
-
+    //---- ATRIBUTOS ----
     private final Usuario            usuario;
     private final ResourceBundle     textos;
     private       JPanel             panel;
@@ -21,8 +21,9 @@ public final class DiaUsuario extends JDialog {
 
     /**
      * Constructor de la clase DiaUsuario.
+     *
      * @param parent Formulario padre, que puede ser null si no hay uno.
-     * @param fa Fachada de la aplicación, que proporciona acceso a los datos del usuario.
+     * @param fa     Fachada de la aplicación, que proporciona acceso a los datos del usuario.
      */
     public DiaUsuario(JFrame parent, FachadaAplicacion fa) {
         super(parent, fa.pedirBundle().getString("datos.do.usuario"), true);
@@ -30,6 +31,7 @@ public final class DiaUsuario extends JDialog {
         this.textos = fa.pedirBundle();
         this.inicializarFormulario();
         this.setResizable(false);
+        this.setLocationRelativeTo(parent);
         this.pack();
     }
 

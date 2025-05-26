@@ -53,6 +53,7 @@ public final class modeloListaBicicletas extends AbstractListModel<String> {
 
     /**
      * Cambia la lista de bicicletas a mostrar.
+     *
      * @param bicicletas Lista de bicicletas que popularán el modelo.
      */
     public void setFilas(List<Bicicleta> bicicletas) {

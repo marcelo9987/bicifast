@@ -19,7 +19,7 @@ final class DAOUsuario extends AbstractDAO {
     private final static Boolean DEBUG = false;
 
     //---- LOGGER ----
-    private final Logger logger = LoggerFactory.getLogger(DAOUsuario.class);
+    private final static Logger logger = LoggerFactory.getLogger(DAOUsuario.class);
 
     DAOUsuario(Connection conexion) {
         super();
@@ -123,10 +123,10 @@ final class DAOUsuario extends AbstractDAO {
                     return null;
                 }
             } catch (Exception e) {
-                _logarFalloValidacionConsulta(e);
+                this._logarFalloValidacionConsulta(e);
             }
         } catch (SQLException e) {
-            _logarNoHePodidoCerrarCursores();
+            this._logarNoHePodidoCerrarCursores();
         }
 
         return usuarioResultante;
@@ -163,21 +163,21 @@ final class DAOUsuario extends AbstractDAO {
                 if (rsUsuario.next()) {
                     boolean tieneBici = rsUsuario.getInt(1) > 0;
                     if (tieneBici) {
-                        _logarUsuarioBiciEnUso();
+                        this._logarUsuarioBiciEnUso();
                     }
                     else {
                         logger.debug("El usuario no tiene una bici en uso.");
                     }
                     return tieneBici;
                 }
-                _quejarseNoExisteUsuario(usuarioLogado);
+                this._quejarseNoExisteUsuario(usuarioLogado);
                 System.exit(-1);
 
             } catch (Exception e) {
-                _logarFalloValidacionConsulta(e);
+                this._logarFalloValidacionConsulta(e);
             }
         } catch (SQLException e) {
-            _logarNoHePodidoCerrarCursores();
+            this._logarNoHePodidoCerrarCursores();
         }
         return false;
     }
@@ -222,7 +222,7 @@ final class DAOUsuario extends AbstractDAO {
                 rsUsuario = stmUsuario.executeQuery();
 
                 if (rsUsuario.next()) {
-                    _logarUsuarioBiciEnUso();
+                    this._logarUsuarioBiciEnUso();
                     Bicicleta bici = new Bicicleta(
                             rsUsuario.getInt("id"),
                             new Estacion(
@@ -238,14 +238,14 @@ final class DAOUsuario extends AbstractDAO {
 
                 }
                 else {
-                    _quejarseNoExisteUsuario(usuarioLogado);
+                    this._quejarseNoExisteUsuario(usuarioLogado);
                     System.exit(-1);
                 }
             } catch (Exception e) {
-                _logarFalloValidacionConsulta(e);
+                this._logarFalloValidacionConsulta(e);
             }
         } catch (SQLException e) {
-            _logarNoHePodidoCerrarCursores();
+            this._logarNoHePodidoCerrarCursores();
         }
         return null;
     }

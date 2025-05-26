@@ -12,14 +12,16 @@ import java.util.List;
  * Esta clase se encarga de gestionar la base de datos de las estaciones.
  */
 final class DAOEstacion extends AbstractDAO {
-    private final Logger logger = LoggerFactory.getLogger(DAOEstacion.class);
+    //---- LOGGER ----
+    private final static Logger logger = LoggerFactory.getLogger(DAOEstacion.class);
 
     /**
+     * Constructor de la clase DAOEstacion
      * @param conexion conexion a la base de datos
      */
     DAOEstacion(Connection conexion) {
         super();
-        setConexion(conexion);
+        this.setConexion(conexion);
     }
 
 
@@ -57,7 +59,7 @@ final class DAOEstacion extends AbstractDAO {
         } catch (Exception e) {
             e.printStackTrace();
 //            System.err.println("EXCEPCION_CONSULTA_ESTACIONES");
-            this.logger.error("Error al consultar las estaciones: {}", e.getMessage());
+            logger.error("Error al consultar las estaciones: {}", e.getMessage());
         } finally {
             try {
                 if (stmEstaciones != null) {
@@ -65,7 +67,7 @@ final class DAOEstacion extends AbstractDAO {
                 }
             } catch (Exception e) {
                 e.printStackTrace();
-                this.logger.error("No se ha podido cerrar la conexión para consultar las estaciones: {}", e.getMessage());
+                logger.error("No se ha podido cerrar la conexión para consultar las estaciones: {}", e.getMessage());
             }
         }
         return estaciones;
@@ -110,7 +112,7 @@ final class DAOEstacion extends AbstractDAO {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            this.logger.error("Error al consultar la ocupación de la estación: {}", e.getMessage());
+            logger.error("Error al consultar la ocupación de la estación: {}", e.getMessage());
         } finally {
             try {
                 if (stmEstaciones != null) {
@@ -118,7 +120,7 @@ final class DAOEstacion extends AbstractDAO {
                 }
             } catch (Exception e) {
                 e.printStackTrace();
-                this.logger.error("No se ha podido cerrar la conexión para consultar la ocupación de la estación: {}", e.getMessage());
+                logger.error("No se ha podido cerrar la conexión para consultar la ocupación de la estación: {}", e.getMessage());
             }
         }
         return ocupacion;

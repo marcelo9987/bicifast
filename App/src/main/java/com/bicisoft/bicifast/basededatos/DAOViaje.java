@@ -12,14 +12,15 @@ import java.sql.Connection;
  * Clase que gestiona la tabla viaje de la base de datos
  */
 final class DAOViaje extends AbstractDAO {
-    private final Logger logger = LoggerFactory.getLogger(DAOViaje.class);
+    //---- LOGGER ----
+    private final static Logger logger = LoggerFactory.getLogger(DAOViaje.class);
 
     /**
      * @param conexion conexion a la base de datos
      */
     DAOViaje(Connection conexion) {
         super();
-        setConexion(conexion);
+        this.setConexion(conexion);
     }
 
 

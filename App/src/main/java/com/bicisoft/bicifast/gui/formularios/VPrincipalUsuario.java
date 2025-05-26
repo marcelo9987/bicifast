@@ -8,6 +8,8 @@ import com.bicisoft.bicifast.aplicacion.Estacion;
 import com.bicisoft.bicifast.aplicacion.FachadaAplicacion;
 import com.bicisoft.bicifast.gui.FachadaGUI;
 import com.bicisoft.bicifast.gui.modelos.modeloTablaEstaciones;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,17 +22,19 @@ import java.util.ResourceBundle;
  */
 public final class VPrincipalUsuario extends JFrame {
 
-    private final ResourceBundle    idioma;
-    private final FachadaAplicacion fa;
-    private final FachadaGUI       fgui;
-    private       JButton           btnDevolverBici;
-    private       JCheckBox         chkBiciEnUso;
-    private       JTable            tablaEstaciones;
+    private final static Logger            logger = LoggerFactory.getLogger(VPrincipalUsuario.class);
+    private final        ResourceBundle    idioma;
+    private final        FachadaAplicacion fa;
+    private final        FachadaGUI        fgui;
+    private              JButton           btnDevolverBici;
+    private              JCheckBox         chkBiciEnUso;
+    private              JTable            tablaEstaciones;
 
     /**
      * Crea una nueva instancia de la clase VPrincipalUsuario.
      *
-     * @param fa Fachada de la aplicación.
+     * @param fa   Fachada de la aplicación.
+     * @param fgui Fachada de la interfaz gráfica.
      */
     public VPrincipalUsuario(FachadaAplicacion fa, FachadaGUI fgui) {
         super();
@@ -157,7 +161,7 @@ public final class VPrincipalUsuario extends JFrame {
                                 .addContainerGap())
         );
 
-        Container               contentPane = this.getContentPane();
+        Container   contentPane = this.getContentPane();
         GroupLayout layout      = new GroupLayout(contentPane);
         contentPane.setLayout(layout);
         layout.setHorizontalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING).addComponent(jPanel1, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE));
@@ -171,9 +175,6 @@ public final class VPrincipalUsuario extends JFrame {
         if (usuarioTieneBici) {
             this.btnDevolverBici.setEnabled(true);
             this.chkBiciEnUso.setSelected(true);
-
-
-
         }
         else {
             this.chkBiciEnUso.setSelected(false);
@@ -194,32 +195,34 @@ public final class VPrincipalUsuario extends JFrame {
         this.fgui.lanzarPerfilUsuario(this);
     }
 
-    private void btnSalirActionPerformed(ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
+    private void btnSalirActionPerformed(ActionEvent evt) {
         this.dispose();
         System.exit(0);
-    }//GEN-LAST:event_btnSalirActionPerformed
+    }
 
-    private void btnDevolverBiciActionPerformed(ActionEvent evt) {//GEN-FIRST:event_btnDevolverBiciActionPerformed
+    private void btnDevolverBiciActionPerformed(ActionEvent evt) {
         int filaSeleccionada = this.tablaEstaciones.getSelectedRow();
         if (-1 == filaSeleccionada) {
-            JOptionPane.showMessageDialog(this, this.idioma.getString("debes.seleccionar.una.estacion"));
+            logger.debug("Fila seleccionada: -1, no se ha seleccionado ninguna estación");
+            this.fgui.lanzarMensajeAviso(this.idioma.getString("debes.seleccionar.una.estacion"));
             return;
         }
 
         Estacion estacionSeleccionada = ((modeloTablaEstaciones) this.tablaEstaciones.getModel()).obtenerEstacion(filaSeleccionada);
         if (!this.fa.devolverBicicleta(estacionSeleccionada)) {
-            JOptionPane.showMessageDialog(this, this.idioma.getString("el.aforo.de.la.estacion.no.es.suficiente.para.devolver.la.bicicleta"));
+            logger.debug("No se ha podido devolver la bicicleta a la estación seleccionada: {}", estacionSeleccionada.ubicacion() + " : " + estacionSeleccionada.idEstacion());
+            this.fgui.lanzarMensajeAviso(this.idioma.getString("el.aforo.de.la.estacion.no.es.suficiente.para.devolver.la.bicicleta"));
         }
 
         this._listarEstaciones();
         this._gestionarBicicletaEnUso();
     }
 
-    private void btnBicisEstacionActionPerformed(ActionEvent evt) {//GEN-FIRST:event_btnBicisEstacionActionPerformed
-        // TODO add your handling code here:
+    private void btnBicisEstacionActionPerformed(ActionEvent evt) {
         int index = this.tablaEstaciones.getSelectedRow();
         if (-1 == index) {
-            JOptionPane.showMessageDialog(this, this.idioma.getString("debes.seleccionar.una.estacion"));
+            logger.debug("No se ha seleccionado ninguna estación para ver las bicicletas");
+            this.fgui.lanzarMensajeAviso(this.idioma.getString("debes.seleccionar.una.estacion"));
             return;
         }
 
@@ -229,21 +232,21 @@ public final class VPrincipalUsuario extends JFrame {
 
     }
 
-    private void btnActualizarActionPerformed(ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
+    private void btnActualizarActionPerformed(ActionEvent evt) {
         this._listarEstaciones();
         this._gestionarBicicletaEnUso();
-    }//GEN-LAST:event_btnActualizarActionPerformed
+    }
 
-    private void btnReservarBicicletaActionPerformed(ActionEvent evt) {//GEN-FIRST:event_btnReservarBicicletaActionPerformed
+    private void btnReservarBicicletaActionPerformed(ActionEvent evt) {
         int filaSeleccionada = this.tablaEstaciones.getSelectedRow();
         if (filaSeleccionada == -1) {
-            JOptionPane.showMessageDialog(this, this.idioma.getString("debes.seleccionar.una.estacion"));
+            this.fgui.lanzarMensajeAviso(this.idioma.getString("debes.seleccionar.una.estacion"));
             return;
         }
         boolean usuarioTieneBici = this.fa.usuarioTieneBici();
 
         if (usuarioTieneBici) {
-            JOptionPane.showMessageDialog(this, this.idioma.getString("ya.tienes.una.bicicleta.reservada") + this.idioma.getString("por.favor.devuelvela.antes.de.reservar.otra"));
+            this.fgui.lanzarMensajeAviso(this.idioma.getString("ya.tienes.una.bicicleta.reservada") + this.idioma.getString("por.favor.devuelvela.antes.de.reservar.otra"));
             return;
         }
 
@@ -252,13 +255,13 @@ public final class VPrincipalUsuario extends JFrame {
         Estacion estacionSeleccionada = ((modeloTablaEstaciones) this.tablaEstaciones.getModel()).obtenerEstacion(filaSeleccionada);
         int      bicicletaAsignada    = this.fa.reservarBicicleta(estacionSeleccionada);
         if (bicicletaAsignada == -1) {
-            JOptionPane.showMessageDialog(this, this.idioma.getString("no.hay.bicicletas.disponibles.en.esta.estacion"));
+            this.fgui.lanzarMensajeAviso(this.idioma.getString("no.hay.bicicletas.disponibles.en.esta.estacion"));
         }
         else {
             JOptionPane.showMessageDialog(this, MessageFormat.format(this.idioma.getString("bicicleta.numero.0.reservada"), bicicletaAsignada));
         }
         this._listarEstaciones();
         this._gestionarBicicletaEnUso();
-    }//GEN-LAST:event_btnReservarBicicletaActionPerformed
+    }
 
 }

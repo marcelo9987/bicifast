@@ -25,7 +25,7 @@ class DAOUsuarioTest {
     private final int        idUsuarioTest = 999;
     private       DAOUsuario daoUsuario;
     private       Connection conexion;
-    private final Logger     logger = org.slf4j.LoggerFactory.getLogger(DAOUsuarioTest.class);
+    private final static Logger     logger = org.slf4j.LoggerFactory.getLogger(DAOUsuarioTest.class);
 
     @BeforeEach
     void setUp() throws SQLException {

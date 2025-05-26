@@ -10,9 +10,15 @@ import java.sql.Connection;
  */
 abstract class AbstractDAO {
 
-    private Connection        conexion;
+    /**
+     * Conexión a la base de datos
+     */
+    private Connection conexion;
 
 
+    /**
+     * @return Devuelve la conexión a la base de datos
+     */
     Connection getConexion() {
         return this.conexion;
     }
@@ -20,7 +26,6 @@ abstract class AbstractDAO {
     void setConexion(Connection conexion) {
         this.conexion = conexion;
     }
-
 
 
 }

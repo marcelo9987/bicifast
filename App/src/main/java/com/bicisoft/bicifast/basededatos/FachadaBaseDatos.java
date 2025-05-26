@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Properties;
@@ -18,13 +19,17 @@ import java.util.Properties;
  * Clase que gestiona la conexión a la base de datos
  */
 public final class FachadaBaseDatos {
+    //---- LOGGER ----
+    private final static Logger log = LoggerFactory.getLogger(FachadaBaseDatos.class);
 
-    private static final Logger log = LoggerFactory.getLogger(FachadaBaseDatos.class);
-    private final DAOUsuario daoUsuario;
-    private final DAOEstacion         daoEstacion;
-    private       java.sql.Connection conexion;
-    private final DAOBicicleta        daoBicicleta;
-    private final DAOViaje          daoViaje;
+    // ---- D.A.O.(s) ----
+    private final DAOUsuario   daoUsuario;
+    private final DAOEstacion  daoEstacion;
+    private final DAOBicicleta daoBicicleta;
+    private final DAOViaje     daoViaje;
+
+    // ---- CONEXIÓN A BBDD ----
+    private Connection conexion;
 
 
     /**
@@ -38,7 +43,7 @@ public final class FachadaBaseDatos {
         InputStream arqConfiguracion;
 
         try {
-            arqConfiguracion = getClass().getResourceAsStream("/baseDatos.properties");
+            arqConfiguracion = this.getClass().getResourceAsStream("/baseDatos.properties");
             if (arqConfiguracion == null) {
                 throw new FileNotFoundException("No se pudo encontrar baseDatos.properties");
             }
@@ -95,7 +100,8 @@ public final class FachadaBaseDatos {
 
     /**
      * Validar usuario en la base de datos
-     * @param email email que se usará como identificador
+     *
+     * @param email       email que se usará como identificador
      * @param contrasenha contraseña del usuario
      * @return Usuario objeto que representa al usuario validado
      */
@@ -105,6 +111,7 @@ public final class FachadaBaseDatos {
 
     /**
      * Obtiene una lista de estaciones
+     *
      * @return Lista de estaciones
      */
     public List<Estacion> preguntaLasEstaciones() {
@@ -113,6 +120,7 @@ public final class FachadaBaseDatos {
 
     /**
      * Obtiene una lista de bicicletas para una estación
+     *
      * @param estacionUsada Estación de la que se quieren obtener las bicicletas
      * @return Lista de bicicletas
      */
@@ -123,6 +131,7 @@ public final class FachadaBaseDatos {
 
     /**
      * Método que obtiene una lista de bicicletas en uso en una estación específica.
+     *
      * @param estacionUsada La estación de la que se quieren obtener las bicicletas en uso.
      * @return Lista de bicicletas en uso en la estación especificada.
      */
@@ -152,7 +161,8 @@ public final class FachadaBaseDatos {
 
     /**
      * Método que deja una bicicleta en una estación específica.
-     * @param bicicleta La bicicleta que se va a dejar en la estación.
+     *
+     * @param bicicleta            La bicicleta que se va a dejar en la estación.
      * @param estacionSeleccionada La estación en la que se va a dejar la bicicleta.
      */
     public void estacionarBicicleta(Bicicleta bicicleta, Estacion estacionSeleccionada) {
@@ -162,8 +172,9 @@ public final class FachadaBaseDatos {
 
     /**
      * Finaliza un viaje, actualizando la tabla viaje
-     * @param usuarioLogado Usuario que ha iniciado sesión
-     * @param bicicleta Bicicleta que se va a devolver
+     *
+     * @param usuarioLogado        Usuario que ha iniciado sesión
+     * @param bicicleta            Bicicleta que se va a devolver
      * @param estacionSeleccionada Estación a la que se va a devolver la bicicleta
      * @return true si la devolución se ha realizado correctamente, false en caso contrario
      */
@@ -173,31 +184,31 @@ public final class FachadaBaseDatos {
 
     /**
      * Este método cuenta el número de bicicletas libres (es decir, sin uso) por estación.
+     *
      * @return Una lista de enteros que representa el número de bicicletas libres en cada estación.
      */
-    public List<Integer> preguntaLasBicicletasPorEstacion()
-    {
+    public List<Integer> preguntaLasBicicletasPorEstacion() {
         return this.daoBicicleta.preguntaLasBicicletasPorEstacion();
     }
 
     /**
      * Método que reserva una bicicleta para un usuario específico.
-     * @param usuarioLogado El usuario que está reservando la bicicleta.
+     *
+     * @param usuarioLogado      El usuario que está reservando la bicicleta.
      * @param bicicletaReservada La bicicleta que se va a reservar.
      * @return true si la reserva se realizó correctamente, false en caso contrario.
      */
-    public boolean reservarBicicleta(Usuario usuarioLogado, Bicicleta bicicletaReservada)
-    {
+    public boolean reservarBicicleta(Usuario usuarioLogado, Bicicleta bicicletaReservada) {
         return this.daoBicicleta.reservarBicicleta(usuarioLogado, bicicletaReservada);
     }
 
     /**
      * Devuelve la ocupacion de una estacion
+     *
      * @param estacionSeleccionada estacion a consultar
      * @return ocupacion de la estacion
      */
-    public int obtenerOcupacionEstacion(Estacion estacionSeleccionada)
-    {
+    public int obtenerOcupacionEstacion(Estacion estacionSeleccionada) {
         return this.daoEstacion.obtenerOcupacionEstacion(estacionSeleccionada.idEstacion());
     }
 }

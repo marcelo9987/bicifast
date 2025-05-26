@@ -8,25 +8,26 @@ import java.util.List;
 /**
  * Gestiona las estaciones.
  */
-public final class GestorEstacion
-{
+final class GestorEstacion {
+    //---- FACHADAS -----
     private final FachadaBaseDatos fbd;
 
     /**
      * Constructor de la clase GestorEstacion.
+     *
      * @param fbd Fachada de la base de datos
      */
-    public GestorEstacion(FachadaBaseDatos fbd) {
+    GestorEstacion(FachadaBaseDatos fbd) {
         super();
         this.fbd = fbd;
     }
 
     /**
      * Pregunta las estaciones disponibles en la base de datos.
+     *
      * @return Lista de estaciones disponibles
      */
-    public List<Estacion> preguntaLasEstaciones()
-    {
+    List<Estacion> preguntaLasEstaciones() {
         return this.fbd.preguntaLasEstaciones();
     }
 }

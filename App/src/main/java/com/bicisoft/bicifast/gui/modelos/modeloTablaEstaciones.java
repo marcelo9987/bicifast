@@ -12,7 +12,13 @@ import java.util.ResourceBundle;
  */
 public final class modeloTablaEstaciones extends AbstractTableModel {
 
+    /**
+     * Lista de estaciones que se mostrarán en la tabla.
+     */
     private List<Estacion> estaciones;
+    /**
+     * Lista de capacidades de las estaciones, que se mostrará junto a cada estación.
+     */
     private List<Integer>  capacidades;
 
     /**
@@ -55,7 +61,7 @@ public final class modeloTablaEstaciones extends AbstractTableModel {
         };
     }
 
-    
+
     @Override
     public Class getColumnClass(int columnIndex) {
 

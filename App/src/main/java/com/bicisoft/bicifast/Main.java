@@ -1,4 +1,5 @@
 package com.bicisoft.bicifast;
+
 import com.bicisoft.bicifast.aplicacion.FachadaAplicacion;
 
 
@@ -13,7 +14,6 @@ public final class Main {
      */
     public static void main(String[] args) {
         FachadaAplicacion fa = new FachadaAplicacion();
-        // fbd._funciona();
 
         fa.lanzarAplicacion();
     }

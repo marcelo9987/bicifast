@@ -7,6 +7,9 @@ import com.bicisoft.bicifast.basededatos.FachadaBaseDatos;
 
 import java.util.List;
 
+/**
+ * Fachada de control que actúa como intermediaria entre la GUI y los gestores de la aplicación.
+ */
 public final class FachadaControl {
     private final GestorUsuario     gestorUsuario;
     private final GestorBicicleta   gestorBicicleta;
@@ -25,6 +28,12 @@ public final class FachadaControl {
     }
 
 
+    /**
+     *
+     * @param email
+     * @param contrasenha
+     * @return
+     */
     public Usuario comprobarLogin(String email, String contrasenha) {
         return this.gestorUsuario.comprobarLogin(email, contrasenha);
     }

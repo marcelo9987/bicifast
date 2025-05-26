@@ -23,6 +23,13 @@ public final class DiaBicis extends JDialog {
     private       JLabel            lblNombreEstacion;
 
 
+    /**
+     * Constructor de la clase DiaBicis.
+     * @param parent Formulario padre
+     * @param modal Indica si el diálogo es modal
+     * @param fa Fachada de la aplicación
+     * @param estacion Estación para la que se mostrarán las bicicletas disponibles
+     */
     public DiaBicis(JFrame parent, boolean modal, FachadaAplicacion fa, Estacion estacion) {
         super(parent, modal);
         this.fa = fa;

@@ -34,9 +34,9 @@ public final class GestorUsuario {
      */
     public Usuario comprobarLogin(String email, String contrasenha)
     {
-        Usuario usuario_obtenido =  fbd.validarUsuario(email, contrasenha);
-        logger.debug("Usuario obtenido: {}", usuario_obtenido);
-        return usuario_obtenido;
+        Usuario usuarioObtenido =  fbd.validarUsuario(email, contrasenha);
+        logger.debug("Usuario obtenido: {}", usuarioObtenido);
+        return usuarioObtenido;
     }
 
     /**

@@ -8,6 +8,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.util.ResourceBundle;
 
+/**
+ * Clase que representa un diálogo para mostrar los datos del usuario autenticado.
+ */
 public final class DiaUsuario extends JDialog {
 
     private final Usuario            usuario;
@@ -16,6 +19,11 @@ public final class DiaUsuario extends JDialog {
     private       GridBagConstraints gbc;
     private       int                fila;
 
+    /**
+     * Constructor de la clase DiaUsuario.
+     * @param parent Formulario padre, que puede ser null si no hay uno.
+     * @param fa Fachada de la aplicación, que proporciona acceso a los datos del usuario.
+     */
     public DiaUsuario(JFrame parent, FachadaAplicacion fa) {
         super(parent, fa.pedirBundle().getString("datos.do.usuario"), true);
         this.usuario = fa.usuario();

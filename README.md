@@ -2,7 +2,7 @@
 
 ![banner](App/src/main/resources/imagenes/bicifast_logo.jpeg)
 
-[![license](https://img.shields.io/github/license/marcelo9987/BiciFast.svg)](LICENSE) 
+[![GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](LICENSE)
 [![standard-readme compliant](https://img.shields.io/badge/readme%20style-standard-brightgreen.svg?style=flat-square)](https://github.com/RichardLitt/standard-readme)
 
 **BiciFast** es una aplicación de gestión de alquiler de bicicletas que permite a los usuarios alquilar bicicletas de forma rápida, intuitiva y eficiente. Diseñada con un enfoque centrado en la usabilidad, BiciFast ofrece funcionalidades pensadas para facilitar tanto la experiencia de alquiler como la gestión interna del sistema.

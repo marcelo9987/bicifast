@@ -82,7 +82,6 @@ final class GestorBicicleta {
             logger.warn("No se pudo reservar la bicicleta.");
             return -1; // Indica que no se pudo reservar la bicicleta
         }
-//            System.err.println("[DEBUG] ¿Como ha llegado aquí? <.>_<.> | Fallo en la BBDD o SQL");
         return bicicletaReservada.Id(); // Retorna el ID de la bicicleta reservada
 
     }

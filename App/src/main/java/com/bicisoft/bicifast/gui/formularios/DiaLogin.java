@@ -133,11 +133,10 @@ public final class DiaLogin extends JDialog {
             }
         });
 
-        // Desactivar o comportamento por defecto do TAB (traversal key) no campo pwdLogin
         Set<KeyStroke> empty = Collections.emptySet();
         this.pwdLogin.setFocusTraversalKeys(KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS, empty);
 
-        // Sobrescribir o comportamento do TAB no campo de contrasinal
+        // Sobrescribir el comportamiento del TAB en el campo de contraseña
         InputMap  im = this.pwdLogin.getInputMap(JComponent.WHEN_FOCUSED);
         ActionMap am = this.pwdLogin.getActionMap();
         im.put(KeyStroke.getKeyStroke(KeyEvent.VK_TAB, 0), "moveToAceptar");

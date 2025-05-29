@@ -41,7 +41,7 @@ public final class VIdioma extends javax.swing.JDialog {
         this.fgui = new FachadaGUI(fa);
         this.fa = fa;
         this.rb = fa.pedirBundle();
-        this.setLocationRelativeTo(parent);
+        this.setLocationRelativeTo(null);
         this.initComponents();
 
     }

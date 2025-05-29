@@ -148,6 +148,7 @@ public final class FachadaGUI {
     public void lanzarPerfilUsuario(JFrame parent) {
         DiaUsuario menuUsuario = new DiaUsuario(parent, this.fa);
 
+        menuUsuario.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         menuUsuario.setVisible(true);
     }
 
@@ -174,5 +175,7 @@ public final class FachadaGUI {
         panel.add(label, BorderLayout.CENTER);
 
         JOptionPane.showMessageDialog(null, panel, "AVISO", JOptionPane.INFORMATION_MESSAGE);
+
+        logger.info("Mensaje de aviso mostrado: {}", mensaje);
     }
 }
